@@ -1,0 +1,22 @@
+# Ignore files generated while compiling.
+*.o
+*.so
+*.depend
+*.a
+*.log
+*.status
+*.aux
+*.bbl
+*.blg
+*.out
+*.toc
+*.aux
+*.nav
+*.out
+*.snm
+*.toc
+*.swp
+*.swo
+
+# Ignore output directory of GDD.
+docs/output/
