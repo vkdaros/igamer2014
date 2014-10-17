@@ -2,14 +2,29 @@ TEX=pdflatex
 FILE=gdd_IceCreamFactory
 OUTPUT_DIR=output
 
+# Definition of basic commands according to the operating system.
+$(info Target platform: $(OS))
+ifeq ($(OS),Windows_NT)
+	RM=del /s/q
+	MD=mkdir
+	SEP=\\
+else
+	RM=rm - rf
+	MD=mkdir -p
+	SEP=/
+endif
+
 all: $(FILE).tex
-    # Creates ouput directory if it doesn't exist.
-	mkdir -p $(OUTPUT_DIR)
+ifeq ($(OS),Windows_NT)
+	if not exist $(OUTPUT_DIR) $(MD) $(OUTPUT_DIR)
+else
+	$(MD) $(OUTPUT_DIR)
+endif
 	$(TEX) -output-directory $(OUTPUT_DIR) $(FILE).tex
 	$(TEX) -output-directory $(OUTPUT_DIR) $(FILE).tex
 
 clean:
-	rm -rf $(OUTPUT_DIR)/$(FILE).aux  $(OUTPUT_DIR)/$(FILE).log $(OUTPUT_DIR)/$(FILE).toc $(OUTPUT_DIR)/$(FILE).out
+	$(RM) $(OUTPUT_DIR)$(SEP)$(FILE).aux  $(OUTPUT_DIR)$(SEP)$(FILE).log $(OUTPUT_DIR)$(SEP)$(FILE).toc $(OUTPUT_DIR)$(SEP)$(FILE).out
 
 clean_all: clean
-	rm -rf $(OUTPUT_DIR)/$(FILE).pdf
+	$(RM) $(OUTPUT_DIR)$(SEP)$(FILE).pdf
