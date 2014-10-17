@@ -9,7 +9,7 @@ ifeq ($(OS),Windows_NT)
 	MD=mkdir
 	SEP=\\
 else
-	RM=rm - rf
+	RM=rm -rf
 	MD=mkdir -p
 	SEP=/
 endif
@@ -24,7 +24,8 @@ endif
 	$(TEX) -output-directory $(OUTPUT_DIR) $(FILE).tex
 
 clean:
-	$(RM) $(OUTPUT_DIR)$(SEP)$(FILE).aux  $(OUTPUT_DIR)$(SEP)$(FILE).log $(OUTPUT_DIR)$(SEP)$(FILE).toc $(OUTPUT_DIR)$(SEP)$(FILE).out
+	$(RM) $(OUTPUT_DIR)$(SEP)$(FILE).aux  $(OUTPUT_DIR)$(SEP)$(FILE).log\
+    $(OUTPUT_DIR)$(SEP)$(FILE).toc $(OUTPUT_DIR)$(SEP)$(FILE).out
 
 clean_all: clean
 	$(RM) $(OUTPUT_DIR)$(SEP)$(FILE).pdf
