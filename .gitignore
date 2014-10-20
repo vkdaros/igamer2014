@@ -18,5 +18,8 @@
 *.swp
 *.swo
 
+# Ignore backup files
+*.blend1
+
 # Ignore output directory of GDD.
 docs/gdd/output/
