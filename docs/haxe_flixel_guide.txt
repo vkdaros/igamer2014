@@ -1,0 +1,71 @@
+===============
+Installing Haxe
+===============
+
+Go to: http://www.openfl.org/documentation/setup/install-haxe/ and select the
+installer for your system. Then run the installer:
+
+$ chmod +x install-haxe.sh
+$ sudo ./install-haxe.sh
+
+
+===============
+Installing Lime
+===============
+
+$ sudo haxelib install lime
+$ sudo haxelib run lime setup
+> Do you want to install the "lime" command? [y/n/a] ?
+y
+
+
+=================
+Installing OpenFL
+=================
+
+$ sudo lime install openfl
+
+
+===========================
+Setting up target platforms
+===========================
+
+For Linux and Flash no further effort is needed, for other platforms follow:
+
+Windows:
+lime setup windows
+
+Android:
+lime setup android
+
+
+=================
+Installing Flixel
+=================
+
+$ sudo haxelib install flixel
+$ sudo haxelib update flixel
+$ sudo haxelib install flixel-tools
+$ sudo haxelib run flixel-tools setup
+> A simple flixel script will be added to your /usr/bin/ [y/n] ?
+y
+> Would you now like this tool to download the flixel-demos and flixel-templates? [y/n] ?
+y
+
+
+=====================
+Test with Hello World
+=====================
+
+Let's check if every thing went fine. Create a new project using template (tpl):
+
+$ flixel tpl -n "HelloWorld"
+
+Now edit MenuState.hx inside source folder adding the following line as last
+command in the "create()" method:
+
+add(new FlxText(0, 0, 100, "Hello World!"));
+
+Save and exit. To compile and run using Neko do:
+
+$ lime test neko
