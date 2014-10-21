@@ -8,7 +8,12 @@ import flash.Lib;
 import flixel.FlxGame;
 import flixel.FlxState;
 
+// Multi-language support.
+import firetongue.FireTongue;
+
 class Main extends Sprite {
+    public static var tongue:FireTongueEx;
+
     // Width of the game in pixels (might be less / more in actual pixels
     // depending on your zoom).
     var gameWidth:Int = 640;
