@@ -32,8 +32,8 @@
     <!--Brasilian Portuguese-->
     <locale id="pt-BR" sort="1">
         <ui language="Lígua" region="Região"/>
-        <label id="en-US" language="Brasilian Portuguese" region="Brazil"/>
-        <label id="pt-BR" language="Português brasileiro" region="Brasil"/>
+        <label id="en-US" language="Portuguese" region="Brazil"/>
+        <label id="pt-BR" language="Português" region="Brasil"/>
     </locale>
 
     <!---

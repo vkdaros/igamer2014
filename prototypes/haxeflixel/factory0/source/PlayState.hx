@@ -2,7 +2,8 @@ package;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
-import flixel.FlxState;
+import flixel.addons.ui.FlxUIState;
+import flixel.addons.ui.FlxUIText;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.util.FlxMath;
@@ -10,12 +11,18 @@ import flixel.util.FlxMath;
 /**
  * A FlxState which can be used for the actual gameplay.
  */
-class PlayState extends FlxState {
+class PlayState extends FlxUIState {
     /**
      * Function that is called up when to state is created to set it up.
      */
     override public function create():Void {
+        if (Main.tongue == null) {
+            Main.tongue = new FireTongueEx();
+            Main.tongue.init("en-US");
+            FlxUIState.static_tongue = Main.tongue;
+        }
         super.create();
+        add(new FlxText(50, 50, 100, "Play Scene"));
     }
 
     /**
