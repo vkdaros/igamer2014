@@ -19,6 +19,6 @@ class Constants {
     // Conveyors possible types
     public static inline var BEGIN:Int = 0;
     public static inline var END:Int   = 1;
-    public static inline var UP:Int    = 2;
-    public static inline var DOWN:Int  = 3;
+    public static inline var DOWN:Int  = 2;
+    public static inline var UP:Int    = 3;
 }

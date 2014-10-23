@@ -10,7 +10,7 @@ import flixel.util.FlxMath;
 import flixel.group.FlxGroup;
 
 import ConveyorTile;
-import Constants;
+import Constants.*;
 
 /**
  * A FlxState which can be used for the actual gameplay.
@@ -36,7 +36,7 @@ class PlayState extends FlxUIState {
         for (i in 0...4) {
             _tileGrid.push([]);
             for (j in 0...4) {
-                var tile = new ConveyorTile(i, j, 1);
+                var tile = new ConveyorTile(i, j, DOWN);
                 _tileGrid[i].push(tile);
                 _conveyorBelt.add(tile);
             }
