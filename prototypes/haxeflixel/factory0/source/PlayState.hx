@@ -7,6 +7,7 @@ import flixel.addons.ui.FlxUIText;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.util.FlxMath;
+import flixel.group.FlxGroup;
 
 import ConveyorTile;
 import Constants;
@@ -15,6 +16,9 @@ import Constants;
  * A FlxState which can be used for the actual gameplay.
  */
 class PlayState extends FlxUIState {
+    private var _tileGrid:Array<Array<ConveyorTile>>;
+    private var _conveyorBelt:FlxGroup;
+
     /**
      * Function that is called up when to state is created to set it up.
      */
@@ -26,7 +30,18 @@ class PlayState extends FlxUIState {
         }
         super.create();
         add(new FlxText(50, 50, 100, "Play Scene"));
-        add(new ConveyorTile(1, 1, 1));
+
+        _tileGrid = new Array<Array<ConveyorTile>>();
+        _conveyorBelt = new FlxGroup();
+        for (i in 0...4) {
+            _tileGrid.push([]);
+            for (j in 0...4) {
+                var tile = new ConveyorTile(i, j, 1);
+                _tileGrid[i].push(tile);
+                _conveyorBelt.add(tile);
+            }
+        }
+        add(_conveyorBelt);
     }
 
     /**

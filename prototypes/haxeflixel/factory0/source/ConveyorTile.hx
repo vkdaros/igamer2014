@@ -12,15 +12,19 @@ class ConveyorTile extends FlxSprite {
      * calculated automaticaly.
      */
     public function new(i:Int, j:Int, type:Int) {
-        // TODO: calculate the right position.
-        super(100, 100);
+        var xOffset = (FlxG.width / 2) - (Constants.TILE_WIDTH / 2);
+        var x = (Constants.TILE_WIDTH / 2) * (j - i) + xOffset;
+        var y = (i + j) * (Constants.TILE_HEIGHT / 2);
+
+        super(x, y);
 
         // loadGraphic(PATH, ANIMATED, FRAME_WIDTH, FRAME_HEIGHT)
-        loadGraphic("assets/images/conveyor.png", true, Constants.TILE_WIDTH,
-                                                        Constants.TILE_HEIGHT);
+        loadGraphic("assets/images/conveyor.png", true,
+                     Constants.TILE_FRAME_WIDTH, Constants.TILE_FRAME_HEIGHT);
 
         // animation.add(NAME, FRAMES, FRAME_RATE, SHOULD_LOOP)
-        animation.add("roll", [0, 1, 2, 3], 4, true);
+        var frames = [for (f in 0...4) f + type * 4];
+        animation.add("roll", frames, 4, true);
         animation.play("roll");
     }
 
