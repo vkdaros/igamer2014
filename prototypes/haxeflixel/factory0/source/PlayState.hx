@@ -8,6 +8,9 @@ import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.util.FlxMath;
 
+import ConveyorTile;
+import Constants;
+
 /**
  * A FlxState which can be used for the actual gameplay.
  */
@@ -23,11 +26,13 @@ class PlayState extends FlxUIState {
         }
         super.create();
         add(new FlxText(50, 50, 100, "Play Scene"));
+        add(new ConveyorTile(1, 1, 1));
     }
 
     /**
      * Function that is called when this state is destroyed - you might want to
-     * consider setting all objects this state uses to null to help garbage collection.
+     * consider setting all objects this state uses to null to help garbage
+     * collection.
      */
     override public function destroy():Void {
         super.destroy();
