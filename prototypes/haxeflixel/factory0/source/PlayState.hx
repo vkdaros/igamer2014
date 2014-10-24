@@ -23,6 +23,13 @@ class PlayState extends FlxUIState {
      * Function that is called up when to state is created to set it up.
      */
     override public function create():Void {
+        FlxG.debugger.visible = true;
+        FlxG.debugger.drawDebug = true;
+
+// WIP: verificar se mudando o offset, a caixa de colisao nao estraga;
+//      Mover o offset para o ponto "base" do tile
+//      Colocar uma caixa na esteira.
+
         if (Main.tongue == null) {
             Main.tongue = new FireTongueEx();
             Main.tongue.init("en-US");
@@ -42,6 +49,7 @@ class PlayState extends FlxUIState {
             }
         }
         add(_conveyorBelt);
+        add(new BoxTile(0, 1));
     }
 
     /**
