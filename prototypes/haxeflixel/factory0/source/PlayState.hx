@@ -10,6 +10,7 @@ import flixel.util.FlxMath;
 import flixel.group.FlxGroup;
 
 import ConveyorTile;
+import BoxTile;
 import Constants.*;
 
 /**
@@ -26,10 +27,6 @@ class PlayState extends FlxUIState {
         FlxG.debugger.visible = true;
         FlxG.debugger.drawDebug = true;
 
-// WIP: verificar se mudando o offset, a caixa de colisao nao estraga;
-//      Mover o offset para o ponto "base" do tile
-//      Colocar uma caixa na esteira.
-
         if (Main.tongue == null) {
             Main.tongue = new FireTongueEx();
             Main.tongue.init("en-US");
@@ -40,16 +37,20 @@ class PlayState extends FlxUIState {
 
         _tileGrid = new Array<Array<ConveyorTile>>();
         _conveyorBelt = new FlxGroup();
-        for (i in 0...4) {
+
+        var max = 4;
+        for (i in 0...max) {
             _tileGrid.push([]);
-            for (j in 0...4) {
-                var tile = new ConveyorTile(i, j, DOWN);
+            for (j in 0...max) {
+                var tile = new ConveyorTile(i, j, DOWN, _tileGrid);
                 _tileGrid[i].push(tile);
                 _conveyorBelt.add(tile);
             }
         }
         add(_conveyorBelt);
-        add(new BoxTile(0, 1));
+        var box = new BoxTile(0, 1);
+        _tileGrid[0][1].receiveBox(box);
+        add(box);
     }
 
     /**

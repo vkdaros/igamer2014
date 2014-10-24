@@ -3,17 +3,31 @@ package;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxObject;
+import flixel.tweens.FlxTween;
 
+import ConveyorTile;
 import Constants.*;
 
 class BoxTile extends FlxSprite {
-    private var _direction: Int;
+    private var _direction:Int;
+
+    // Coordinates in tile matrix.
+    public var i:Int;
+    public var j:Int;
+
+    public var moving:Bool;
+
+    private var _tween:FlxTween;
 
     /**
      * Position i,j with respect of tile grid. The screen coordinates x,y will
      * calculated automaticaly.
      */
-    public function new(i:Int, j:Int, direction:Int = SW) {
+    public function new(I:Int, J:Int, direction:Int = SW) {
+        i = I;
+        j = J;
+        moving = false;
+
         var xOffset = FlxG.width / 2;
         var yOffset = TILE_HEIGHT / 2;
         var x = (TILE_WIDTH / 2) * (j - i) + xOffset;
@@ -32,7 +46,8 @@ class BoxTile extends FlxSprite {
         // animation.add(NAME, FRAMES, FRAME_RATE, SHOULD_LOOP)
         var frames = [0, 1, 2, 3];
         animation.add("shake", frames, 4, true);
-        animation.play("shake");
+        animation.add("idle", [0], 1, false);
+        animation.play("idle");
 
         facing = FlxObject.LEFT;
         if (direction == SE || direction == NE) {
@@ -42,5 +57,28 @@ class BoxTile extends FlxSprite {
 
     override public function update():Void {
         super.update();
+    }
+
+    public function setGridPosition(I:Int, J:Int):Void {
+        i = I;
+        j = J;
+    }
+
+    public function setTarget(targetTile:ConveyorTile):Void {
+        var me = this;
+        var callback:FlxTween->Void = function(tween:FlxTween) {
+            targetTile.receiveBox(me);
+        }
+
+        var options = {
+            type: FlxTween.ONESHOT,
+            startDelay: null,
+            loopDelay: null,
+            ease: null,
+            complete: callback
+        }
+
+        _tween = FlxTween.linearMotion(this, x, y, targetTile.x, targetTile.y,
+                                       BOX_MOVEMENT_DURATION, true, options);
     }
 }
