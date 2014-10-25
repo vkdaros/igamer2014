@@ -68,7 +68,7 @@ class PlayState extends FlxUIState {
         for (i in 0...max) {
             _tileGrid.push([]);
             for (j in 0...max) {
-                var tile = new ConveyorTile(i, j, GROUND, _tileGrid);
+                var tile = new ConveyorTile(i, j, HIDDEN, _tileGrid);
                 _tileGrid[i].push(tile);
                 _conveyorBelt.add(tile);
             }
@@ -82,6 +82,6 @@ class PlayState extends FlxUIState {
         _tileGrid[2][2].setTile(SE, DOWN);
         _tileGrid[2][3].setTile(SW, DOWN);
         _tileGrid[3][3].setTile(SW, DOWN);
-        _tileGrid[4][3].setTile(SW, DOWN);
+        //_tileGrid[4][3].setTile(SW, DOWN);
     }
 }

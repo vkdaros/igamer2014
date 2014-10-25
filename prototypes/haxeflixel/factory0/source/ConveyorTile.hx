@@ -61,6 +61,13 @@ class ConveyorTile extends FlxSprite {
     }
 
     public function setTile(direction:Int, type:Int):Void {
+        if (type == HIDDEN) {
+            active = visible = false;
+        }
+        else {
+            active = visible = true;
+        }
+
         _type = type;
         setDirection(direction);
         initAnimations(_type);
@@ -72,7 +79,7 @@ class ConveyorTile extends FlxSprite {
         // animation.add(NAME, FRAMES, FRAME_RATE, SHOULD_LOOP)
         animation.add("idle", [type * 4], 1, false);
 
-        if (type == GROUND) {
+        if (type == HIDDEN || type == GROUND) {
             _rolling = false;
         }
         else {
@@ -130,7 +137,9 @@ class ConveyorTile extends FlxSprite {
     public function receiveBox(box:BoxTile):Void {
         _box = box;
         _box.setGridPosition(i, j);
-        if (isValidPosition(_targetI, _targetJ)) {
+        if (isValidPosition(_targetI, _targetJ) &&
+            _grid[_targetI][_targetJ].active) {
+
             _box.setTarget(_grid[_targetI][_targetJ]);
             _box.setShaking(false);
         }
