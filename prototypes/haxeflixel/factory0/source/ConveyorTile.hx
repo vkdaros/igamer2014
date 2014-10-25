@@ -24,9 +24,6 @@ class ConveyorTile extends FlxSprite {
     public var i:Int;
     public var j:Int;
 
-    // Tiles reached by this one (usually only one or two).
-    private var _connections:Array<ConveyorTile>;
-
     /**
      * Position i,j with respect of tile grid. The screen coordinates x,y will
      * calculated automaticaly.
@@ -38,9 +35,6 @@ class ConveyorTile extends FlxSprite {
         _grid = grid;
         _direction = direction;
         _type = type;
-
-        // TODO: fill connections.
-        _connections = new Array<ConveyorTile>();
 
         var xOffset = FlxG.width / 2;
         var yOffset = TILE_HEIGHT / 2;
@@ -134,10 +128,22 @@ class ConveyorTile extends FlxSprite {
     public function receiveBox(box:BoxTile):Void {
         _box = box;
         _box.setGridPosition(i, j);
-        /*
-         * PROBLEM: check if i,j is out of bounds before acess _grid[i][j].
-         */
-        _box.setTarget(_grid[_targetI][_targetJ]);
-        _box.moving = _rolling;
+        if (isValidPosition(_targetI, _targetJ)) {
+            _box.moving = _rolling;
+            _box.setTarget(_grid[_targetI][_targetJ]);
+        }
+        else {
+            _targetI = i;
+            _targetJ = j;
+            _box.moving = false;
+        }
+    }
+
+    private function isValidPosition(I:Int, J:Int):Bool {
+        if (I < 0 || J < 0 || I >= _grid.length || J >= _grid[0].length) {
+            trace("INVALID");
+            return false;
+        }
+        return true;
     }
 }
