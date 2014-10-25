@@ -13,12 +13,19 @@ The objectives are:
 You can easily test on Linux with Neko. In prototype directory run:
 
 ```
-lime build neko
-lime run neko
+lime build linux
+lime run linux
 ```
 
 Or alternatively just:
 
 ```
-lime test neko
+lime test linux
+```
+
+### Debugging
+You also que test in debug mode to check a lot off stats during gameplay.
+
+```
+lime test linux -debug
 ```
