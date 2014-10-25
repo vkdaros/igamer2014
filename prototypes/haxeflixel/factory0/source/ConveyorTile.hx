@@ -11,6 +11,7 @@ class ConveyorTile extends FlxSprite {
     private var _direction:Int;
     private var _box:BoxTile;
     private var _rolling:Bool;
+    private var _type:Int;
 
     // Tile grid used to communicate to neighbor tiles.
     private var _grid:Array<Array<ConveyorTile>>;
@@ -23,6 +24,9 @@ class ConveyorTile extends FlxSprite {
     public var i:Int;
     public var j:Int;
 
+    // Tiles reached by this one (usually only one or two).
+    private var _connections:Array<ConveyorTile>;
+
     /**
      * Position i,j with respect of tile grid. The screen coordinates x,y will
      * calculated automaticaly.
@@ -33,6 +37,10 @@ class ConveyorTile extends FlxSprite {
         j = J;
         _grid = grid;
         _direction = direction;
+        _type = type;
+
+        // TODO: fill connections.
+        _connections = new Array<ConveyorTile>();
 
         var xOffset = FlxG.width / 2;
         var yOffset = TILE_HEIGHT / 2;
@@ -46,22 +54,56 @@ class ConveyorTile extends FlxSprite {
         loadGraphic("assets/images/conveyor.png", true, TILE_FRAME_WIDTH,
                     TILE_FRAME_HEIGHT);
 
-        _rolling = true;
+        setFacingFlip(FlxObject.LEFT, false, false);
+        setFacingFlip(FlxObject.RIGHT, true, false);
+        facing = FlxObject.LEFT;
+
+        _rolling = false;
+        setTile(direction, _type);
+    }
+
+    public function setTile(direction:Int, type:Int):Void {
+        _type = type;
         setDirection(direction);
-        initAnimations(type);
+        initAnimations(_type);
+    }
+
+    private function initAnimations(type:Int):Void {
+        animation.destroyAnimations();
+
+        // animation.add(NAME, FRAMES, FRAME_RATE, SHOULD_LOOP)
+        animation.add("idle", [type * 4], 1, false);
+
+        if (type == GROUND) {
+            _rolling = false;
+        }
+        else {
+            _rolling = true;
+            var frames = [for (f in 0...4) f + type * 4];
+            animation.add("roll", frames, 4, true);
+        }
+
+        if (_rolling) {
+            animation.play("roll");
+        }
+        else {
+            animation.play("idle");
+        }
     }
 
     private function setDirection(direction:Int):Void {
-        setFacingFlip(FlxObject.LEFT, false, false);
-        setFacingFlip(FlxObject.RIGHT, true, false);
+        _direction = direction;
 
-        facing = FlxObject.LEFT;
-        if (direction == SE || direction == NE) {
+        if (_direction == SE || _direction == NE) {
             facing = FlxObject.RIGHT;
         }
 
         _targetI = i;
         _targetJ = j;
+        if (_type == GROUND) {
+            return;
+        }
+
         switch (_direction) {
             case NE:
                 _targetI--;
@@ -71,20 +113,6 @@ class ConveyorTile extends FlxSprite {
                 _targetI++;
             case SE:
                 _targetJ++;
-        }
-    }
-
-    private function initAnimations(type:Int):Void {
-        // animation.add(NAME, FRAMES, FRAME_RATE, SHOULD_LOOP)
-        var frames = [for (f in 0...4) f + type * 4];
-        animation.add("roll", frames, 4, true);
-        animation.add("idle", [0], 1, false);
-
-        if (_rolling) {
-            animation.play("roll");
-        }
-        else {
-            animation.play("idle");
         }
     }
 

@@ -38,15 +38,9 @@ class PlayState extends FlxUIState {
         _tileGrid = new Array<Array<ConveyorTile>>();
         _conveyorBelt = new FlxGroup();
 
-        var max = 4;
-        for (i in 0...max) {
-            _tileGrid.push([]);
-            for (j in 0...max) {
-                var tile = new ConveyorTile(i, j, DOWN, _tileGrid);
-                _tileGrid[i].push(tile);
-                _conveyorBelt.add(tile);
-            }
-        }
+        initTileGrid();
+        initConveyor();
+
         add(_conveyorBelt);
         var box = new BoxTile(0, 1);
         _tileGrid[0][1].receiveBox(box);
@@ -67,5 +61,27 @@ class PlayState extends FlxUIState {
      */
     override public function update():Void {
         super.update();
+    }
+
+    public function initTileGrid():Void {
+        var max = 5;
+        for (i in 0...max) {
+            _tileGrid.push([]);
+            for (j in 0...max) {
+                var tile = new ConveyorTile(i, j, GROUND, _tileGrid);
+                _tileGrid[i].push(tile);
+                _conveyorBelt.add(tile);
+            }
+        }
+    }
+
+    public function initConveyor():Void {
+        _tileGrid[0][1].setTile(SW, DOWN);
+        _tileGrid[1][1].setTile(SW, DOWN);
+        _tileGrid[2][1].setTile(SE, DOWN);
+        _tileGrid[2][2].setTile(SE, DOWN);
+        _tileGrid[2][3].setTile(SW, DOWN);
+        _tileGrid[3][3].setTile(SW, DOWN);
+        _tileGrid[4][3].setTile(SW, DOWN);
     }
 }

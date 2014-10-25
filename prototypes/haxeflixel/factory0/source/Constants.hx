@@ -17,10 +17,11 @@ class Constants {
 
 
     // Conveyors possible types.
-    public static inline var BEGIN:Int = 0;
-    public static inline var END:Int   = 1;
-    public static inline var DOWN:Int  = 2;
-    public static inline var UP:Int    = 3;
+    public static inline var BEGIN:Int  = 0;
+    public static inline var END:Int    = 1;
+    public static inline var DOWN:Int   = 2;
+    public static inline var UP:Int     = 3;
+    public static inline var GROUND:Int = 4;
 
     // Tween movement parameters.
     public static inline var BOX_MOVEMENT_DURATION:Int = 1; // seconds.
