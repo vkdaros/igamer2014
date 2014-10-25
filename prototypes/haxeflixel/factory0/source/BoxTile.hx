@@ -15,7 +15,7 @@ class BoxTile extends FlxSprite {
     public var i:Int;
     public var j:Int;
 
-    public var moving:Bool;
+    private var _shaking:Bool;
 
     private var _tween:FlxTween;
 
@@ -26,7 +26,7 @@ class BoxTile extends FlxSprite {
     public function new(I:Int, J:Int, direction:Int = SW) {
         i = I;
         j = J;
-        moving = false;
+        _shaking = false;
 
         var xOffset = FlxG.width / 2;
         var yOffset = TILE_HEIGHT / 2;
@@ -45,7 +45,7 @@ class BoxTile extends FlxSprite {
 
         // animation.add(NAME, FRAMES, FRAME_RATE, SHOULD_LOOP)
         var frames = [0, 1, 2, 3];
-        animation.add("shake", frames, 4, true);
+        animation.add("shake", frames, 10, true);
         animation.add("idle", [0], 1, false);
         animation.play("idle");
 
@@ -80,5 +80,19 @@ class BoxTile extends FlxSprite {
 
         _tween = FlxTween.linearMotion(this, x, y, targetTile.x, targetTile.y,
                                        BOX_MOVEMENT_DURATION, true, options);
+    }
+
+    public function setShaking(isShaking:Bool):Void {
+        if (isShaking == _shaking) {
+            return;
+        }
+
+        _shaking = isShaking;
+        if (_shaking) {
+            animation.play("shake");
+        }
+        else {
+            animation.play("idle");
+        }
     }
 }

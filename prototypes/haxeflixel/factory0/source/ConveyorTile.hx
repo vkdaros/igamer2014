@@ -117,11 +117,9 @@ class ConveyorTile extends FlxSprite {
     public function powerSwitch(on:Bool):Void {
         if (on && !_rolling) {
             animation.play("rolling");
-            _box.moving = true;
         }
         else if (!on && _rolling) {
             animation.play("idle");
-            _box.moving = false;
         }
     }
 
@@ -129,19 +127,18 @@ class ConveyorTile extends FlxSprite {
         _box = box;
         _box.setGridPosition(i, j);
         if (isValidPosition(_targetI, _targetJ)) {
-            _box.moving = _rolling;
             _box.setTarget(_grid[_targetI][_targetJ]);
+            _box.setShaking(false);
         }
         else {
             _targetI = i;
             _targetJ = j;
-            _box.moving = false;
+            _box.setShaking(true);
         }
     }
 
     private function isValidPosition(I:Int, J:Int):Bool {
         if (I < 0 || J < 0 || I >= _grid.length || J >= _grid[0].length) {
-            trace("INVALID");
             return false;
         }
         return true;
