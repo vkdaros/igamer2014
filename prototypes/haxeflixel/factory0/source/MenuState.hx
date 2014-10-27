@@ -8,6 +8,11 @@ import flixel.addons.ui.FlxUIButton;
 import flixel.text.FlxText;
 import flixel.util.FlxMath;
 
+import flixel.system.scaleModes.FillScaleMode;
+import flixel.system.scaleModes.FixedScaleMode;
+import flixel.system.scaleModes.RatioScaleMode;
+import flixel.system.scaleModes.RelativeScaleMode;
+
 // Multi-language support.
 import firetongue.FireTongue;
 
@@ -15,17 +20,31 @@ import firetongue.FireTongue;
  * A FlxState which can be used for the game's menu.
  */
 class MenuState extends FlxUIState {
+    private var fill:FillScaleMode;
+    private var ratio:RatioScaleMode;
+    private var relative:RelativeScaleMode;
+    private var fixed:FixedScaleMode;
+
     /**
      * Function that is called up when to state is created to set it up.
      */
     override public function create():Void {
+        fill = new FillScaleMode();
+        ratio = new RatioScaleMode();
+        relative = new RelativeScaleMode(0.75, 0.75);
+        fixed = new FixedScaleMode();
+
+        FlxG.scaleMode = ratio;
+
         if (Main.tongue == null) {
             Main.tongue = new FireTongueEx();
             Main.tongue.init("en-US");
             FlxUIState.static_tongue = Main.tongue;
         }
+
         super.create();
 
+        add(new FlxSprite(0, 0, "assets/images/bg_debug2.png"));
         createUI();
     }
 

@@ -9,6 +9,11 @@ import flixel.ui.FlxButton;
 import flixel.util.FlxMath;
 import flixel.group.FlxGroup;
 
+import flixel.system.scaleModes.FillScaleMode;
+import flixel.system.scaleModes.FixedScaleMode;
+import flixel.system.scaleModes.RatioScaleMode;
+import flixel.system.scaleModes.RelativeScaleMode;
+
 import ConveyorTile;
 import BoxTile;
 import Constants.*;
@@ -20,20 +25,31 @@ class PlayState extends FlxUIState {
     private var _tileGrid:Array<Array<ConveyorTile>>;
     private var _conveyorBelt:FlxGroup;
 
+    private var fill:FillScaleMode;
+    private var ratio:RatioScaleMode;
+    private var relative:RelativeScaleMode;
+    private var fixed:FixedScaleMode;
+
     /**
      * Function that is called up when to state is created to set it up.
      */
     override public function create():Void {
-        FlxG.debugger.visible = true;
-        FlxG.debugger.drawDebug = true;
+        fill = new FillScaleMode();
+        ratio = new RatioScaleMode();
+        relative = new RelativeScaleMode(0.75, 0.75);
+        fixed = new FixedScaleMode();
+
+        FlxG.scaleMode = fixed;
+
+        add(new FlxSprite(0, 0, "assets/images/bg_debug2.png"));
 
         if (Main.tongue == null) {
             Main.tongue = new FireTongueEx();
             Main.tongue.init("en-US");
             FlxUIState.static_tongue = Main.tongue;
         }
+
         super.create();
-        add(new FlxText(50, 50, 100, "Play Scene"));
 
         _tileGrid = new Array<Array<ConveyorTile>>();
         _conveyorBelt = new FlxGroup();
