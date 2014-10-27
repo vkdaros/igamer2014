@@ -1,0 +1,117 @@
+===============
+Installing Haxe
+===============
+
+Go to: http://www.openfl.org/documentation/setup/install-haxe/ and select the
+installer for your system. Then run the installer:
+
+$ chmod +x install-haxe.sh
+$ sudo ./install-haxe.sh
+
+
+===============
+Installing Lime
+===============
+
+$ sudo haxelib install lime
+$ sudo haxelib run lime setup
+> Do you want to install the "lime" command? [y/n/a] ?
+y
+
+
+=================
+Installing OpenFL
+=================
+
+$ sudo lime install openfl
+
+
+===========================
+Setting up target platforms
+===========================
+
+For Linux and Flash no further effort is needed, for other platforms follow:
+
+Windows:
+lime setup windows
+
+Android:
+lime setup android
+
+
+=================
+Installing Flixel
+=================
+
+$ sudo haxelib install flixel
+$ sudo haxelib update flixel
+$ sudo haxelib install flixel-tools
+$ sudo haxelib run flixel-tools setup
+> A simple flixel script will be added to your /usr/bin/ [y/n] ?
+y
+> Would you now like this tool to download the flixel-demos and flixel-templates? [y/n] ?
+y
+
+
+==========================
+Installing extra libraries
+==========================
+
+$ sudo haxelib install flixel-addons
+$ sudo haxelib install firetongue
+
+
+=====================
+Test with Hello World
+=====================
+
+Let's check if every thing went fine. Create a new project using template (tpl):
+
+$ flixel tpl -n "HelloWorld"
+
+Now edit MenuState.hx inside source folder adding the following line as last
+command in the "create()" method:
+
+add(new FlxText(0, 0, 100, "Hello World!"));
+
+Save and exit. To compile and run using Neko do:
+
+$ lime test linux
+
+
+====================
+Testing Flash target
+====================
+
+After building for Flash target, it is better to test from an html page. Create
+an index.html with the following code in the same directory where .swf file were
+created. Remember to change FILE_NAME.swf to the correct name.
+
+<html>
+<head><title>HaxeFlixel in Flash</title></head>
+<body bgcolor="#dddddd">
+<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"
+        width="800"
+    height="600"
+    id="haxe"
+    align="middle">
+<param name="movie" value="FILE_NAME.swf"/>
+<param name="allowScriptAccess" value="always" />
+<param name="quality" value="high" />
+<param name="scale" value="noscale" />
+<param name="salign" value="lt" />
+<param name="bgcolor" value="#ffffff"/>
+<embed src="FILE_NAME.swf"
+       bgcolor="#ffffff"
+       width="400"
+       height="300"
+       name="haxe"
+       quality="high"
+       align="middle"
+       allowScriptAccess="always"
+       type="application/x-shockwave-flash"
+       pluginspage="http://www.macromedia.com/go/getflashplayer"
+/>
+</object>
+</body>
+</html>

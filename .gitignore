@@ -23,3 +23,9 @@
 
 # Ignore output directory of GDD.
 docs/gdd/output/
+
+# Ignore output directory of HaxeFlixel prototypes.
+prototypes/haxeflixel/*/export/
+
+# Vim session file
+*session.vim
