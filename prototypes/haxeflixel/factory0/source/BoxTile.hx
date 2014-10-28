@@ -43,6 +43,7 @@ class BoxTile extends FlxSprite {
         // loadGraphic(PATH, ANIMATED, FRAME_WIDTH, FRAME_HEIGHT)
         loadGraphic("assets/images/box.png", true, TILE_FRAME_WIDTH,
                     TILE_FRAME_HEIGHT);
+        antialiasing = true;
 
         setFacingFlip(FlxObject.LEFT, false, false);
         setFacingFlip(FlxObject.RIGHT, true, false);

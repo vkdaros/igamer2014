@@ -39,7 +39,7 @@ class PlayState extends FlxUIState {
         relative = new RelativeScaleMode(0.75, 0.75);
         fixed = new FixedScaleMode();
 
-        FlxG.scaleMode = fixed;
+        FlxG.scaleMode = ratio;
 
         add(new FlxSprite(0, 0, "assets/images/bg_debug2.png"));
 
