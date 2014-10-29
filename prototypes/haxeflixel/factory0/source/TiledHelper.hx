@@ -32,7 +32,7 @@ typedef TiledTileSet = {
     var tileoffset:Map<String, Int>;
 
     // Only present when there are animated tiles.
-    var tiles:Map<Float, TiledAnimation>;
+    var tiles:Dynamic;
 }
 
 typedef TiledAnimation = {
