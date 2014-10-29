@@ -91,7 +91,7 @@
  "tilesets":[
         {
          "firstgid":1,
-         "image":"..\/..\/..\/..\/..\/..\/..\/..\/..\/..\/data\/vinicius\/disciplinas\/mestrado\/igamer2014\/prototypes\/haxeflixel\/factory0\/assets\/images\/conveyor.png",
+         "image":"..\/\/images\/conveyor.png",
          "imageheight":325,
          "imagewidth":400,
          "margin":0,
@@ -194,7 +194,7 @@
         }, 
         {
          "firstgid":21,
-         "image":"..\/..\/..\/..\/..\/..\/..\/..\/..\/..\/data\/vinicius\/disciplinas\/mestrado\/igamer2014\/prototypes\/haxeflixel\/factory0\/assets\/images\/box.png",
+         "image":"..\/images\/box.png",
          "imageheight":65,
          "imagewidth":400,
          "margin":0,
