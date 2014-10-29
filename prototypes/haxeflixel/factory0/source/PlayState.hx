@@ -8,6 +8,7 @@ import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.util.FlxMath;
 import flixel.group.FlxGroup;
+import flixel.plugin.MouseEventManager;
 
 import flixel.system.scaleModes.FillScaleMode;
 import flixel.system.scaleModes.FixedScaleMode;
@@ -54,11 +55,13 @@ class PlayState extends FlxUIState {
 
         super.create();
 
+        // Plugin needed to detect when player clicks on a sprite.
+        FlxG.plugins.add(new MouseEventManager());
+
         _tileGrid = new Array<Array<ConveyorTile>>();
         _conveyorBelt = new FlxGroup();
 
         initTileGrid();
-        //initConveyor();
 
         add(_conveyorBelt);
         var box = new BoxTile(0, 1);
@@ -115,7 +118,8 @@ class PlayState extends FlxUIState {
 
                 var tile = new ConveyorTile(i, j, Std.int(tileType), _tileGrid,
                                             tileDirection,
-                                            animationMap[Std.int(tileType)]);
+                                            animationMap[Std.int(tileType)],
+                                            addToState);
                 _tileGrid[i].push(tile);
                 _conveyorBelt.add(tile);
             }
@@ -162,5 +166,10 @@ class PlayState extends FlxUIState {
             }
         }
         return animationMap;
+    }
+
+    // Calback function passed to other classes such as ConveyorTile.
+    public function addToState(sprite:FlxSprite):Void {
+        add(sprite);
     }
 }

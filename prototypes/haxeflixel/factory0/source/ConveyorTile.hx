@@ -3,6 +3,8 @@ package;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxObject;
+import flixel.util.FlxColor;
+import flixel.plugin.MouseEventManager;
 
 import Constants.*;
 import BoxTile;
@@ -24,17 +26,22 @@ class ConveyorTile extends FlxSprite {
     public var i:Int;
     public var j:Int;
 
+    // Callback function to add a box to Playstate.
+    private var addToState:FlxSprite->Void;
+
     /**
      * Position i,j with respect of tile grid. The screen coordinates x,y will
      * calculated automaticaly.
      */
     public function new(I:Int, J:Int, type:Int, grid:Array<Array<ConveyorTile>>,
-                        direction:Int = SW, animationFrames:Array<Int> = null) {
+                        direction:Int = SW, animationFrames:Array<Int> = null,
+                        addToStateCallback:FlxSprite->Void = null) {
         i = I;
         j = J;
         _grid = grid;
         _direction = direction;
         _type = type;
+        addToState = addToStateCallback;
 
         var xOffset = FlxG.width / 2;
         var yOffset = TILE_HEIGHT / 2;
@@ -60,11 +67,14 @@ class ConveyorTile extends FlxSprite {
         _rolling = false;
         setTile(direction, _type);
         initAnimations(_type, animationFrames);
+
+        // Setup the mouse events
+        // add(SPRITE, ON_MOUSE_DOWN, ON_MOUSE_UP, ON_MOUSE_OVER, ON_MOUSE_OUT)
+        MouseEventManager.add(this, onDown, null, onOver, onOut);
     }
 
     public function setTile(direction:Int, type:Int):Void {
-        if (type == HIDDEN) {
-            active = visible = false;
+        if (type == HIDDEN) { active = visible = false;
         }
         else {
             active = visible = true;
@@ -148,5 +158,24 @@ class ConveyorTile extends FlxSprite {
             return false;
         }
         return true;
+    }
+
+    private function onDown(sprite:FlxSprite):Void {
+        var box = new BoxTile(i, j);
+        receiveBox(box);
+        addToState(box);
+    }
+
+    private function onOver(sprite:FlxSprite):Void {
+        color = 0x00FF00;
+    }
+
+    private function onOut(sprite:FlxSprite):Void {
+        color = FlxColor.WHITE;
+    }
+
+    override public function destroy():Void {
+        MouseEventManager.remove(this);
+        super.destroy();
     }
 }

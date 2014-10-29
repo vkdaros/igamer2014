@@ -23,7 +23,7 @@ class BoxTile extends FlxSprite {
      * Position i,j with respect of tile grid. The screen coordinates x,y will
      * calculated automaticaly.
      */
-    public function new(I:Int, J:Int, direction:Int = SW) {
+    public function new(I:Int = 0, J:Int = 0, direction:Int = SW) {
         i = I;
         j = J;
         _shaking = false;
