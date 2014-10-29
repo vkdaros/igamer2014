@@ -29,7 +29,7 @@ class ConveyorTile extends FlxSprite {
      * calculated automaticaly.
      */
     public function new(I:Int, J:Int, type:Int, grid:Array<Array<ConveyorTile>>,
-                        direction:Int = SW) {
+                        direction:Int = SW, animationFrames:Array<Int> = null) {
         i = I;
         j = J;
         _grid = grid;
@@ -59,6 +59,7 @@ class ConveyorTile extends FlxSprite {
 
         _rolling = false;
         setTile(direction, _type);
+        initAnimations(_type, animationFrames);
     }
 
     public function setTile(direction:Int, type:Int):Void {
@@ -68,37 +69,6 @@ class ConveyorTile extends FlxSprite {
         else {
             active = visible = true;
         }
-
-        _type = type;
-        setDirection(direction);
-        initAnimations(_type);
-    }
-
-    private function initAnimations(type:Int):Void {
-        animation.destroyAnimations();
-
-        // animation.add(NAME, FRAMES, FRAME_RATE, SHOULD_LOOP)
-        animation.add("idle", [type * 4], 1, false);
-
-        if (type == HIDDEN || type == GROUND) {
-            _rolling = false;
-        }
-        else {
-            _rolling = true;
-            var frames = [for (f in 0...4) f + type * 4];
-            animation.add("roll", frames, 4, true);
-        }
-
-        if (_rolling) {
-            animation.play("roll");
-        }
-        else {
-            animation.play("idle");
-        }
-    }
-
-    private function setDirection(direction:Int):Void {
-        _direction = direction;
 
         if (_direction == SE || _direction == NE) {
             facing = FlxObject.RIGHT;
@@ -119,6 +89,28 @@ class ConveyorTile extends FlxSprite {
                 _targetI++;
             case SE:
                 _targetJ++;
+        }
+    }
+
+    private function initAnimations(type:Int, animationFrames:Array<Int>):Void {
+        animation.destroyAnimations();
+
+        if (animationFrames == null) {
+            return;
+        }
+
+        // animation.add(NAME, FRAMES, FRAME_RATE, SHOULD_LOOP)
+        animation.add("idle", [animationFrames[0]], 1, false);
+
+        // Ops
+        _rolling = (type != HIDDEN && type != GROUND);
+
+        if (_rolling) {
+            animation.add("roll", animationFrames, 4, true);
+            animation.play("roll");
+        }
+        else {
+            animation.play("idle");
         }
     }
 

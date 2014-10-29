@@ -14,9 +14,12 @@ import flixel.system.scaleModes.FixedScaleMode;
 import flixel.system.scaleModes.RatioScaleMode;
 import flixel.system.scaleModes.RelativeScaleMode;
 
+import openfl.Assets;
+
 import ConveyorTile;
 import BoxTile;
 import Constants.*;
+import TiledHelper;
 
 /**
  * A FlxState which can be used for the actual gameplay.
@@ -55,7 +58,7 @@ class PlayState extends FlxUIState {
         _conveyorBelt = new FlxGroup();
 
         initTileGrid();
-        initConveyor();
+        //initConveyor();
 
         add(_conveyorBelt);
         var box = new BoxTile(0, 1);
@@ -80,24 +83,84 @@ class PlayState extends FlxUIState {
     }
 
     public function initTileGrid():Void {
-        var max = 5;
-        for (i in 0...max) {
+        var jsonFile = Assets.getText("assets/maps/test03.json");
+        var map:TiledMap = haxe.Json.parse(jsonFile);
+        var dataArray:Array<Float> = null;
+
+        for (layer in map.layers) {
+            if (layer.type == "tilelayer") {
+                dataArray = layer.data;
+            }
+        }
+        if (dataArray == null) {
+            trace("ERROR: couldn't find tile layer.");
+            return;
+        }
+
+        var animationMap:Map<Int, Array<Int>> = getAnimationMap(map);
+
+        for (i in 0...map.height) {
             _tileGrid.push([]);
-            for (j in 0...max) {
-                var tile = new ConveyorTile(i, j, HIDDEN, _tileGrid);
+            for (j in 0...map.width) {
+                var tileType = dataArray[i * map.width + j];
+                var tileDirection = SW;
+
+                if (tileType > TILED_X_FLIP) {
+                    tileType -= TILED_X_FLIP;
+                    tileDirection = SE;
+                }
+                if (tileType > TILED_Y_FLIP) {
+                    tileType -= TILED_Y_FLIP;
+                }
+
+                var tile = new ConveyorTile(i, j, Std.int(tileType), _tileGrid,
+                                            tileDirection,
+                                            animationMap[Std.int(tileType)]);
                 _tileGrid[i].push(tile);
                 _conveyorBelt.add(tile);
             }
         }
     }
 
-    public function initConveyor():Void {
-        _tileGrid[0][1].setTile(SW, DOWN);
-        _tileGrid[1][1].setTile(SW, DOWN);
-        _tileGrid[2][1].setTile(SE, DOWN);
-        _tileGrid[2][2].setTile(SE, DOWN);
-        _tileGrid[2][3].setTile(SW, DOWN);
-        _tileGrid[3][3].setTile(SW, DOWN);
-        //_tileGrid[4][3].setTile(SW, DOWN);
+    private function getAnimationMap(map:TiledMap):Map<Int, Array<Int>> {
+        var dataArray:Array<Float> = null;
+        for (layer in map.layers) {
+            if (layer.type == "tilelayer") {
+                dataArray = layer.data;
+            }
+        }
+
+        var animationMap = new Map<Int, Array<Int>>();
+
+        // First, add all tiles as they are not animated.
+        for (tileID in dataArray) {
+            if (tileID > TILED_X_FLIP) {
+                tileID -= TILED_X_FLIP;
+            }
+            if (tileID > TILED_Y_FLIP) {
+                tileID -= TILED_Y_FLIP;
+            }
+            var frames = new Array<Int>();
+            frames.push(Std.int(tileID) - 1);
+            animationMap[Std.int(tileID)] = frames;
+        }
+
+        for (set in map.tilesets) {
+            var idOffset = set.firstgid;
+            for (key in Reflect.fields(set.tiles)) {
+                var floatID = Std.parseFloat(key) + idOffset;
+
+                var tiledAnimation:TiledAnimation = Reflect.field(set.tiles,
+                                                                  key);
+
+                var frames = new Array<Int>();
+                for (frame in tiledAnimation.animation) {
+                    frames.push(frame.tileid + idOffset - 1);
+                }
+
+                animationMap[Std.int(floatID)] = frames;
+            }
+        }
+        return animationMap;
     }
 }
