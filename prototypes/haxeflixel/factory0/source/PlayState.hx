@@ -28,6 +28,8 @@ import TiledHelper;
 class PlayState extends FlxUIState {
     private var _tileGrid:Array<Array<ConveyorTile>>;
     private var _conveyorBelt:FlxGroup;
+    private var _objects:FlxGroup;
+    private var _uiLayer:FlxGroup;
 
     private var fill:FillScaleMode;
     private var ratio:RatioScaleMode;
@@ -60,10 +62,15 @@ class PlayState extends FlxUIState {
 
         _tileGrid = new Array<Array<ConveyorTile>>();
         _conveyorBelt = new FlxGroup();
+        _objects= new FlxGroup();
+        _uiLayer= createUI();
 
         initTileGrid();
 
         add(_conveyorBelt);
+        add(_objects);
+        add(_uiLayer);
+
         var box = new BoxTile(0, 1);
         _tileGrid[0][1].receiveBox(box);
         add(box);
@@ -119,7 +126,7 @@ class PlayState extends FlxUIState {
                 var tile = new ConveyorTile(i, j, Std.int(tileType), _tileGrid,
                                             tileDirection,
                                             animationMap[Std.int(tileType)],
-                                            addToState);
+                                            addToObjectsGroup);
                 _tileGrid[i].push(tile);
                 _conveyorBelt.add(tile);
             }
@@ -168,8 +175,17 @@ class PlayState extends FlxUIState {
         return animationMap;
     }
 
+    private function createUI():FlxGroup {
+        var ui = new FlxGroup();
+        var rightBar = new FlxSprite(600, 0);
+        rightBar.makeGraphic(Std.int(FlxG.width * 0.25), FlxG.height,
+                             0x99B0C4DE);
+        ui.add(rightBar);
+        return ui;
+    }
+
     // Calback function passed to other classes such as ConveyorTile.
-    public function addToState(sprite:FlxSprite):Void {
-        add(sprite);
+    public function addToObjectsGroup(sprite:FlxSprite):Void {
+        _objects.add(sprite);
     }
 }

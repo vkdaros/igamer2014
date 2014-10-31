@@ -27,7 +27,7 @@ class ConveyorTile extends FlxSprite {
     public var j:Int;
 
     // Callback function to add a box to Playstate.
-    private var addToState:FlxSprite->Void;
+    private var addToObjectsGroup:FlxSprite->Void;
 
     /**
      * Position i,j with respect of tile grid. The screen coordinates x,y will
@@ -35,13 +35,13 @@ class ConveyorTile extends FlxSprite {
      */
     public function new(I:Int, J:Int, type:Int, grid:Array<Array<ConveyorTile>>,
                         direction:Int = SW, animationFrames:Array<Int> = null,
-                        addToStateCallback:FlxSprite->Void = null) {
+                        addToObjectsGroupCallback:FlxSprite->Void = null) {
         i = I;
         j = J;
         _grid = grid;
         _direction = direction;
         _type = type;
-        addToState = addToStateCallback;
+        addToObjectsGroup = addToObjectsGroupCallback;
 
         var xOffset = FlxG.width / 2;
         var yOffset = TILE_HEIGHT / 2;
@@ -163,7 +163,7 @@ class ConveyorTile extends FlxSprite {
     private function onDown(sprite:FlxSprite):Void {
         var box = new BoxTile(i, j);
         receiveBox(box);
-        addToState(box);
+        addToObjectsGroup(box);
     }
 
     private function onOver(sprite:FlxSprite):Void {
