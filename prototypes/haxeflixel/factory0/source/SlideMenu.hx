@@ -35,9 +35,9 @@ class SlideMenu extends FlxSpriteGroup {
     private function addContent():Void {
         // Place holder content.
         // TODO: Replace this with the real content.
-        var t1 = new FlxSprite(SLIDE_MENU_MARGIN, 10);
-        t1.loadGraphic("assets/images/box.png", true, TILE_FRAME_WIDTH,
-                       TILE_FRAME_HEIGHT);
+        var t1 = new FlxSprite(SLIDE_MENU_MARGIN, SLIDE_MENU_MARGIN);
+        t1.loadGraphic("assets/images/doser.png", true, TILE_FRAME_WIDTH,
+                       2 * TILE_FRAME_HEIGHT);
         t1.antialiasing = true;
         add(t1);
     }

@@ -7,7 +7,10 @@ import flixel.util.FlxColor;
 import flixel.plugin.MouseEventManager;
 
 import Constants.*;
+import Attachment;
 import BoxTile;
+import Doser;
+import Attachment;
 
 class ConveyorTile extends FlxSprite {
     private var _direction:Int;
@@ -29,26 +32,37 @@ class ConveyorTile extends FlxSprite {
     // Callback function to add a box to Playstate.
     private var addToObjectsGroup:FlxSprite->Void;
 
+    // Device (doser, switcher, etc.) attached to conveyor.
+    private var _attachment:Attachment;
+
     /**
      * Position i,j with respect of tile grid. The screen coordinates x,y will
      * calculated automaticaly.
      */
     public function new(I:Int, J:Int, type:Int, grid:Array<Array<ConveyorTile>>,
                         direction:Int = SW, animationFrames:Array<Int> = null,
-                        addToObjectsGroupCallback:FlxSprite->Void = null) {
+                        callback:FlxSprite->Void = null) {
+
+        super(x, y);
+        init(I, J, type, grid, direction, animationFrames, callback);
+    }
+
+    public function init(I:Int, J:Int, type:Int,
+                         grid:Array<Array<ConveyorTile>>, direction:Int = SW,
+                         animationFrames:Array<Int> = null,
+                         callback:FlxSprite->Void = null) {
         i = I;
         j = J;
         _grid = grid;
         _direction = direction;
         _type = type;
-        addToObjectsGroup = addToObjectsGroupCallback;
+        addToObjectsGroup = callback;
 
         var xOffset = FlxG.width / 2;
         var yOffset = TILE_HEIGHT / 2;
-        var x = (TILE_WIDTH / 2) * (j - i) + xOffset;
-        var y = (i + j) * (TILE_HEIGHT / 2) + yOffset;
+        x = (TILE_WIDTH / 2) * (j - i) + xOffset;
+        y = (i + j) * (TILE_HEIGHT / 2) + yOffset;
 
-        super(x, y);
         // TODO: this moves the hitbox. It sholud be the new origin (position)
         //       of the sprite. But origin in Flixel is used only for rotation.
         //       Best approach would be create MySprite which extends FlXSprite
@@ -161,9 +175,11 @@ class ConveyorTile extends FlxSprite {
     }
 
     private function onDown(sprite:FlxSprite):Void {
-        var box = new BoxTile(i, j);
-        receiveBox(box);
-        addToObjectsGroup(box);
+        //var box = new BoxTile(i, j);
+        //receiveBox(box);
+        //addToObjectsGroup(box);
+        _attachment = new Doser(x, y, _direction);
+        addToObjectsGroup(_attachment);
     }
 
     private function onOver(sprite:FlxSprite):Void {
