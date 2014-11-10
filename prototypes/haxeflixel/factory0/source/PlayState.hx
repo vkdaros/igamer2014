@@ -177,10 +177,7 @@ class PlayState extends FlxUIState {
 
     private function createUI():FlxGroup {
         var ui = new FlxGroup();
-        var rightBar = new FlxSprite(600, 0);
-        rightBar.makeGraphic(Std.int(FlxG.width * 0.25), FlxG.height,
-                             0x99B0C4DE);
-        ui.add(rightBar);
+        ui.add(new SlideMenu());
         return ui;
     }
 

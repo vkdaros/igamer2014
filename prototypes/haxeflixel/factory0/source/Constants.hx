@@ -30,4 +30,12 @@ class Constants {
 
     // Tween movement parameters.
     public static inline var BOX_MOVEMENT_DURATION:Int = 1; // seconds.
+
+    // Slide menu properties.
+    public static inline var SLIDE_MENU_X:Int          = 600;
+    public static inline var SLIDE_MENU_Y:Int          = 0;
+    public static inline var SLIDE_MENU_WIDTH:Int      = 200;
+    public static inline var SLIDE_MENU_COLOR:Int      = 0x99B0C4DE;
+    public static inline var SLIDE_MENU_MARGIN:Int     = 20;
+    public static inline var SLIDE_MENU_DURATION:Float = 0.5;
 }
