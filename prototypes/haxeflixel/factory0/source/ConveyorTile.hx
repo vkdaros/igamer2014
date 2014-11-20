@@ -7,14 +7,13 @@ import flixel.util.FlxColor;
 import flixel.plugin.MouseEventManager;
 
 import Constants.*;
-import Attachment;
-import BoxTile;
+import IceCream;
+import Box;
+import Device;
 import Doser;
-import Attachment;
 
 class ConveyorTile extends FlxSprite {
     private var _direction:Int;
-    private var _box:BoxTile;
     private var _rolling:Bool;
     private var _type:Int;
 
@@ -32,18 +31,18 @@ class ConveyorTile extends FlxSprite {
     // Callback function to add a box to Playstate.
     private var addToObjectsGroup:FlxSprite->Void;
 
-    // Device (doser, switcher, etc.) attached to conveyor.
-    private var _attachment:Attachment;
+    private var _device:Device;
+    private var _item:IceCream;
 
     /**
      * Position i,j with respect of tile grid. The screen coordinates x,y will
-     * calculated automaticaly.
+     * be calculated automaticaly latter in init();
      */
     public function new(I:Int, J:Int, type:Int, grid:Array<Array<ConveyorTile>>,
                         direction:Int = SW, animationFrames:Array<Int> = null,
                         callback:FlxSprite->Void = null) {
 
-        super(x, y);
+        super(0, 0);
         init(I, J, type, grid, direction, animationFrames, callback);
     }
 
@@ -88,7 +87,8 @@ class ConveyorTile extends FlxSprite {
     }
 
     public function setTile(direction:Int, type:Int):Void {
-        if (type == HIDDEN) { active = visible = false;
+        if (type == HIDDEN) {
+            active = visible = false;
         }
         else {
             active = visible = true;
@@ -126,7 +126,6 @@ class ConveyorTile extends FlxSprite {
         // animation.add(NAME, FRAMES, FRAME_RATE, SHOULD_LOOP)
         animation.add("idle", [animationFrames[0]], 1, false);
 
-        // Ops
         _rolling = (type != HIDDEN && type != GROUND);
 
         if (_rolling) {
@@ -151,20 +150,24 @@ class ConveyorTile extends FlxSprite {
         }
     }
 
-    public function receiveBox(box:BoxTile):Void {
-        _box = box;
-        _box.setGridPosition(i, j);
+    public function receiveIceCream(item:IceCream):Void {
+        _item = item;
+        _item.setGridPosition(i, j);
         if (isValidPosition(_targetI, _targetJ) &&
             _grid[_targetI][_targetJ].active) {
 
-            _box.setTarget(_grid[_targetI][_targetJ]);
-            _box.setShaking(false);
+            _item.setTarget(_grid[_targetI][_targetJ]);
+            _item.setShaking(false);
         }
         else {
             _targetI = i;
             _targetJ = j;
-            _box.setShaking(true);
+            _item.setShaking(true);
         }
+    }
+
+    public function addDevice(device:Device):Void {
+        _device = device;
     }
 
     private function isValidPosition(I:Int, J:Int):Bool {
@@ -179,9 +182,16 @@ class ConveyorTile extends FlxSprite {
         //receiveBox(box);
         //addToObjectsGroup(box);
 
+        var d = new Doser(x, y, _direction);
+        addDevice(d);
+
+        // Add new object to PlayState list of objects.
+        addToObjectsGroup(d);
+
+        // TODO:
+        // Check what happens onClick and call addDevice or addIceCream.
+
         // FIXME: draw order totally messed up.
-        _attachment = new Doser(x, y, _direction);
-        addToObjectsGroup(_attachment);
     }
 
     private function onOver(sprite:FlxSprite):Void {

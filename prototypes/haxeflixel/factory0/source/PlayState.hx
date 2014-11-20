@@ -19,10 +19,10 @@ import flixel.system.scaleModes.RelativeScaleMode;
 
 import openfl.Assets;
 
-import ConveyorTile;
-import BoxTile;
 import Constants.*;
+import ConveyorTile;
 import TiledHelper;
+import Box;
 
 /**
  * A FlxState which can be used for the actual gameplay.
@@ -36,6 +36,7 @@ class PlayState extends FlxUIState {
     // Flag to resort draw order.
     private var _resort:Bool;
 
+    // Scale modes.
     private var fill:FillScaleMode;
     private var ratio:RatioScaleMode;
     private var relative:RelativeScaleMode;
@@ -45,40 +46,52 @@ class PlayState extends FlxUIState {
      * Function that is called up when to state is created to set it up.
      */
     override public function create():Void {
-        fill = new FillScaleMode();
-        ratio = new RatioScaleMode();
-        relative = new RelativeScaleMode(0.75, 0.75);
-        fixed = new FixedScaleMode();
+        initScaleMode();
+        initFireTongue();
 
-        FlxG.scaleMode = ratio;
-
+        // Add background image.
         add(new FlxSprite(0, 0, "assets/images/bg_debug2.png"));
-
-        if (Main.tongue == null) {
-            Main.tongue = new FireTongueEx();
-            Main.tongue.init("en-US");
-            FlxUIState.static_tongue = Main.tongue;
-        }
 
         super.create();
 
         // Plugin needed to detect when player clicks on a sprite.
         FlxG.plugins.add(new MouseEventManager());
 
-        _tileGrid = new Array<Array<ConveyorTile>>();
-        _conveyorBelt = new FlxGroup();
-        _objects= new FlxSpriteGroup();
-
+        // Create current level from a Tiled file.
         initTileGrid();
-        _uiLayer= createUI();
 
-        add(_conveyorBelt);
+        // Objects created outside PlayState class.
+        _objects= new FlxSpriteGroup();
         add(_objects);
+
+        _uiLayer= createUI();
         add(_uiLayer);
 
-        var box = new BoxTile(0, 1);
-        _tileGrid[0][1].receiveBox(box);
+        // Test box. Should be removed latter.
+        var box = new Box(0, 1);
+        _tileGrid[0][1].receiveIceCream(box);
         add(box);
+    }
+
+    private function initScaleMode():Void {
+        fill = new FillScaleMode();
+        ratio = new RatioScaleMode();
+        relative = new RelativeScaleMode(0.75, 0.75);
+        fixed = new FixedScaleMode();
+
+        FlxG.scaleMode = ratio;
+    }
+
+    /**
+     * Get text labels from external files. This avoids hard coded text and
+     * allows multi-language support.
+     */
+    private function initFireTongue():Void {
+        if (Main.tongue == null) {
+            Main.tongue = new FireTongueEx();
+            Main.tongue.init("en-US");
+            FlxUIState.static_tongue = Main.tongue;
+        }
     }
 
     /**
@@ -101,10 +114,16 @@ class PlayState extends FlxUIState {
         super.update();
     }
 
+    /**
+     * Open Tiled file and fill tileGrid and conveyorBelt.
+     */
     public function initTileGrid():Void {
         var jsonFile = Assets.getText("assets/maps/test03.json");
         var map:TiledMap = haxe.Json.parse(jsonFile);
         var dataArray:Array<Float> = null;
+
+        _tileGrid = new Array<Array<ConveyorTile>>();
+        _conveyorBelt = new FlxGroup();
 
         for (layer in map.layers) {
             if (layer.type == "tilelayer") {
@@ -140,8 +159,12 @@ class PlayState extends FlxUIState {
                 _conveyorBelt.add(tile);
             }
         }
+        add(_conveyorBelt);
     }
 
+    /**
+     * Create a map with animations created in Tiled.
+     */
     private function getAnimationMap(map:TiledMap):Map<Int, Array<Int>> {
         var dataArray:Array<Float> = null;
         for (layer in map.layers) {
@@ -190,7 +213,9 @@ class PlayState extends FlxUIState {
         return ui;
     }
 
-    // Calback function passed to other classes such as ConveyorTile.
+    /**
+     * Calback function passed to other classes such as ConveyorTile.
+     */
     public function addToObjectsGroup(sprite:FlxSprite):Void {
         _resort = true;
         _objects.add(sprite);

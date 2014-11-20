@@ -4,7 +4,7 @@ import flixel.FlxSprite;
 
 import Constants.*;
 
-class Attachment extends FlxSprite{
+class Device extends FlxSprite{
     private var _direction:Int;
 
     /***

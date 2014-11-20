@@ -5,9 +5,9 @@ import flixel.FlxObject;
 import flixel.FlxSprite;
 
 import Constants.*;
-import Attachment;
+import Device;
 
-class Doser extends Attachment {
+class Doser extends Device {
     public function new(X:Float, Y:Float, direction:Int = SW) {
         super(X, Y - 15, direction);
 
