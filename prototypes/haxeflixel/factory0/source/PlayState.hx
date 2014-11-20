@@ -7,7 +7,9 @@ import flixel.addons.ui.FlxUIText;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.util.FlxMath;
+import flixel.util.FlxSort;
 import flixel.group.FlxGroup;
+import flixel.group.FlxSpriteGroup;
 import flixel.plugin.MouseEventManager;
 
 import flixel.system.scaleModes.FillScaleMode;
@@ -28,8 +30,11 @@ import TiledHelper;
 class PlayState extends FlxUIState {
     private var _tileGrid:Array<Array<ConveyorTile>>;
     private var _conveyorBelt:FlxGroup;
-    private var _objects:FlxGroup;
+    private var _objects:FlxSpriteGroup;
     private var _uiLayer:FlxGroup;
+
+    // Flag to resort draw order.
+    private var _resort:Bool;
 
     private var fill:FillScaleMode;
     private var ratio:RatioScaleMode;
@@ -62,10 +67,10 @@ class PlayState extends FlxUIState {
 
         _tileGrid = new Array<Array<ConveyorTile>>();
         _conveyorBelt = new FlxGroup();
-        _objects= new FlxGroup();
-        _uiLayer= createUI();
+        _objects= new FlxSpriteGroup();
 
         initTileGrid();
+        _uiLayer= createUI();
 
         add(_conveyorBelt);
         add(_objects);
@@ -89,6 +94,10 @@ class PlayState extends FlxUIState {
      * Function that is called once every frame.
      */
     override public function update():Void {
+        if (_resort) {
+            _objects.sort(FlxSort.byY, FlxSort.ASCENDING);
+            _resort = false;
+        }
         super.update();
     }
 
@@ -183,6 +192,7 @@ class PlayState extends FlxUIState {
 
     // Calback function passed to other classes such as ConveyorTile.
     public function addToObjectsGroup(sprite:FlxSprite):Void {
+        _resort = true;
         _objects.add(sprite);
     }
 }

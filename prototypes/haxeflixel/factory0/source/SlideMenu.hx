@@ -11,6 +11,7 @@ import Constants.*;
 
 class SlideMenu extends FlxSpriteGroup {
     private var _isHidden:Bool; // When true, the menu is contracted/hidden.
+    private var _overMenuItem:Bool;
     private var _background:FlxSprite;
     private var _tween:FlxTween;
 
@@ -23,6 +24,7 @@ class SlideMenu extends FlxSpriteGroup {
         _background.makeGraphic(SLIDE_MENU_WIDTH, FlxG.height,
                                 SLIDE_MENU_COLOR);
         _isHidden = true;
+        _overMenuItem = false;
 
         // Setup the mouse events
         // add(SPRITE, ON_MOUSE_DOWN, ON_MOUSE_UP, ON_MOUSE_OVER, ON_MOUSE_OUT)
@@ -40,6 +42,24 @@ class SlideMenu extends FlxSpriteGroup {
                        2 * TILE_FRAME_HEIGHT);
         t1.antialiasing = true;
         add(t1);
+
+        var t2 = new FlxSprite(SLIDE_MENU_MARGIN, 3 * TILE_FRAME_HEIGHT);
+        t2.loadGraphic("assets/images/box.png", true, TILE_FRAME_WIDTH,
+                       TILE_FRAME_HEIGHT);
+        t2.antialiasing = true;
+        add(t2);
+
+        var itemOnUp = function(s:FlxSprite):Void {
+            trace("Click on menu item");
+        }
+        var itemOnOver = function(s:FlxSprite):Void {
+            _overMenuItem = true;
+        }
+        var itemOnOut = function(s:FlxSprite):Void {
+            _overMenuItem = false;
+        }
+        MouseEventManager.add(t1, null, itemOnUp, itemOnOver, itemOnOut);
+        MouseEventManager.add(t2, null, itemOnUp, itemOnOver, itemOnOut);
     }
 
     private function onUp(sprite:FlxSprite):Void {
@@ -51,11 +71,16 @@ class SlideMenu extends FlxSpriteGroup {
     }
 
     private function onOver(sprite:FlxSprite):Void {
-        slideOut();
+        //slideOut();
+        if (_tween != null && _tween.active && !_overMenuItem) {
+            _tween.cancel();
+        }
     }
 
     private function onOut(sprite:FlxSprite):Void {
-        slideIn();
+        if (!_overMenuItem) {
+            slideIn(0.5);
+        }
     }
 
     override public function update():Void {
@@ -71,35 +96,34 @@ class SlideMenu extends FlxSpriteGroup {
         return _isHidden;
     }
 
-    public function slideOut():Void {
+    public function slideOut(delay:Float = 0.0):Void {
         if (!_isHidden) {
             return;
         }
-        _isHidden = false;
 
         var options = {
             type: FlxTween.ONESHOT,
-            startDelay: null,
+            startDelay: delay,
             loopDelay: null,
             ease: FlxEase.quintOut,
-            complete: null
+            complete: function(t: FlxTween) {_isHidden = false;}
         }
         _tween = FlxTween.linearMotion(this, x, y, SLIDE_MENU_X, SLIDE_MENU_Y,
                                        SLIDE_MENU_DURATION, true, options);
     }
 
-    public function slideIn():Void {
-        if (_isHidden) {
+    public function slideIn(delay:Float = 0.0):Void {
+        // If it is already hidden or sliding, do nothing.
+        if (_isHidden || _tween.active) {
             return;
         }
-        _isHidden = true;
 
         var options = {
             type: FlxTween.ONESHOT,
-            startDelay: null,
+            startDelay: delay,
             loopDelay: null,
             ease: FlxEase.quintOut,
-            complete: null
+            complete: function(t: FlxTween) {_isHidden = true;}
         }
         _tween = FlxTween.linearMotion(this, x, y,
                                        FlxG.width - SLIDE_MENU_MARGIN,

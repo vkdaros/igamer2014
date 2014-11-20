@@ -178,6 +178,8 @@ class ConveyorTile extends FlxSprite {
         //var box = new BoxTile(i, j);
         //receiveBox(box);
         //addToObjectsGroup(box);
+
+        // FIXME: draw order totally messed up.
         _attachment = new Doser(x, y, _direction);
         addToObjectsGroup(_attachment);
     }
