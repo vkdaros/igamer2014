@@ -83,7 +83,7 @@ class ConveyorTile extends FlxSprite {
 
         // Setup the mouse events
         // add(SPRITE, ON_MOUSE_DOWN, ON_MOUSE_UP, ON_MOUSE_OVER, ON_MOUSE_OUT)
-        MouseEventManager.add(this, onDown, null, onOver, onOut);
+        MouseEventManager.add(this, null, onUp, onOver, onOut);
     }
 
     public function setTile(direction:Int, type:Int):Void {
@@ -177,7 +177,7 @@ class ConveyorTile extends FlxSprite {
         return true;
     }
 
-    private function onDown(sprite:FlxSprite):Void {
+    private function onUp(sprite:FlxSprite):Void {
         //var box = new BoxTile(i, j);
         //receiveBox(box);
         //addToObjectsGroup(box);

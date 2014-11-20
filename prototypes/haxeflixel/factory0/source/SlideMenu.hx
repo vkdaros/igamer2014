@@ -71,15 +71,17 @@ class SlideMenu extends FlxSpriteGroup {
     }
 
     private function onOver(sprite:FlxSprite):Void {
-        //slideOut();
-        if (_tween != null && _tween.active && !_overMenuItem) {
+        // If onOver is called while tween is waiting its delay, cancel slideIn.
+        if (_tween != null && !_overMenuItem && !_isHidden &&
+            _tween.percent <= 0) {
+
             _tween.cancel();
         }
     }
 
     private function onOut(sprite:FlxSprite):Void {
         if (!_overMenuItem) {
-            slideIn(0.5);
+            slideIn(0.25);
         }
     }
 
