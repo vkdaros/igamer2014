@@ -40,10 +40,15 @@ class IceCream extends FlxSprite{
         j = J;
     }
 
-    public function setTarget(targetTile:ConveyorTile):Void {
+    public function setTarget(target:ConveyorTile, from:ConveyorTile):Void {
         var me = this;
+        target.receiveIceCream(me);
+        if (from != null) {
+            from.releseIceCream();
+        }
+
         var callback:FlxTween->Void = function(tween:FlxTween) {
-            targetTile.receiveIceCream(me);
+            target.deliverIceCream();
         }
 
         var options = {
@@ -54,7 +59,7 @@ class IceCream extends FlxSprite{
             complete: callback
         }
 
-        _tween = FlxTween.linearMotion(this, x, y, targetTile.x, targetTile.y,
+        _tween = FlxTween.linearMotion(this, x, y, target.x, target.y,
                                        BOX_MOVEMENT_DURATION, true, options);
     }
 

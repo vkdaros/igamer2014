@@ -7,6 +7,7 @@ import flixel.util.FlxColor;
 import flixel.plugin.MouseEventManager;
 
 import Constants.*;
+import PlayState;
 import IceCream;
 import Box;
 import Device;
@@ -16,6 +17,9 @@ class ConveyorTile extends FlxSprite {
     private var _direction:Int;
     private var _rolling:Bool;
     private var _type:Int;
+
+    // When fail to deliver ice cream to next tile, this flag is set to true.
+    private var _retryDeliver:Bool;
 
     // Tile grid used to communicate to neighbor tiles.
     private var _grid:Array<Array<ConveyorTile>>;
@@ -55,6 +59,7 @@ class ConveyorTile extends FlxSprite {
         _grid = grid;
         _direction = direction;
         _type = type;
+        _retryDeliver = false;
         addToObjectsGroup = callback;
 
         var xOffset = FlxG.width / 2;
@@ -138,6 +143,9 @@ class ConveyorTile extends FlxSprite {
     }
 
     override public function update():Void {
+        if (_retryDeliver) {
+            deliverIceCream();
+        }
         super.update();
     }
 
@@ -151,19 +159,45 @@ class ConveyorTile extends FlxSprite {
     }
 
     public function receiveIceCream(item:IceCream):Void {
-        _item = item;
-        _item.setGridPosition(i, j);
-        if (isValidPosition(_targetI, _targetJ) &&
-            _grid[_targetI][_targetJ].active) {
-
-            _item.setTarget(_grid[_targetI][_targetJ]);
-            _item.setShaking(false);
+        if (item == null) {
+            trace("Received null ice cream.");
+        }
+        else if (_item != null) {
+            // Should not accept other ice cream.
+            item.setShaking(true);
         }
         else {
-            _targetI = i;
-            _targetJ = j;
-            _item.setShaking(true);
+            _item = item;
+            _item.setGridPosition(i, j);
         }
+    }
+
+    public function deliverIceCream():Void {
+        if (_item == null) {
+            // No ice cream to deliver.
+        }
+        else if (isValidPosition(_targetI, _targetJ) &&
+                 _grid[_targetI][_targetJ].active &&
+                 (_targetI != i || _targetJ != j)) {
+
+            if (_grid[_targetI][_targetJ].isEmpty()) {
+                _item.setShaking(false);
+                _item.setTarget(_grid[_targetI][_targetJ], this);
+                _retryDeliver = false;
+            }
+            else {
+                _item.setShaking(true);
+                _retryDeliver = true;
+            }
+        }
+        else {
+            //Ice cream reached a dead end. Should go to truck
+            //_item.setShaking(true);
+        }
+    }
+
+    public function releseIceCream():Void {
+        _item = null;
     }
 
     public function addDevice(device:Device):Void {
@@ -178,20 +212,27 @@ class ConveyorTile extends FlxSprite {
     }
 
     private function onUp(sprite:FlxSprite):Void {
-        //var box = new BoxTile(i, j);
-        //receiveBox(box);
-        //addToObjectsGroup(box);
-
-        var d = new Doser(x, y, _direction);
-        addDevice(d);
-
-        // Add new object to PlayState list of objects.
-        addToObjectsGroup(d);
-
-        // TODO:
-        // Check what happens onClick and call addDevice or addIceCream.
-
-        // FIXME: draw order totally messed up.
+        // FIXME: Draw order of device top piece is wrong.
+        //        One way to fix that is to draw top pieces after the others.
+        switch (PlayState.mode) {
+            case 0:
+                // Only accept a new device when conveyor doesn't have one.
+                if (_device == null) {
+                    var newObject = new Doser(x, y, _direction);
+                    addToObjectsGroup(newObject);
+                    addDevice(newObject);
+                }
+            case 1:
+                // Only accept a new ice cream when conveyor is empty.
+                if (isEmpty()) {
+                    var newObject = new Box(i, j);
+                    receiveIceCream(newObject);
+                    deliverIceCream();
+                    addToObjectsGroup(newObject);
+                }
+            default:
+                trace("Undefined mode - do nothing");
+        }
     }
 
     private function onOver(sprite:FlxSprite):Void {
@@ -200,6 +241,10 @@ class ConveyorTile extends FlxSprite {
 
     private function onOut(sprite:FlxSprite):Void {
         color = FlxColor.WHITE;
+    }
+
+    public function isEmpty():Bool {
+        return (_item == null);
     }
 
     override public function destroy():Void {

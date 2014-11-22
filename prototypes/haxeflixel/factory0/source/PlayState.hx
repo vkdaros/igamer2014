@@ -42,12 +42,15 @@ class PlayState extends FlxUIState {
     private var relative:RelativeScaleMode;
     private var fixed:FixedScaleMode;
 
+    public static var mode:Int;
+
     /**
      * Function that is called up when to state is created to set it up.
      */
     override public function create():Void {
         initScaleMode();
         initFireTongue();
+        mode = 0;
 
         // Add background image.
         add(new FlxSprite(0, 0, "assets/images/bg_debug2.png"));
@@ -70,6 +73,7 @@ class PlayState extends FlxUIState {
         // Test box. Should be removed latter.
         var box = new Box(0, 1);
         _tileGrid[0][1].receiveIceCream(box);
+        _tileGrid[0][1].deliverIceCream();
         add(box);
     }
 

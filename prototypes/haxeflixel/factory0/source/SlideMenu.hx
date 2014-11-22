@@ -8,10 +8,14 @@ import flixel.group.FlxSpriteGroup;
 import flixel.plugin.MouseEventManager;
 
 import Constants.*;
+import PlayState;
 
 class SlideMenu extends FlxSpriteGroup {
     private var _isHidden:Bool; // When true, the menu is contracted/hidden.
+    private var _slidingIn:Bool;
+    private var _slidingOut:Bool;
     private var _overMenuItem:Bool;
+
     private var _background:FlxSprite;
     private var _tween:FlxTween;
 
@@ -24,6 +28,8 @@ class SlideMenu extends FlxSpriteGroup {
         _background.makeGraphic(SLIDE_MENU_WIDTH, FlxG.height,
                                 SLIDE_MENU_COLOR);
         _isHidden = true;
+        _slidingIn = false;
+        _slidingOut = false;
         _overMenuItem = false;
 
         // Setup the mouse events
@@ -49,8 +55,13 @@ class SlideMenu extends FlxSpriteGroup {
         t2.antialiasing = true;
         add(t2);
 
-        var itemOnUp = function(s:FlxSprite):Void {
-            trace("Click on menu item");
+        var itemZeroOnUp = function(s:FlxSprite):Void {
+            slideIn();
+            PlayState.mode = 0;
+        }
+        var itemOneOnUp = function(s:FlxSprite):Void {
+            slideIn();
+            PlayState.mode = 1;
         }
         var itemOnOver = function(s:FlxSprite):Void {
             _overMenuItem = true;
@@ -58,8 +69,8 @@ class SlideMenu extends FlxSpriteGroup {
         var itemOnOut = function(s:FlxSprite):Void {
             _overMenuItem = false;
         }
-        MouseEventManager.add(t1, null, itemOnUp, itemOnOver, itemOnOut);
-        MouseEventManager.add(t2, null, itemOnUp, itemOnOver, itemOnOut);
+        MouseEventManager.add(t1, null, itemZeroOnUp, itemOnOver, itemOnOut);
+        MouseEventManager.add(t2, null, itemOneOnUp, itemOnOver, itemOnOut);
     }
 
     private function onUp(sprite:FlxSprite):Void {
@@ -72,16 +83,20 @@ class SlideMenu extends FlxSpriteGroup {
 
     private function onOver(sprite:FlxSprite):Void {
         // If onOver is called while tween is waiting its delay, cancel slideIn.
-        if (_tween != null && !_overMenuItem && !_isHidden &&
-            _tween.percent <= 0) {
+        if (_tween != null && !_overMenuItem && _slidingIn) {
 
             _tween.cancel();
+            slideOut();
         }
     }
 
     private function onOut(sprite:FlxSprite):Void {
         if (!_overMenuItem) {
-            slideIn(0.25);
+            if (_slidingOut) {
+                slideIn();
+            } else {
+                slideIn(0.25);
+            }
         }
     }
 
@@ -99,33 +114,42 @@ class SlideMenu extends FlxSpriteGroup {
     }
 
     public function slideOut(delay:Float = 0.0):Void {
-        if (!_isHidden) {
+        if ((!_isHidden && !_slidingIn) || _slidingOut) {
             return;
         }
+        _slidingOut = true;
+        _slidingIn = false;
 
         var options = {
             type: FlxTween.ONESHOT,
             startDelay: delay,
             loopDelay: null,
             ease: FlxEase.quintOut,
-            complete: function(t: FlxTween) {_isHidden = false;}
+            complete: function(t: FlxTween) {
+                _isHidden = false;
+                _slidingOut = false;
+            }
         }
         _tween = FlxTween.linearMotion(this, x, y, SLIDE_MENU_X, SLIDE_MENU_Y,
                                        SLIDE_MENU_DURATION, true, options);
     }
 
     public function slideIn(delay:Float = 0.0):Void {
-        // If it is already hidden or sliding, do nothing.
-        if (_isHidden || _tween.active) {
+        if ((_isHidden && !_slidingOut) || _slidingIn) {
             return;
         }
+        _slidingIn = true;
+        _slidingOut = false;
 
         var options = {
             type: FlxTween.ONESHOT,
             startDelay: delay,
             loopDelay: null,
             ease: FlxEase.quintOut,
-            complete: function(t: FlxTween) {_isHidden = true;}
+            complete: function(t: FlxTween) {
+                _isHidden = true;
+                _slidingIn = false;
+            }
         }
         _tween = FlxTween.linearMotion(this, x, y,
                                        FlxG.width - SLIDE_MENU_MARGIN,
