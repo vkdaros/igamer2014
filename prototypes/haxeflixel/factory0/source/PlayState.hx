@@ -2,10 +2,10 @@ package;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.ui.FlxButton;
 import flixel.addons.ui.FlxUIState;
 import flixel.addons.ui.FlxUIText;
 import flixel.text.FlxText;
-import flixel.ui.FlxButton;
 import flixel.util.FlxMath;
 import flixel.util.FlxSort;
 import flixel.group.FlxGroup;
@@ -32,6 +32,9 @@ class PlayState extends FlxUIState {
     private var _conveyorBelt:FlxGroup;
     private var _objects:FlxSpriteGroup;
     private var _uiLayer:FlxGroup;
+
+    private var _playButton:FlxButton;
+    private var _stopButton:FlxButton;
 
     // Flag to resort draw order.
     private var _resort:Bool;
@@ -214,7 +217,32 @@ class PlayState extends FlxUIState {
     private function createUI():FlxGroup {
         var ui = new FlxGroup();
         ui.add(new SlideMenu());
+
+        _playButton = new FlxButton(20, 20, null, buttonCallback);
+        _playButton.loadGraphic("assets/images/button_play.png", true, 50, 50);
+        _playButton.antialiasing = true;
+
+        _stopButton = new FlxButton(20, 20, null, buttonCallback);
+        _stopButton.loadGraphic("assets/images/button_stop.png", true, 50, 50);
+        _stopButton.antialiasing = true;
+
+        ui.add(_playButton);
+        ui.add(_stopButton);
+        _stopButton.kill();
         return ui;
+    }
+
+    // Callback function called when play/stop button is pressed.
+    public function buttonCallback():Void {
+        if (_playButton.alive) {
+            _playButton.kill();
+            _stopButton.revive();
+            trace("> Play!");
+        } else {
+            _playButton.revive();
+            _stopButton.kill();
+            trace("> Stop!");
+        }
     }
 
     /**
