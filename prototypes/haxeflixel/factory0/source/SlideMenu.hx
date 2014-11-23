@@ -41,8 +41,7 @@ class SlideMenu extends FlxSpriteGroup {
     }
 
     private function addContent():Void {
-        // Place holder content.
-        // TODO: Replace this with the real content.
+        // TODO: Refactor all this.
         var t1 = new FlxSprite(SLIDE_MENU_MARGIN, SLIDE_MENU_MARGIN);
         t1.loadGraphic("assets/images/doser.png", true, TILE_FRAME_WIDTH,
                        2 * TILE_FRAME_HEIGHT);
@@ -55,22 +54,29 @@ class SlideMenu extends FlxSpriteGroup {
         t2.antialiasing = true;
         add(t2);
 
-        var itemZeroOnUp = function(s:FlxSprite):Void {
-            slideIn();
-            PlayState.mode = 0;
+        var t3 = new FlxSprite(SLIDE_MENU_MARGIN * 3, 5 * TILE_FRAME_HEIGHT);
+        t3.loadGraphic("assets/images/icecream_cup.png", true,
+                       ICE_CREAM_FRAME_WIDTH, ICE_CREAM_FRAME_HEIGHT);
+        t3.antialiasing = true;
+        add(t3);
+
+        var onUpFactory = function(index:Int):FlxSprite->Void {
+            return function(s:FlxSprite):Void {
+                slideIn();
+                PlayState.mode = index;
+            };
         }
-        var itemOneOnUp = function(s:FlxSprite):Void {
-            slideIn();
-            PlayState.mode = 1;
-        }
+
         var itemOnOver = function(s:FlxSprite):Void {
             _overMenuItem = true;
         }
+
         var itemOnOut = function(s:FlxSprite):Void {
             _overMenuItem = false;
         }
-        MouseEventManager.add(t1, null, itemZeroOnUp, itemOnOver, itemOnOut);
-        MouseEventManager.add(t2, null, itemOneOnUp, itemOnOver, itemOnOut);
+        MouseEventManager.add(t1, null, onUpFactory(0), itemOnOver, itemOnOut);
+        MouseEventManager.add(t2, null, onUpFactory(1), itemOnOver, itemOnOut);
+        MouseEventManager.add(t3, null, onUpFactory(2), itemOnOver, itemOnOut);
     }
 
     private function onUp(sprite:FlxSprite):Void {

@@ -10,6 +10,7 @@ import Constants.*;
 import PlayState;
 import IceCream;
 import Box;
+import Cup;
 import Device;
 import Doser;
 
@@ -226,6 +227,14 @@ class ConveyorTile extends FlxSprite {
                 // Only accept a new ice cream when conveyor is empty.
                 if (isEmpty()) {
                     var newObject = new Box(i, j);
+                    receiveIceCream(newObject);
+                    deliverIceCream();
+                    addToObjectsGroup(newObject);
+                }
+            case 2:
+                // Only accept a new ice cream when conveyor is empty.
+                if (isEmpty()) {
+                    var newObject = new Cup(i, j);
                     receiveIceCream(newObject);
                     deliverIceCream();
                     addToObjectsGroup(newObject);
