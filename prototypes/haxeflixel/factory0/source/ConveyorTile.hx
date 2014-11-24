@@ -175,8 +175,14 @@ class ConveyorTile extends FlxSprite {
             item.setShaking(true);
         }
         else {
+            // Every thing is fine. Accepting ice cream.
             _item = item;
             _item.setGridPosition(i, j);
+
+            // If there is a device in this tile, it transforms the ice cream.
+            if (_device != null) {
+                _device.transformIceCream(_item);
+            }
         }
     }
 

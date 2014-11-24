@@ -6,6 +6,7 @@ import flixel.FlxSprite;
 
 import Constants.*;
 import Device;
+import IceCream;
 
 class Doser extends Device {
     public function new(X:Float, Y:Float, direction:Int = SW) {
@@ -43,5 +44,14 @@ class Doser extends Device {
         // animation.add(NAME, FRAMES, FRAME_RATE, SHOULD_LOOP)
         animation.add("idle", [firstFrame], 1, false);
         animation.play("idle");
+    }
+
+    override public function transformIceCream(item:IceCream):Void {
+        if (item == null) {
+            return;
+        }
+
+        // Add a new ball to the ice cream stack.
+        item.addLayer(0);
     }
 }
