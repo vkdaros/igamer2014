@@ -33,8 +33,9 @@ class ConveyorTile extends FlxSprite {
     public var i:Int;
     public var j:Int;
 
-    // Callback function to add a box to Playstate.
-    private var addToObjectsGroup:FlxSprite->Void;
+    // Callback function to add objects to Playstate.
+    private var _addIceCream:FlxSprite->Void;
+    private var _addDevice:FlxSprite->Void;
 
     private var _device:Device;
     private var _item:IceCream;
@@ -45,23 +46,27 @@ class ConveyorTile extends FlxSprite {
      */
     public function new(I:Int, J:Int, type:Int, grid:Array<Array<ConveyorTile>>,
                         direction:Int = SW, animationFrames:Array<Int> = null,
-                        callback:FlxSprite->Void = null) {
+                        addIceCreamCallback:FlxSprite->Void = null,
+                        addDeviceCallback:FlxSprite->Void = null) {
 
         super(0, 0);
-        init(I, J, type, grid, direction, animationFrames, callback);
+        init(I, J, type, grid, direction, animationFrames, addIceCreamCallback,
+             addDeviceCallback);
     }
 
     public function init(I:Int, J:Int, type:Int,
                          grid:Array<Array<ConveyorTile>>, direction:Int = SW,
                          animationFrames:Array<Int> = null,
-                         callback:FlxSprite->Void = null) {
+                         addIceCreamCallback:FlxSprite->Void = null,
+                         addDeviceCallback:FlxSprite->Void = null) {
         i = I;
         j = J;
         _grid = grid;
         _direction = direction;
         _type = type;
         _retryDeliver = false;
-        addToObjectsGroup = callback;
+        _addIceCream = addIceCreamCallback;
+        _addDevice = addDeviceCallback;
 
         var xOffset = FlxG.width / 2;
         var yOffset = TILE_HEIGHT / 2;
@@ -125,21 +130,14 @@ class ConveyorTile extends FlxSprite {
     private function initAnimations(type:Int, animationFrames:Array<Int>):Void {
         animation.destroyAnimations();
 
-        if (animationFrames == null) {
-            return;
-        }
-
-        // animation.add(NAME, FRAMES, FRAME_RATE, SHOULD_LOOP)
-        animation.add("idle", [animationFrames[0]], 1, false);
-
-        _rolling = (type != HIDDEN && type != GROUND);
-
-        if (_rolling) {
-            animation.add("roll", animationFrames, 4, true);
-            animation.play("roll");
-        }
-        else {
+        if (animationFrames != null) {
+            // animation.add(NAME, FRAMES, FRAME_RATE, SHOULD_LOOP)
+            animation.add("idle", [animationFrames[0]], 1, false);
             animation.play("idle");
+
+            if (type != HIDDEN && type != GROUND) {
+                animation.add("roll", animationFrames, 4, true);
+            }
         }
     }
 
@@ -150,12 +148,21 @@ class ConveyorTile extends FlxSprite {
         super.update();
     }
 
-    public function powerSwitch(on:Bool):Void {
-        if (on && !_rolling) {
-            animation.play("rolling");
+    public function turnOn():Void {
+        if (!_rolling) {
+            _rolling = true;
+            if (animation.paused) {
+                animation.resume();
+            } else {
+                animation.play("roll");
+            }
         }
-        else if (!on && _rolling) {
-            animation.play("idle");
+    }
+
+    public function turnOff():Void {
+        if (_rolling) {
+            _rolling = false;
+            animation.pause();
         }
     }
 
@@ -176,6 +183,7 @@ class ConveyorTile extends FlxSprite {
     public function deliverIceCream():Void {
         if (_item == null) {
             // No ice cream to deliver.
+            _retryDeliver = false;
         }
         else if (isValidPosition(_targetI, _targetJ) &&
                  _grid[_targetI][_targetJ].active &&
@@ -201,10 +209,6 @@ class ConveyorTile extends FlxSprite {
         _item = null;
     }
 
-    public function addDevice(device:Device):Void {
-        _device = device;
-    }
-
     private function isValidPosition(I:Int, J:Int):Bool {
         if (I < 0 || J < 0 || I >= _grid.length || J >= _grid[0].length) {
             return false;
@@ -217,27 +221,30 @@ class ConveyorTile extends FlxSprite {
         //        One way to fix that is to draw top pieces after the others.
         switch (PlayState.mode) {
             case 0:
-                // Only accept a new device when conveyor doesn't have one.
-                if (_device == null) {
+                // Only accept a new device when conveyor doesn't have one and
+                // the factory is stopped.
+                if (_device == null && !_rolling) {
                     var newObject = new Doser(x, y, _direction);
-                    addToObjectsGroup(newObject);
-                    addDevice(newObject);
+                    _addDevice(newObject);
+                    _device = newObject;
                 }
             case 1:
-                // Only accept a new ice cream when conveyor is empty.
-                if (isEmpty()) {
+                // Only accept a new ice cream when conveyor is empty and the
+                // factory is running.
+                if (isEmpty() && _rolling) {
                     var newObject = new Box(i, j);
                     receiveIceCream(newObject);
                     deliverIceCream();
-                    addToObjectsGroup(newObject);
+                    _addIceCream(newObject);
                 }
             case 2:
-                // Only accept a new ice cream when conveyor is empty.
-                if (isEmpty()) {
+                // Only accept a new ice cream when conveyor is empty and the
+                // factory is running.
+                if (isEmpty() && _rolling) {
                     var newObject = new Cup(i, j);
                     receiveIceCream(newObject);
                     deliverIceCream();
-                    addToObjectsGroup(newObject);
+                    _addIceCream(newObject);
                 }
             default:
                 trace("Undefined mode - do nothing");
