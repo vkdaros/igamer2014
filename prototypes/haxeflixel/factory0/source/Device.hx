@@ -1,12 +1,16 @@
 package;
 
 import flixel.FlxSprite;
+import flixel.group.FlxSpriteGroup;
 
 import Constants.*;
 import IceCream;
 
-class Device extends FlxSprite{
+class Device extends FlxSpriteGroup {
     private var _direction:Int;
+
+    private var _bodyPiece:FlxSprite;
+    private var _topPiece:FlxSprite;
 
     /***
      * Private constructor prevents instantiation of this class.
@@ -22,5 +26,13 @@ class Device extends FlxSprite{
         if (item == null) {
             return;
         }
+    }
+
+    public function getBodyPiece():FlxSprite {
+        return _bodyPiece;
+    }
+
+    public function getTopPiece():FlxSprite {
+        return _topPiece;
     }
 }

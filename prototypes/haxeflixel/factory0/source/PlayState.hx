@@ -34,6 +34,7 @@ class PlayState extends FlxUIState {
     // Layers to be added in current state.
     private var _conveyorLayer:FlxTypedGroup<ConveyorTile>;
     private var _onConveyorLayer:FlxSpriteGroup;
+    private var _overConveyorLayer:FlxSpriteGroup;
     private var _uiLayer:FlxGroup;
 
     // Helper groups to access different kinds of objects easier.
@@ -80,7 +81,9 @@ class PlayState extends FlxUIState {
         _iceCreams = new FlxSpriteGroup();
         _devices = new FlxSpriteGroup();
         _onConveyorLayer = new FlxSpriteGroup();
+        _overConveyorLayer = new FlxSpriteGroup();
         add(_onConveyorLayer);
+        add(_overConveyorLayer);
 
         _uiLayer= createUI();
         add(_uiLayer);
@@ -121,31 +124,7 @@ class PlayState extends FlxUIState {
      */
     override public function update():Void {
         if (_resort || _isPlaying) {
-            var sortByXY = function(order:Int, s1:FlxSprite, s2:FlxSprite):Int {
-                var result:Int = 0;
-                // Sprite with smaller y is drawn first.
-                if (s1.y < s2.y) {
-                    result = order;
-                }
-                else if (s1.y > s2.y) {
-                    result = -order;
-                }
-                else {
-                    // When both sprites has the same y, the one with greater x
-                    // must be drawn first.
-                    if (s1.x > s2.x) {
-                        result = order;
-                    }
-                    else if (s1.x < s2.y) {
-                        result = -order;
-                    }
-                }
-
-                return result;
-            };
-            // FIXME:
-            // The sort function should follow (i,j).
-            _onConveyorLayer.sort(sortByXY, FlxSort.ASCENDING);
+            _onConveyorLayer.sort(sortByXY);
             _resort = false;
         }
         super.update();
@@ -293,15 +272,41 @@ class PlayState extends FlxUIState {
     /**
      * Calback functions passed to other classes such as ConveyorTile.
      */
-    public function addIceCream(sprite:FlxSprite):Void {
+    public function addIceCream(iceCream:IceCream):Void {
         _resort = true;
-        _onConveyorLayer.add(sprite);
-        _iceCreams.add(sprite);
+        _onConveyorLayer.add(iceCream);
+        _iceCreams.add(iceCream);
     }
 
-    public function addDevice(sprite:FlxSprite):Void {
+    public function addDevice(device:Device):Void {
         _resort = true;
-        _onConveyorLayer.add(sprite);
-        _devices.add(sprite);
+        _onConveyorLayer.add(device.getBodyPiece());
+        _overConveyorLayer.add(device.getTopPiece());
+        _devices.add(device);
+
+        _overConveyorLayer.sort(sortByXY);
     }
+
+    private function sortByXY(order:Int, s1:FlxSprite, s2:FlxSprite):Int {
+        var result:Int = 0;
+        // Sprite with smaller y is drawn first.
+        if (s1.y < s2.y) {
+            result = order;
+        }
+        else if (s1.y > s2.y) {
+            result = -order;
+        }
+        else {
+            // When both sprites has the same y, the one with greater x must be
+            // drawn first.
+            if (s1.x > s2.x) {
+                result = order;
+            }
+            else if (s1.x < s2.y) {
+                result = -order;
+            }
+        }
+
+        return result;
+    };
 }

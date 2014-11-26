@@ -34,8 +34,8 @@ class ConveyorTile extends FlxSprite {
     public var j:Int;
 
     // Callback function to add objects to Playstate.
-    private var _addIceCream:FlxSprite->Void;
-    private var _addDevice:FlxSprite->Void;
+    private var _addIceCream:IceCream->Void;
+    private var _addDevice:Device->Void;
 
     private var _device:Device;
     private var _item:IceCream;
@@ -46,8 +46,8 @@ class ConveyorTile extends FlxSprite {
      */
     public function new(I:Int, J:Int, type:Int, grid:Array<Array<ConveyorTile>>,
                         direction:Int = SW, animationFrames:Array<Int> = null,
-                        addIceCreamCallback:FlxSprite->Void = null,
-                        addDeviceCallback:FlxSprite->Void = null) {
+                        addIceCreamCallback:IceCream->Void = null,
+                        addDeviceCallback:Device->Void = null) {
 
         super(0, 0);
         init(I, J, type, grid, direction, animationFrames, addIceCreamCallback,
@@ -57,8 +57,8 @@ class ConveyorTile extends FlxSprite {
     public function init(I:Int, J:Int, type:Int,
                          grid:Array<Array<ConveyorTile>>, direction:Int = SW,
                          animationFrames:Array<Int> = null,
-                         addIceCreamCallback:FlxSprite->Void = null,
-                         addDeviceCallback:FlxSprite->Void = null) {
+                         addIceCreamCallback:IceCream->Void = null,
+                         addDeviceCallback:Device->Void = null) {
         i = I;
         j = J;
         _grid = grid;

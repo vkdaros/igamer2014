@@ -24,17 +24,37 @@ class Doser extends Device {
         //       and handle offset the way it is needed.
         offset.set(xOffset, yOffset);
 
-        // loadGraphic(PATH, ANIMATED, FRAME_WIDTH, FRAME_HEIGHT)
-        loadGraphic("assets/images/doser.png", true, TILE_FRAME_WIDTH,
-                    2 * TILE_FRAME_HEIGHT);
-        antialiasing = true;
+        _bodyPiece = new FlxSprite(X - xOffset, Y - yOffset - 15);
+        _topPiece = new FlxSprite(X - xOffset, Y - yOffset - 15);
 
-        setFacingFlip(FlxObject.LEFT, false, false);
-        setFacingFlip(FlxObject.RIGHT, true, false);
-        facing = FlxObject.LEFT;
-        initAnimations();
+        // loadGraphic(PATH, ANIMATED, FRAME_WIDTH, FRAME_HEIGHT)
+        _bodyPiece.loadGraphic("assets/images/device_support.png", true,
+                               TILE_WIDTH, 2 * TILE_FRAME_HEIGHT);
+        _topPiece.loadGraphic("assets/images/doser_top.png", true, TILE_WIDTH,
+                               2 * TILE_FRAME_HEIGHT);
+
+        _bodyPiece.antialiasing = true;
+        _topPiece.antialiasing = true;
+
+        _bodyPiece.setFacingFlip(FlxObject.LEFT, false, false);
+        _bodyPiece.setFacingFlip(FlxObject.RIGHT, true, false);
+        _topPiece.setFacingFlip(FlxObject.LEFT, false, false);
+        _topPiece.setFacingFlip(FlxObject.RIGHT, true, false);
+
+        if (_direction == SW || _direction == NE) {
+            _bodyPiece.facing = FlxObject.LEFT;
+            _topPiece.facing = FlxObject.LEFT;
+        }
+        else {
+            _bodyPiece.facing = FlxObject.RIGHT;
+            _topPiece.facing = FlxObject.RIGHT;
+
+        }
+
+        //initAnimations();
     }
 
+/*
     private function initAnimations():Void {
         animation.destroyAnimations();
 
@@ -48,6 +68,7 @@ class Doser extends Device {
         animation.add("idle", [firstFrame], 1, false);
         animation.play("idle");
     }
+*/
 
     override public function transformIceCream(item:IceCream):Void {
         if (item == null) {
