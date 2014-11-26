@@ -120,13 +120,28 @@ class PlayState extends FlxUIState {
      * Function that is called once every frame.
      */
     override public function update():Void {
-        if (_resort) {
-            var sortByXY = function(order:Int, obj1:FlxSprite,
-                                    obj2:FlxSprite):Int {
-                var xy1 = obj1.y - (2 * obj1.x);
-                var xy2 = obj2.y - (2 * obj2.x);
+        if (_resort || _isPlaying) {
+            var sortByXY = function(order:Int, s1:FlxSprite, s2:FlxSprite):Int {
+                var result:Int = 0;
+                // Sprite with smaller y is drawn first.
+                if (s1.y < s2.y) {
+                    result = order;
+                }
+                else if (s1.y > s2.y) {
+                    result = -order;
+                }
+                else {
+                    // When both sprites has the same y, the one with greater x
+                    // must be drawn first.
+                    if (s1.x > s2.x) {
+                        result = order;
+                    }
+                    else if (s1.x < s2.y) {
+                        result = -order;
+                    }
+                }
 
-                return FlxSort.byValues(-order, xy1, xy2);
+                return result;
             };
             // FIXME:
             // The sort function should follow (i,j).
