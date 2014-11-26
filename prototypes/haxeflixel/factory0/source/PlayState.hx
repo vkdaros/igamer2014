@@ -30,10 +30,15 @@ import Box;
  */
 class PlayState extends FlxUIState {
     private var _tileGrid:Array<Array<ConveyorTile>>;
-    private var _conveyorBelt:FlxTypedGroup<ConveyorTile>;
+
+    // Layers to be added in current state.
+    private var _conveyorLayer:FlxTypedGroup<ConveyorTile>;
+    private var _onConveyorLayer:FlxSpriteGroup;
+    private var _uiLayer:FlxGroup;
+
+    // Helper groups to access different kinds of objects easier.
     private var _iceCreams:FlxSpriteGroup;
     private var _devices:FlxSpriteGroup;
-    private var _uiLayer:FlxGroup;
 
     private var _playButton:FlxButton;
     private var _stopButton:FlxButton;
@@ -69,12 +74,13 @@ class PlayState extends FlxUIState {
 
         // Create current level from a Tiled file.
         initTileGrid();
+        add(_conveyorLayer);
 
         // Objects created outside PlayState class.
         _iceCreams = new FlxSpriteGroup();
         _devices = new FlxSpriteGroup();
-        add(_iceCreams);
-        add(_devices);
+        _onConveyorLayer = new FlxSpriteGroup();
+        add(_onConveyorLayer);
 
         _uiLayer= createUI();
         add(_uiLayer);
@@ -114,18 +120,17 @@ class PlayState extends FlxUIState {
      * Function that is called once every frame.
      */
     override public function update():Void {
-        // TODO:
-        // Only allow everything to move only when _isPlaying == true.
         if (_resort) {
-            _iceCreams.sort(FlxSort.byY, FlxSort.ASCENDING);
-            _devices.sort(FlxSort.byY, FlxSort.ASCENDING);
+            // FIXME:
+            // The sort function should follow (i,j).
+            _onConveyorLayer.sort(FlxSort.byY, FlxSort.ASCENDING);
             _resort = false;
         }
         super.update();
     }
 
     /**
-     * Open Tiled file and fill tileGrid and conveyorBelt.
+     * Open Tiled file and fill tileGrid and conveyorLayer.
      */
     public function initTileGrid():Void {
         var jsonFile = Assets.getText("assets/maps/test03.json");
@@ -133,7 +138,7 @@ class PlayState extends FlxUIState {
         var dataArray:Array<Float> = null;
 
         _tileGrid = new Array<Array<ConveyorTile>>();
-        _conveyorBelt = new FlxTypedGroup<ConveyorTile>();
+        _conveyorLayer = new FlxTypedGroup<ConveyorTile>();
 
         for (layer in map.layers) {
             if (layer.type == "tilelayer") {
@@ -167,10 +172,9 @@ class PlayState extends FlxUIState {
                                             animationMap[Std.int(tileType)],
                                             addIceCream, addDevice);
                 _tileGrid[i].push(tile);
-                _conveyorBelt.add(tile);
+                _conveyorLayer.add(tile);
             }
         }
-        add(_conveyorBelt);
     }
 
     /**
@@ -244,7 +248,7 @@ class PlayState extends FlxUIState {
             _stopButton.revive();
 
             // Turn on all conveyors.
-            for (conveyor in _conveyorBelt) {
+            for (conveyor in _conveyorLayer) {
                 conveyor.turnOn();
             }
         } else {
@@ -253,7 +257,7 @@ class PlayState extends FlxUIState {
             _stopButton.kill();
 
             // Remove all ice creams and turn off all conveyors.
-            for (conveyor in _conveyorBelt) {
+            for (conveyor in _conveyorLayer) {
                 conveyor.releseIceCream();
                 conveyor.turnOff();
             }
@@ -269,11 +273,13 @@ class PlayState extends FlxUIState {
      */
     public function addIceCream(sprite:FlxSprite):Void {
         _resort = true;
+        _onConveyorLayer.add(sprite);
         _iceCreams.add(sprite);
     }
 
     public function addDevice(sprite:FlxSprite):Void {
         _resort = true;
+        _onConveyorLayer.add(sprite);
         _devices.add(sprite);
     }
 }

@@ -16,25 +16,23 @@ class IceCream extends FlxSpriteGroup {
     private var _shaking:Bool;
     private var _tween:FlxTween;
 
-    private var _stack:Array<Int>;
+    // Stack of ice cream pieces. The first element is at the bottom of stack.
+    // The type of each piece is stored in sprite's id.
+    private var _stack:Array<FlxSprite>;
 
     override public function new(I:Int = 0, J:Int = 0, direction:Int = SW) {
         i = I;
         j = J;
         _direction = direction;
         _shaking = false;
+        _stack = new Array<FlxSprite>();
 
         var xOffset = FlxG.width / 2;
         var yOffset = TILE_HEIGHT / 2;
         var x = (TILE_WIDTH / 2) * (j - i) + xOffset;
         var y = (i + j) * (TILE_HEIGHT / 2) + yOffset;
 
-        //super(x, y);
-        super(0, 0);
-
-        // FIXME:
-        // Created in wrong place.
-        // Ice cream balls not showing up.
+        super(x, y);
     }
 
     public function setGridPosition(I:Int, J:Int):Void {
@@ -43,8 +41,7 @@ class IceCream extends FlxSpriteGroup {
     }
 
     public function setTarget(target:ConveyorTile, from:ConveyorTile):Void {
-        var me = this;
-        target.receiveIceCream(me);
+        target.receiveIceCream(this);
         if (from != null) {
             from.releseIceCream();
         }
@@ -72,16 +69,12 @@ class IceCream extends FlxSpriteGroup {
         _shaking = isShaking;
     }
 
-    public function addLayer(type:Int):Void {
-        switch (type) {
-            case 0:
-                var layer = new FlxSprite();
-                layer.loadGraphic("assets/images/icecream_cup.png", true,
-                                  ICE_CREAM_FRAME_WIDTH,
-                                  ICE_CREAM_FRAME_HEIGHT);
-                layer.animation.frameIndex = 4;
-                layer.setPosition(0, 0);
-                add(layer);
-        }
+    public function addToStack(sprite:FlxSprite):Void {
+        add(sprite);
+        _stack.push(sprite);
+    }
+
+    public function stackPiece(index:Int):FlxSprite {
+        return null;
     }
 }

@@ -9,8 +9,11 @@ import Device;
 import IceCream;
 
 class Doser extends Device {
-    public function new(X:Float, Y:Float, direction:Int = SW) {
+    private var _flavor:Int;
+
+    public function new(X:Float, Y:Float, direction:Int = SW, flavor:Int = 4) {
         super(X, Y - 15, direction);
+        _flavor = flavor;
 
         var xOffset = TILE_WIDTH / 2;
         var yOffset = TILE_HEIGHT * 1.5;
@@ -52,6 +55,10 @@ class Doser extends Device {
         }
 
         // Add a new ball to the ice cream stack.
-        item.addLayer(0);
+        item.stackPiece(_flavor);
+    }
+
+    public function setFlavor(flavor:Int):Void {
+        _flavor = flavor;
     }
 }

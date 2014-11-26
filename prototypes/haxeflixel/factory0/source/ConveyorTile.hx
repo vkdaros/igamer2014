@@ -178,11 +178,6 @@ class ConveyorTile extends FlxSprite {
             // Every thing is fine. Accepting ice cream.
             _item = item;
             _item.setGridPosition(i, j);
-
-            // If there is a device in this tile, it transforms the ice cream.
-            if (_device != null) {
-                _device.transformIceCream(_item);
-            }
         }
     }
 
@@ -212,6 +207,11 @@ class ConveyorTile extends FlxSprite {
     }
 
     public function releseIceCream():Void {
+        // If there is a device in this tile, it transforms the ice cream.
+        if (_device != null) {
+            _device.transformIceCream(_item);
+        }
+
         _item = null;
     }
 
