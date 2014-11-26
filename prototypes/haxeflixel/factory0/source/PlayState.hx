@@ -121,9 +121,16 @@ class PlayState extends FlxUIState {
      */
     override public function update():Void {
         if (_resort) {
+            var sortByXY = function(order:Int, obj1:FlxSprite,
+                                    obj2:FlxSprite):Int {
+                var xy1 = obj1.y - (2 * obj1.x);
+                var xy2 = obj2.y - (2 * obj2.x);
+
+                return FlxSort.byValues(-order, xy1, xy2);
+            };
             // FIXME:
             // The sort function should follow (i,j).
-            _onConveyorLayer.sort(FlxSort.byY, FlxSort.ASCENDING);
+            _onConveyorLayer.sort(sortByXY, FlxSort.ASCENDING);
             _resort = false;
         }
         super.update();
