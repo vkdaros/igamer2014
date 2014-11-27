@@ -3,12 +3,7 @@ package;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.ui.FlxButton;
-import flixel.addons.ui.FlxUIText;
 import flixel.addons.ui.FlxUIState;
-import flixel.addons.ui.FlxUIPopup;
-import flixel.text.FlxText;
-import flixel.util.FlxMath;
-import flixel.util.FlxSort;
 import flixel.group.FlxGroup;
 import flixel.group.FlxTypedGroup;
 import flixel.group.FlxSpriteGroup;
@@ -22,6 +17,7 @@ import flixel.system.scaleModes.RelativeScaleMode;
 import openfl.Assets;
 
 import Constants.*;
+import DevicePopup;
 import ConveyorTile;
 import TiledHelper;
 import Box;
@@ -244,7 +240,7 @@ class PlayState extends FlxUIState {
 
     // Callback function called when play/stop button is pressed.
     public function buttonCallback():Void {
-        openSubState(new DeviceMenu());
+        openSubState(new DevicePopup());
         if (!_isPlaying) {
             // Start the factory.
             _playButton.kill();
@@ -311,23 +307,4 @@ class PlayState extends FlxUIState {
 
         return result;
     };
-}
-
-class DeviceMenu extends FlxUIPopup {
-    override public function create():Void {
-        // Set an empty xml file just to avoid FlxUIPopup default layout.
-        _xml_id = "empty";
-        super.create();
-
-        var closeFunction = function():Void {
-            close();
-        }
-        var closerButton = new FlxButton(30, 15, "Close", closeFunction);
-        add(closerButton);
-    }
-
-    // This function is called by substate right after substate will be closed.
-    public static function onSubstateClose():Void {
-        FlxG.cameras.fade();
-    }
 }
