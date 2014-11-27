@@ -11,16 +11,18 @@ import flixel.FlxState;
 // Multi-language support.
 import firetongue.FireTongue;
 
+import Constants.*;
+
 class Main extends Sprite {
     public static var tongue:FireTongueEx;
 
     // Width of the game in pixels (might be less / more in actual pixels
     // depending on your zoom).
-    var gameWidth:Int = 800;
+    var gameWidth:Int = GAME_WIDTH;
 
     // Height of the game in pixels (might be less / more in actual pixels
     // depending on your zoom).
-    var gameHeight:Int = 600;
+    var gameHeight:Int = GAME_HEIGHT;
 
     // The FlxState the game starts with.
     var initialState:Class<FlxState> = MenuState;

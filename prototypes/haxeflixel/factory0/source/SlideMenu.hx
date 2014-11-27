@@ -20,7 +20,7 @@ class SlideMenu extends FlxSpriteGroup {
     private var _tween:FlxTween;
 
     public function new() {
-        super(FlxG.width - SLIDE_MENU_MARGIN, SLIDE_MENU_Y);
+        super(FlxG.width - SLIDE_MENU_MARGIN, 0);
 
         // Position of all sprites inside this group will be relative to group's
         // coordinates.
@@ -136,7 +136,8 @@ class SlideMenu extends FlxSpriteGroup {
                 _slidingOut = false;
             }
         }
-        _tween = FlxTween.linearMotion(this, x, y, SLIDE_MENU_X, SLIDE_MENU_Y,
+        _tween = FlxTween.linearMotion(this, x, y,
+                                       FlxG.width - SLIDE_MENU_WIDTH, 0,
                                        SLIDE_MENU_DURATION, true, options);
     }
 
@@ -158,8 +159,7 @@ class SlideMenu extends FlxSpriteGroup {
             }
         }
         _tween = FlxTween.linearMotion(this, x, y,
-                                       FlxG.width - SLIDE_MENU_MARGIN,
-                                       SLIDE_MENU_Y, SLIDE_MENU_DURATION, true,
-                                       options);
+                                       FlxG.width - SLIDE_MENU_MARGIN, 0,
+                                       SLIDE_MENU_DURATION, true, options);
     }
 }

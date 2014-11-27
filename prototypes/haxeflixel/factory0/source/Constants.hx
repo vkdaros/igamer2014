@@ -1,6 +1,10 @@
 package;
 
 class Constants {
+    // Screen size
+    public static inline var GAME_WIDTH:Int = 960;
+    public static inline var GAME_HEIGHT:Int = 600;
+
     // Dimensions of ground tile (without elevation).
     public static inline var TILE_WIDTH:Int  = 100;
     public static inline var TILE_HEIGHT:Int =  50;
@@ -36,9 +40,7 @@ class Constants {
     public static inline var BOX_MOVEMENT_DURATION:Int = 1; // seconds.
 
     // Slide menu properties.
-    public static inline var SLIDE_MENU_X:Int          = 600;
-    public static inline var SLIDE_MENU_Y:Int          = 0;
-    public static inline var SLIDE_MENU_WIDTH:Int      = 200;
+    public static inline var SLIDE_MENU_WIDTH:Int      = 180;
     public static inline var SLIDE_MENU_COLOR:Int      = 0x99B0C4DE;
     public static inline var SLIDE_MENU_MARGIN:Int     = 20;
     public static inline var SLIDE_MENU_DURATION:Float = 0.5;
