@@ -215,6 +215,13 @@ class ConveyorTile extends FlxSprite {
         _item = null;
     }
 
+    /**
+     * Function called by devices when they are destroying themselves.
+     */
+    public function removeDevice():Void {
+        _device = null;
+    }
+
     private function isValidPosition(I:Int, J:Int):Bool {
         if (I < 0 || J < 0 || I >= _grid.length || J >= _grid[0].length) {
             return false;
@@ -230,7 +237,7 @@ class ConveyorTile extends FlxSprite {
                 // Only accept a new device when conveyor doesn't have one and
                 // the factory is stopped.
                 if (_device == null && !_rolling) {
-                    var newObject = new Doser(x, y, _direction);
+                    var newObject = new Doser(this, x, y, _direction);
                     _addDevice(newObject);
                     _device = newObject;
                 }

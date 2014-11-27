@@ -40,6 +40,7 @@ class PlayState extends FlxUIState {
 
     private var _playButton:FlxButton;
     private var _stopButton:FlxButton;
+    private var _resetButton:FlxButton;
     private var _isPlaying:Bool;
 
     // Flag to resort draw order.
@@ -232,8 +233,13 @@ class PlayState extends FlxUIState {
         _stopButton.loadGraphic("assets/images/button_stop.png", true, 50, 50);
         _stopButton.antialiasing = true;
 
+        _resetButton = new FlxButton(70, 20, null, resetCallback);
+        _resetButton.loadGraphic("assets/images/button_reset.png", true, 50, 50);
+        _resetButton.antialiasing = true;
+
         ui.add(_playButton);
         ui.add(_stopButton);
+        ui.add(_resetButton);
         _stopButton.kill();
         return ui;
     }
@@ -244,6 +250,7 @@ class PlayState extends FlxUIState {
         if (!_isPlaying) {
             // Start the factory.
             _playButton.kill();
+            _resetButton.kill();
             _stopButton.revive();
 
             // Turn on all conveyors.
@@ -253,6 +260,7 @@ class PlayState extends FlxUIState {
         } else {
             // Stop the factory.
             _playButton.revive();
+            _resetButton.revive();
             _stopButton.kill();
 
             // Remove all ice creams and turn off all conveyors.
@@ -262,9 +270,25 @@ class PlayState extends FlxUIState {
             }
             for (icecream in _iceCreams.group) {
                 icecream.destroy();
+                // FIXME: We have to remove all ice creams from _onConveyorLayer
             }
         }
         _isPlaying = !_isPlaying;
+    }
+
+    /**
+     * Remove all devices player has put in the factory.
+     */
+    public function resetCallback():Void {
+        _devices.callAll("destroy");
+        _devices.clear();
+
+        // It is ok to clear this group because no ice cream should exist when
+        // the factory is not running.
+        _onConveyorLayer.clear();
+
+        // It is ok to clear this group because only top devices should be here.
+        _overConveyorLayer.clear();
     }
 
     /**

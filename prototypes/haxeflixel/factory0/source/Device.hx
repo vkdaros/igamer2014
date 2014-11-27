@@ -7,6 +7,7 @@ import Constants.*;
 import IceCream;
 
 class Device extends FlxSpriteGroup {
+    private var _parentTile:ConveyorTile;
     private var _direction:Int;
 
     private var _bodyPiece:FlxSprite;
@@ -16,8 +17,10 @@ class Device extends FlxSpriteGroup {
      * Private constructor prevents instantiation of this class.
      * It is almost abstract.
      */
-    private function new(X:Float, Y:Float, direction:Int = SW) {
+    private function new(parent:ConveyorTile, X:Float, Y:Float,
+                         direction:Int = SW) {
         super(X, Y);
+        _parentTile = parent;
         _direction = direction;
     }
 
@@ -34,5 +37,11 @@ class Device extends FlxSpriteGroup {
 
     public function getTopPiece():FlxSprite {
         return _topPiece;
+    }
+
+    override public function destroy():Void {
+        _parentTile.removeDevice();
+        _bodyPiece.destroy();
+        _topPiece.destroy();
     }
 }

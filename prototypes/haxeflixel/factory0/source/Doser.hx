@@ -11,8 +11,9 @@ import IceCream;
 class Doser extends Device {
     private var _flavor:Int;
 
-    public function new(X:Float, Y:Float, direction:Int = SW, flavor:Int = 4) {
-        super(X, Y - 15, direction);
+    public function new(parent:ConveyorTile, X:Float, Y:Float,
+                        direction:Int = SW, flavor:Int = 4) {
+        super(parent, X, Y - 15, direction);
         _flavor = flavor;
 
         var xOffset = TILE_WIDTH / 2;
