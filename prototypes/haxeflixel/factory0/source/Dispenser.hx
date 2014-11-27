@@ -3,18 +3,23 @@ package;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
+import flixel.util.FlxTimer;
 
 import Constants.*;
 import Device;
 import IceCream;
 
-class Doser extends Device {
-    private var _flavor:Int;
+class Dispenser extends Device {
+    private var _type:Int;
+    private var _coolDown:FlxTimer;
+    private var _retryDrop:Bool;
 
     public function new(parent:ConveyorTile, X:Float, Y:Float,
-                        direction:Int = SW, flavor:Int = 4) {
+                        direction:Int = SW, type:Int = CUP) {
         super(parent, X, Y - 15, direction);
-        _flavor = flavor;
+        _type = type;
+        _coolDown = new FlxTimer();
+        _retryDrop = false;
 
         var xOffset = TILE_WIDTH / 2;
         var yOffset = TILE_HEIGHT * 1.5;
@@ -31,8 +36,8 @@ class Doser extends Device {
         // loadGraphic(PATH, ANIMATED, FRAME_WIDTH, FRAME_HEIGHT)
         _bodyPiece.loadGraphic("assets/images/device_support.png", true,
                                TILE_WIDTH, 2 * TILE_FRAME_HEIGHT);
-        _topPiece.loadGraphic("assets/images/doser_top.png", true, TILE_WIDTH,
-                               2 * TILE_FRAME_HEIGHT);
+        _topPiece.loadGraphic("assets/images/dispenser_top.png", true,
+                              TILE_WIDTH, 2 * TILE_FRAME_HEIGHT);
 
         _bodyPiece.antialiasing = true;
         _topPiece.antialiasing = true;
@@ -51,40 +56,45 @@ class Doser extends Device {
             _topPiece.facing = FlxObject.RIGHT;
 
         }
-
-        //initAnimations();
     }
 
-/*
-    private function initAnimations():Void {
-        animation.destroyAnimations();
+    public function setType(type:Int):Void {
+        _type = type;
+    }
 
-        var firstFrame = 0;
-        if (_direction == SE || _direction == NE) {
-            //facing = FlxObject.RIGHT;
-            firstFrame = 4;
+    override public function turnOn():Void {
+        _coolDown.start(BOX_MOVEMENT_DURATION, dropContainer);
+    }
+
+    override public function turnOff():Void {
+        _coolDown.cancel();
+    }
+
+    /**
+     * Try to add an ice cream container to the conveyor. If the tile is empty,
+     * drop immediately and reset cooldown. If the tile is not empty, keep drop
+     * as soon as it is possible.
+     */
+    private function dropContainer(timer:FlxTimer = null):Void {
+        if (_parent.isEmpty()) {
+            _parent.addIceCream(_type);
+            _coolDown.start(2 * BOX_MOVEMENT_DURATION, dropContainer);
+            _retryDrop = false;
         }
-
-        // animation.add(NAME, FRAMES, FRAME_RATE, SHOULD_LOOP)
-        animation.add("idle", [firstFrame], 1, false);
-        animation.play("idle");
-    }
-*/
-
-    override public function transformIceCream(item:IceCream):Void {
-        if (item == null) {
-            return;
+        else {
+            _retryDrop = true;
         }
-
-        // Add a new ball to the ice cream stack.
-        item.stackPiece(_flavor);
     }
 
-    public function setFlavor(flavor:Int):Void {
-        _flavor = flavor;
+    override public function update():Void {
+        if (_retryDrop) {
+            dropContainer();
+        }
+        super.update();
     }
 
     override public function destroy():Void {
+        _coolDown.destroy();
         _bodyPiece.destroy();
         _topPiece.destroy();
         super.destroy();

@@ -23,7 +23,6 @@ class Constants {
     public static inline var SW:Int = 2;
     public static inline var SE:Int = 3;
 
-
     // Conveyors possible types. Same index system from Tiled.
     public static inline var HIDDEN:Int =  0;
     public static inline var BEGIN:Int  =  1;
@@ -44,4 +43,10 @@ class Constants {
     public static inline var SLIDE_MENU_COLOR:Int      = 0x99B0C4DE;
     public static inline var SLIDE_MENU_MARGIN:Int     = 20;
     public static inline var SLIDE_MENU_DURATION:Float = 0.5;
+
+    // Game elements.
+    public static inline var DISPENSER:Int = 0;
+    public static inline var DOSER:Int     = 1;
+    public static inline var CUP:Int       = 2;
+    public static inline var BOX:Int       = 3;
 }

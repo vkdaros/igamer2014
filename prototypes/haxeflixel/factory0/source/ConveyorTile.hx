@@ -156,6 +156,9 @@ class ConveyorTile extends FlxSprite {
             } else {
                 animation.play("roll");
             }
+            if (_device != null) {
+                _device.turnOn();
+            }
         }
     }
 
@@ -163,6 +166,9 @@ class ConveyorTile extends FlxSprite {
         if (_rolling) {
             _rolling = false;
             animation.pause();
+            if (_device != null) {
+                _device.turnOff();
+            }
         }
     }
 
@@ -230,38 +236,16 @@ class ConveyorTile extends FlxSprite {
     }
 
     private function onUp(sprite:FlxSprite):Void {
-        // FIXME: Draw order of device top piece is wrong.
-        //        One way to fix that is to draw top pieces after the others.
-        switch (PlayState.mode) {
-            case 0:
-                // Only accept a new device when conveyor doesn't have one and
-                // the factory is stopped.
-                if (_device == null && !_rolling) {
-                    var newObject = new Doser(this, x, y, _direction);
-                    _addDevice(newObject);
-                    _device = newObject;
-                }
-            case 1:
-                // Only accept a new ice cream when conveyor is empty and the
-                // factory is running.
-                if (isEmpty() && _rolling) {
-                    var newObject = new Box(i, j);
-                    receiveIceCream(newObject);
-                    deliverIceCream();
-                    _addIceCream(newObject);
-                }
-            case 2:
-                // Only accept a new ice cream when conveyor is empty and the
-                // factory is running.
-                if (isEmpty() && _rolling) {
-                    var newObject = new Cup(i, j);
-                    receiveIceCream(newObject);
-                    deliverIceCream();
-                    _addIceCream(newObject);
-                }
-            default:
-                trace("Undefined mode - do nothing");
+        var item = PlayState.selectedItem;
+
+        // TODO:
+        // This conditional is temporary and just for testing.
+        // When there is only devices in menu, this if() should be removed.
+        if (item == CUP || item == BOX) {
+            addIceCream(item);
+            return;
         }
+        addDevice(item);
     }
 
     private function onOver(sprite:FlxSprite):Void {
@@ -274,6 +258,39 @@ class ConveyorTile extends FlxSprite {
 
     public function isEmpty():Bool {
         return (_item == null);
+    }
+
+    public function addDevice(type:Int):Void {
+        // Only accept a new device when conveyor doesn't have one and the
+        // factory is stopped.
+        if (_device == null && !_rolling) {
+            switch (type) {
+                case DOSER:
+                    _device = new Doser(this, x, y, _direction);
+                case DISPENSER:
+                    _device = new Dispenser(this, x, y, _direction);
+            }
+            _addDevice(_device);
+        }
+    }
+
+    public function addIceCream(type:Int):Void{
+        // Only accept a new ice cream when conveyor is empty and the factory is
+        // running.
+        if (isEmpty() && _rolling) {
+            var iceCream:IceCream;
+            switch (type) {
+                case CUP:
+                    iceCream = new Cup(i, j);
+                case BOX:
+                    iceCream = new Box(i, j);
+                default:
+                    iceCream = null;
+            }
+            receiveIceCream(iceCream);
+            deliverIceCream();
+            _addIceCream(iceCream);
+        }
     }
 
     override public function destroy():Void {

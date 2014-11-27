@@ -52,7 +52,8 @@ class PlayState extends FlxUIState {
     private var relative:RelativeScaleMode;
     private var fixed:FixedScaleMode;
 
-    public static var mode:Int;
+    // This indicates what was the last selectiom from menu.
+    public static var selectedItem:Int;
 
     /**
      * Function that is called up when to state is created to set it up.
@@ -60,7 +61,7 @@ class PlayState extends FlxUIState {
     override public function create():Void {
         initScaleMode();
         initFireTongue();
-        mode = 0;
+        selectedItem = DOSER;
         _isPlaying = false;
 
         // Add background image.
@@ -246,7 +247,7 @@ class PlayState extends FlxUIState {
 
     // Callback function called when play/stop button is pressed.
     public function buttonCallback():Void {
-        openSubState(new DevicePopup());
+        //openSubState(new DevicePopup());
         if (!_isPlaying) {
             // Start the factory.
             _playButton.kill();

@@ -7,7 +7,7 @@ import Constants.*;
 import IceCream;
 
 class Device extends FlxSpriteGroup {
-    private var _parentTile:ConveyorTile;
+    private var _parent:ConveyorTile;
     private var _direction:Int;
 
     private var _bodyPiece:FlxSprite;
@@ -20,7 +20,7 @@ class Device extends FlxSpriteGroup {
     private function new(parent:ConveyorTile, X:Float, Y:Float,
                          direction:Int = SW) {
         super(X, Y);
-        _parentTile = parent;
+        _parent = parent;
         _direction = direction;
     }
 
@@ -29,6 +29,18 @@ class Device extends FlxSpriteGroup {
         if (item == null) {
             return;
         }
+    }
+
+    /**
+     * Function called when the factory starts.
+     */
+    public function turnOn():Void {
+    }
+
+    /**
+     * Function called when the factory stops.
+     */
+    public function turnOff():Void {
     }
 
     public function getBodyPiece():FlxSprite {
@@ -40,8 +52,7 @@ class Device extends FlxSpriteGroup {
     }
 
     override public function destroy():Void {
-        _parentTile.removeDevice();
-        _bodyPiece.destroy();
-        _topPiece.destroy();
+        _parent.removeDevice();
+        super.destroy();
     }
 }
