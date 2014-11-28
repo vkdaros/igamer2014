@@ -1,5 +1,10 @@
 package;
 
+import flash.Lib;
+import flash.system.System;
+import flash.events.Event;
+import flash.events.KeyboardEvent;
+
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.ui.FlxUIState;
@@ -46,6 +51,7 @@ class MenuState extends FlxUIState {
 
         add(new FlxSprite(0, 0, "assets/images/bg_debug2.png"));
         createUI();
+        initEventListener();
     }
 
     /**
@@ -54,6 +60,9 @@ class MenuState extends FlxUIState {
      * collection.
      */
     override public function destroy():Void {
+        // Remove listener before switch to other state.
+        Lib.current.stage.removeEventListener(KeyboardEvent.KEY_UP, onUp);
+
         super.destroy();
     }
 
@@ -88,7 +97,7 @@ class MenuState extends FlxUIState {
     private function createUIButtons():Void {
         /* Play button */
         // FlxUIButton(x, y, label)
-        var playButton = new FlxUIButton(10, 400, _tongue.get("$MENU_PLAY",
+        var playButton = new FlxUIButton(20, 300, _tongue.get("$MENU_PLAY",
                                                                "ui"));
         playButton.params = ["play"];
         //playButton.id = "?";
@@ -98,10 +107,11 @@ class MenuState extends FlxUIState {
         add(playButton);
 
         /* Switch language buttons */
-        var enButton = new FlxUIButton(10, 430, _tongue.get("$LANGUAGE:EN-US",
+        var enButton = new FlxUIButton(20, 400, _tongue.get("$LANGUAGE:EN-US",
                                                             "index"));
-        var ptButton = new FlxUIButton(10, 450, _tongue.get("$LANGUAGE:PT-BR",
+        var ptButton = new FlxUIButton(20, 430, _tongue.get("$LANGUAGE:PT-BR",
                                                             "index"));
+        //TODO:ExitButton.
         enButton.params = ["en-US"];
         ptButton.params = ["pt-BR"];
         enButton.x = (FlxG.width - enButton.width) / 2;
@@ -121,9 +131,14 @@ class MenuState extends FlxUIState {
             switch (id) {
                 case "click_button":
                     switch (cast(params[0], String)) {
-                        case "play": FlxG.switchState(new PlayState());
-                        case "en-US": switchLanguage("en-US");
-                        case "pt-BR": switchLanguage("pt-BR");
+                        case "play":
+                            FlxG.switchState(new PlayState());
+
+                        case "en-US":
+                            switchLanguage("en-US");
+
+                        case "pt-BR":
+                            switchLanguage("pt-BR");
                     }
             }
         }
@@ -138,4 +153,25 @@ class MenuState extends FlxUIState {
 	private function reloadState():Void {
 		FlxG.switchState(new MenuState());
 	}
+
+    /**
+     * Remove existing key up listener and add a new one.
+     */
+    private function initEventListener():Void {
+        if (Lib.current.stage.hasEventListener(KeyboardEvent.KEY_UP)) {
+            Lib.current.stage.removeEventListener(KeyboardEvent.KEY_UP, onUp);
+        }
+        Lib.current.stage.addEventListener(KeyboardEvent.KEY_UP, onUp);
+    }
+
+    /**
+     * Called whenever a key from keyboard or moble device is released.
+     * If the key is ESCAPE, end the application.
+     */
+    public function onUp(event:KeyboardEvent):Void {
+        // Get ESCAPE from keyboard or BACK from android.
+        if (event.keyCode == 27) {
+            System.exit(0);
+        }
+    }
 }

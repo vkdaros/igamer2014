@@ -1,5 +1,9 @@
 package;
 
+import flash.Lib;
+import flash.events.Event;
+import flash.events.KeyboardEvent;
+
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.ui.FlxButton;
@@ -17,6 +21,7 @@ import flixel.system.scaleModes.RelativeScaleMode;
 import openfl.Assets;
 
 import Constants.*;
+import MenuState;
 import DevicePopup;
 import ConveyorTile;
 import TiledHelper;
@@ -41,6 +46,7 @@ class PlayState extends FlxUIState {
     private var _playButton:FlxButton;
     private var _stopButton:FlxButton;
     private var _resetButton:FlxButton;
+    private var _exitButton:FlxButton;
     private var _isPlaying:Bool;
 
     // Flag to resort draw order.
@@ -86,6 +92,8 @@ class PlayState extends FlxUIState {
 
         _uiLayer= createUI();
         add(_uiLayer);
+
+        initEventListener();
     }
 
     private function initScaleMode():Void {
@@ -115,6 +123,9 @@ class PlayState extends FlxUIState {
      * collection.
      */
     override public function destroy():Void {
+        // Remove listener before switch to other state.
+        Lib.current.stage.removeEventListener(KeyboardEvent.KEY_UP, onUp);
+
         super.destroy();
     }
 
@@ -238,16 +249,20 @@ class PlayState extends FlxUIState {
         _resetButton.loadGraphic("assets/images/button_reset.png", true, 50, 50);
         _resetButton.antialiasing = true;
 
+        _exitButton = new FlxButton(120, 20, null, exitCallback);
+        _exitButton.loadGraphic("assets/images/button_exit.png", true, 50, 50);
+        _exitButton.antialiasing = true;
+
         ui.add(_playButton);
         ui.add(_stopButton);
         ui.add(_resetButton);
+        ui.add(_exitButton);
         _stopButton.kill();
         return ui;
     }
 
     // Callback function called when play/stop button is pressed.
     public function buttonCallback():Void {
-        //openSubState(new DevicePopup());
         if (!_isPlaying) {
             // Start the factory.
             _playButton.kill();
@@ -281,6 +296,7 @@ class PlayState extends FlxUIState {
      * Remove all devices player has put in the factory.
      */
     public function resetCallback():Void {
+        openSubState(new DevicePopup());
         _devices.callAll("destroy");
         _devices.clear();
 
@@ -290,6 +306,13 @@ class PlayState extends FlxUIState {
 
         // It is ok to clear this group because only top devices should be here.
         _overConveyorLayer.clear();
+    }
+
+    /**
+     * Return to menu.
+     */
+    public function exitCallback():Void {
+        FlxG.switchState(new MenuState());
     }
 
     /**
@@ -331,5 +354,29 @@ class PlayState extends FlxUIState {
         }
 
         return result;
-    };
+    }
+
+    /**
+     * Remove existing key up listener and add a new one.
+     */
+    private function initEventListener():Void {
+        if (Lib.current.stage.hasEventListener(KeyboardEvent.KEY_UP)) {
+            Lib.current.stage.removeEventListener(KeyboardEvent.KEY_UP, onUp);
+        }
+        Lib.current.stage.addEventListener(KeyboardEvent.KEY_UP, onUp);
+    }
+
+    /**
+     * Called whenever a key from keyboard or moble device is released.
+     * If the key is ESCAPE, go back to menu state.
+     */
+    public function onUp(event:KeyboardEvent):Void {
+        // Get ESCAPE from keyboard or BACK from android.
+        if (event.keyCode == 27) {
+            #if android
+            event.stopImmediatePropagation();
+            #end
+            exitCallback();
+        }
+    }
 }
