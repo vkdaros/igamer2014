@@ -33,6 +33,10 @@ import Box;
 class PlayState extends FlxUIState {
     private var _tileGrid:Array<Array<ConveyorTile>>;
 
+    // Map of <stage index, path to stage file>.
+    private var _stageMap:Map<Int, String>;
+    private var _stageIndex:Int;
+
     // Layers to be added in current state.
     private var _conveyorLayer:FlxTypedGroup<ConveyorTile>;
     private var _onConveyorLayer:FlxSpriteGroup;
@@ -61,6 +65,11 @@ class PlayState extends FlxUIState {
     // This indicates what was the last selectiom from menu.
     public static var selectedItem:Int;
 
+    public function new(index:Int) {
+        super();
+        _stageIndex = index;
+    }
+
     /**
      * Function that is called up when to state is created to set it up.
      */
@@ -79,6 +88,7 @@ class PlayState extends FlxUIState {
         FlxG.plugins.add(new MouseEventManager());
 
         // Create current level from a Tiled file.
+        initStageMap();
         initTileGrid();
         add(_conveyorLayer);
 
@@ -140,11 +150,18 @@ class PlayState extends FlxUIState {
         super.update();
     }
 
+    private function initStageMap():Void {
+        _stageMap = new Map<Int, String>();
+        _stageMap[0] = "assets/maps/stage00.json";
+        _stageMap[1] = "assets/maps/stage01.json";
+        _stageMap[2] = "assets/maps/stage02.json";
+    }
+
     /**
      * Open Tiled file and fill tileGrid and conveyorLayer.
      */
     public function initTileGrid():Void {
-        var jsonFile = Assets.getText("assets/maps/test03.json");
+        var jsonFile = Assets.getText(_stageMap[_stageIndex]);
         var map:TiledMap = haxe.Json.parse(jsonFile);
         var dataArray:Array<Float> = null;
 

@@ -5,6 +5,7 @@ import flash.events.KeyboardEvent;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.ui.FlxButton;
 import flixel.addons.ui.FlxUIText;
 import flixel.addons.ui.FlxUIState;
 import flixel.addons.ui.FlxUIButton;
@@ -27,6 +28,7 @@ import PlayState;
 class StageSelectState extends FlxUIState {
     // Buttons to all stages.
     private var _buttons:Array<FlxUIButton>;
+    private var _exitButton:FlxButton;
 
     // Scale modes.
     private var fill:FillScaleMode;
@@ -105,23 +107,30 @@ class StageSelectState extends FlxUIState {
     }
 
     private function createUIButtons():Void {
-        _buttons.push(new FlxUIButton(300, 120, null, buttonCallback));
+        _exitButton = new FlxButton(20, 20, null, exitCallback);
+        _exitButton.loadGraphic("assets/images/button_exit.png", true, 50, 50);
+        _exitButton.antialiasing = true;
+        add(_exitButton);
+
+        var callbackFactory = function(id:Int):Void->Void {
+            return function():Void {
+                FlxG.switchState(new PlayState(id));
+            };
+        };
+        _buttons.push(new FlxUIButton(300, 120, null, callbackFactory(0)));
         _buttons[0].loadGraphic("assets/images/stage_icon.png", true,
                                 STAGE_BUTTON_SIZE, STAGE_BUTTON_SIZE);
         _buttons[0].antialiasing = true;
-        _buttons[0].id = "0";
 
-        _buttons.push(new FlxUIButton(535, 395, null, buttonCallback));
+        _buttons.push(new FlxUIButton(535, 395, null, callbackFactory(1)));
         _buttons[1].loadGraphic("assets/images/stage_icon.png", true,
                                 STAGE_BUTTON_SIZE, STAGE_BUTTON_SIZE);
         _buttons[1].antialiasing = true;
-        _buttons[1].id = "1";
 
-        _buttons.push(new FlxUIButton(470, 505, null, buttonCallback));
+        _buttons.push(new FlxUIButton(470, 505, null, callbackFactory(2)));
         _buttons[2].loadGraphic("assets/images/stage_icon.png", true,
                                 STAGE_BUTTON_SIZE, STAGE_BUTTON_SIZE);
         _buttons[2].antialiasing = true;
-        _buttons[2].id = "2";
 
         for (button in _buttons) {
             add(button);
@@ -130,7 +139,6 @@ class StageSelectState extends FlxUIState {
 
     private function buttonCallback():Void {
         // TODO: make each button call a different stage (duh!).
-        FlxG.switchState(new PlayState());
     }
 
     /**
@@ -141,6 +149,13 @@ class StageSelectState extends FlxUIState {
             Lib.current.stage.removeEventListener(KeyboardEvent.KEY_UP, onUp);
         }
         Lib.current.stage.addEventListener(KeyboardEvent.KEY_UP, onUp);
+    }
+
+    /**
+     * Return to menu.
+     */
+    public function exitCallback():Void {
+        FlxG.switchState(new MenuState());
     }
 
     /**
