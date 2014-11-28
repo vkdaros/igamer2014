@@ -2,4 +2,5 @@
 "$GAME_NAME","Sweet Switches",
 "$MENU_PLAY","Play",
 "$MENU_EXIT","Exit",
+"$STAGE_SELECT","Select which factory you will help",
 "$LONG_TEXT","This is a long text with some special characteres. First a new line<N>Then a pair of <Q>quotation marks<Q>.",

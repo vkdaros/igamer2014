@@ -21,7 +21,7 @@ import flixel.system.scaleModes.RelativeScaleMode;
 import openfl.Assets;
 
 import Constants.*;
-import MenuState;
+import StageSelectState;
 import DevicePopup;
 import ConveyorTile;
 import TiledHelper;
@@ -312,7 +312,7 @@ class PlayState extends FlxUIState {
      * Return to menu.
      */
     public function exitCallback():Void {
-        FlxG.switchState(new MenuState());
+        FlxG.switchState(new StageSelectState());
     }
 
     /**

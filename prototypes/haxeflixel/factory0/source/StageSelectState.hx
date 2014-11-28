@@ -1,17 +1,13 @@
 package;
 
 import flash.Lib;
-import flash.system.System;
-import flash.events.Event;
 import flash.events.KeyboardEvent;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
-import flixel.addons.ui.FlxUIState;
 import flixel.addons.ui.FlxUIText;
+import flixel.addons.ui.FlxUIState;
 import flixel.addons.ui.FlxUIButton;
-import flixel.text.FlxText;
-import flixel.util.FlxMath;
 
 import flixel.system.scaleModes.FillScaleMode;
 import flixel.system.scaleModes.FixedScaleMode;
@@ -21,12 +17,18 @@ import flixel.system.scaleModes.RelativeScaleMode;
 // Multi-language support.
 import firetongue.FireTongue;
 
-import StageSelectState;
+import Constants.*;
+import MenuState;
+import PlayState;
 
 /**
  * A FlxState which can be used for the game's menu.
  */
-class MenuState extends FlxUIState {
+class StageSelectState extends FlxUIState {
+    // Buttons to all stages.
+    private var _buttons:Array<FlxUIButton>;
+
+    // Scale modes.
     private var fill:FillScaleMode;
     private var ratio:RatioScaleMode;
     private var relative:RelativeScaleMode;
@@ -51,7 +53,13 @@ class MenuState extends FlxUIState {
 
         super.create();
 
+        _buttons = new Array<FlxUIButton>();
+
         add(new FlxSprite(0, 0, "assets/images/bg_debug2.png"));
+        var brazil = new FlxSprite(0, 0, "assets/images/brazil_map.png");
+        brazil.x = (FlxG.width - brazil.width) / 2;
+        brazil.antialiasing = true;
+        add(brazil);
         createUI();
         initEventListener();
     }
@@ -87,9 +95,9 @@ class MenuState extends FlxUIState {
     private function createUITitle():Void {
         // FlxUIText(x, y, width, text)
         // _tongue.get(csv_field, translation_context)
-        var titleText = new FlxUIText(50, 100, 100, _tongue.get("$GAME_NAME",
+        var titleText = new FlxUIText(20, 20, 300, _tongue.get("$STAGE_SELECT",
                                                                 "ui"));
-        titleText.x = (FlxG.width - titleText.width) / 2;
+        //titleText.x = (FlxG.width - titleText.width) / 2;
         titleText.alignment = "center";
 
         // Add titleText to the scene.
@@ -97,64 +105,33 @@ class MenuState extends FlxUIState {
     }
 
     private function createUIButtons():Void {
-        /* Play button */
-        // FlxUIButton(x, y, label)
-        var playButton = new FlxUIButton(20, 300, _tongue.get("$MENU_PLAY",
-                                                               "ui"));
-        playButton.params = ["play"];
-        //playButton.id = "?";
-        playButton.x = (FlxG.width - playButton.width) / 2;
+        _buttons.push(new FlxUIButton(300, 120, null, buttonCallback));
+        _buttons[0].loadGraphic("assets/images/stage_icon.png", true,
+                                STAGE_BUTTON_SIZE, STAGE_BUTTON_SIZE);
+        _buttons[0].antialiasing = true;
+        _buttons[0].id = "0";
 
-        // Add button to the scene.
-        add(playButton);
+        _buttons.push(new FlxUIButton(535, 395, null, buttonCallback));
+        _buttons[1].loadGraphic("assets/images/stage_icon.png", true,
+                                STAGE_BUTTON_SIZE, STAGE_BUTTON_SIZE);
+        _buttons[1].antialiasing = true;
+        _buttons[1].id = "1";
 
-        /* Switch language buttons */
-        var enButton = new FlxUIButton(20, 400, _tongue.get("$LANGUAGE:EN-US",
-                                                            "index"));
-        var ptButton = new FlxUIButton(20, 430, _tongue.get("$LANGUAGE:PT-BR",
-                                                            "index"));
-        //TODO:ExitButton.
-        enButton.params = ["en-US"];
-        ptButton.params = ["pt-BR"];
-        enButton.x = (FlxG.width - enButton.width) / 2;
-        ptButton.x = (FlxG.width - ptButton.width) / 2;
-        add(enButton);
-        add(ptButton);
-    }
+        _buttons.push(new FlxUIButton(470, 505, null, buttonCallback));
+        _buttons[2].loadGraphic("assets/images/stage_icon.png", true,
+                                STAGE_BUTTON_SIZE, STAGE_BUTTON_SIZE);
+        _buttons[2].antialiasing = true;
+        _buttons[2].id = "2";
 
-    public override function getRequest(id:String, sender:Dynamic, data:Dynamic,
-                                        ?params:Array<Dynamic>):Dynamic {
-        return null;
-    }
-
-    public override function getEvent(id:String, target:Dynamic, data:Dynamic,
-                                      ?params:Array<Dynamic>):Void {
-        if (params != null) {
-            switch (id) {
-                case "click_button":
-                    switch (cast(params[0], String)) {
-                        case "play":
-                            FlxG.switchState(new StageSelectState());
-
-                        case "en-US":
-                            switchLanguage("en-US");
-
-                        case "pt-BR":
-                            switchLanguage("pt-BR");
-                    }
-            }
+        for (button in _buttons) {
+            add(button);
         }
     }
 
-    private function switchLanguage(language:String):Void {
-        if (Main.tongue != null) {
-		    Main.tongue.init(language, reloadState);
-        }
+    private function buttonCallback():Void {
+        // TODO: make each button call a different stage (duh!).
+        FlxG.switchState(new PlayState());
     }
-
-	private function reloadState():Void {
-		FlxG.switchState(new MenuState());
-	}
 
     /**
      * Remove existing key up listener and add a new one.
@@ -173,7 +150,10 @@ class MenuState extends FlxUIState {
     public function onUp(event:KeyboardEvent):Void {
         // Get ESCAPE from keyboard or BACK from android.
         if (event.keyCode == 27) {
-            System.exit(0);
+            #if android
+            event.stopImmediatePropagation();
+            #end
+            FlxG.switchState(new MenuState());
         }
     }
 }

@@ -17,6 +17,9 @@ class Constants {
     public static inline var ICE_CREAM_FRAME_WIDTH:Int  = 32;
     public static inline var ICE_CREAM_FRAME_HEIGHT:Int = 32;
 
+    // Dimension of stage button for StageSelectState.
+    public static inline var STAGE_BUTTON_SIZE:Int = 56;
+
     // Isometric directions.
     public static inline var NE:Int = 0;
     public static inline var NW:Int = 1;
