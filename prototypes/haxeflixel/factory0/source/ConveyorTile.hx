@@ -115,16 +115,7 @@ class ConveyorTile extends FlxSprite {
             return;
         }
 
-        switch (_direction) {
-            case NE:
-                _targetI--;
-            case NW:
-                _targetJ--;
-            case SW:
-                _targetI++;
-            case SE:
-                _targetJ++;
-        }
+        setDirectionTarget(_direction);
     }
 
     private function initAnimations(type:Int, animationFrames:Array<Int>):Void {
@@ -212,7 +203,7 @@ class ConveyorTile extends FlxSprite {
         }
     }
 
-    public function releseIceCream():Void {
+    public function releaseIceCream():Void {
         // If there is a device in this tile, it transforms the ice cream.
         if (_device != null) {
             _device.transformIceCream(_item);
@@ -269,6 +260,8 @@ class ConveyorTile extends FlxSprite {
                     _device = new Doser(this, x, y, _direction);
                 case DISPENSER:
                     _device = new Dispenser(this, x, y, _direction);
+                case SWITCH:
+                    _device = new Switch(this, x, y, _direction);
             }
             _addDevice(_device);
         }
@@ -290,6 +283,22 @@ class ConveyorTile extends FlxSprite {
             receiveIceCream(iceCream);
             deliverIceCream();
             _addIceCream(iceCream);
+        }
+    }
+
+    public function setDirectionTarget(direction:Int):Void {
+        _targetI = i;
+        _targetJ = j;
+
+        switch (direction) {
+            case NE:
+                _targetI--;
+            case NW:
+                _targetJ--;
+            case SW:
+                _targetI++;
+            case SE:
+                _targetJ++;
         }
     }
 

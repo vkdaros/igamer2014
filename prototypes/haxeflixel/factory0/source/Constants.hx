@@ -52,4 +52,6 @@ class Constants {
     public static inline var DOSER:Int     = 1;
     public static inline var CUP:Int       = 2;
     public static inline var BOX:Int       = 3;
+    public static inline var SWITCH:Int    = 4;
+    public static inline var SCALE:Int     = 5;
 }

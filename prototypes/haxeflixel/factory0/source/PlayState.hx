@@ -31,6 +31,9 @@ import Box;
  * A FlxState which can be used for the actual gameplay.
  */
 class PlayState extends FlxUIState {
+    // This indicates what was the last selectiom from menu.
+    public static var selectedItem:Int;
+
     private var _tileGrid:Array<Array<ConveyorTile>>;
 
     // Map of <stage index, path to stage file>.
@@ -61,9 +64,6 @@ class PlayState extends FlxUIState {
     private var ratio:RatioScaleMode;
     private var relative:RelativeScaleMode;
     private var fixed:FixedScaleMode;
-
-    // This indicates what was the last selectiom from menu.
-    public static var selectedItem:Int;
 
     public function new(index:Int) {
         super();
@@ -155,6 +155,7 @@ class PlayState extends FlxUIState {
         _stageMap[0] = "assets/maps/stage00.json";
         _stageMap[1] = "assets/maps/stage01.json";
         _stageMap[2] = "assets/maps/stage02.json";
+        _stageMap[3] = "assets/maps/stage03.json";
     }
 
     /**
@@ -298,7 +299,7 @@ class PlayState extends FlxUIState {
 
             // Remove all ice creams and turn off all conveyors.
             for (conveyor in _conveyorLayer) {
-                conveyor.releseIceCream();
+                conveyor.releaseIceCream();
                 conveyor.turnOff();
             }
             for (icecream in _iceCreams.group) {

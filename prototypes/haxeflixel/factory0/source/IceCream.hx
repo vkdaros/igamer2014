@@ -43,7 +43,7 @@ class IceCream extends FlxSpriteGroup {
     public function setTarget(target:ConveyorTile, from:ConveyorTile):Void {
         target.receiveIceCream(this);
         if (from != null) {
-            from.releseIceCream();
+            from.releaseIceCream();
         }
 
         var callback:FlxTween->Void = function(tween:FlxTween) {

@@ -132,6 +132,11 @@ class StageSelectState extends FlxUIState {
                                 STAGE_BUTTON_SIZE, STAGE_BUTTON_SIZE);
         _buttons[2].antialiasing = true;
 
+        _buttons.push(new FlxUIButton(500, 505, null, callbackFactory(3)));
+        _buttons[3].loadGraphic("assets/images/stage_icon.png", true,
+                                STAGE_BUTTON_SIZE, STAGE_BUTTON_SIZE);
+        _buttons[3].antialiasing = true;
+
         for (button in _buttons) {
             add(button);
         }

@@ -66,6 +66,12 @@ class SlideMenu extends FlxSpriteGroup {
         t4.antialiasing = true;
         add(t4);
 
+        var t5 = new FlxSprite(SLIDE_MENU_MARGIN * 3, 7 * TILE_FRAME_HEIGHT);
+        t5.loadGraphic("assets/images/switch_top.png", true,
+                       TILE_FRAME_WIDTH, 2 * TILE_FRAME_HEIGHT);
+        t5.antialiasing = true;
+        add(t5);
+
         var onUpFactory = function(index:Int):FlxSprite->Void {
             return function(s:FlxSprite):Void {
                 slideIn();
@@ -80,10 +86,16 @@ class SlideMenu extends FlxSpriteGroup {
         var itemOnOut = function(s:FlxSprite):Void {
             _overMenuItem = false;
         }
-        MouseEventManager.add(t1, null, onUpFactory(DOSER), itemOnOver, itemOnOut);
-        MouseEventManager.add(t2, null, onUpFactory(BOX), itemOnOver, itemOnOut);
-        MouseEventManager.add(t3, null, onUpFactory(CUP), itemOnOver, itemOnOut);
-        MouseEventManager.add(t4, null, onUpFactory(DISPENSER), itemOnOver, itemOnOut);
+        MouseEventManager.add(t1, null, onUpFactory(DOSER), itemOnOver,
+                              itemOnOut);
+        MouseEventManager.add(t2, null, onUpFactory(BOX), itemOnOver,
+                              itemOnOut);
+        MouseEventManager.add(t3, null, onUpFactory(CUP), itemOnOver,
+                              itemOnOut);
+        MouseEventManager.add(t4, null, onUpFactory(DISPENSER), itemOnOver,
+                              itemOnOut);
+        MouseEventManager.add(t5, null, onUpFactory(SWITCH), itemOnOver,
+                              itemOnOut);
     }
 
     private function onUp(sprite:FlxSprite):Void {
