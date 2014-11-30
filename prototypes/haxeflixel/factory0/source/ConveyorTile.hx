@@ -9,10 +9,10 @@ import flixel.plugin.MouseEventManager;
 import Constants.*;
 import PlayState;
 import IceCream;
-import Box;
 import Cup;
 import Device;
 import Doser;
+import Scale;
 
 class ConveyorTile extends FlxSprite {
     private var _direction:Int;
@@ -175,6 +175,7 @@ class ConveyorTile extends FlxSprite {
             // Every thing is fine. Accepting ice cream.
             _item = item;
             _item.setGridPosition(i, j);
+            _item.direction = _direction;
         }
     }
 
@@ -182,33 +183,39 @@ class ConveyorTile extends FlxSprite {
         if (_item == null) {
             // No ice cream to deliver.
             _retryDeliver = false;
+            return;
         }
-        else if (isValidPosition(_targetI, _targetJ) &&
-                 _grid[_targetI][_targetJ].active &&
-                 (_targetI != i || _targetJ != j)) {
 
-            if (_grid[_targetI][_targetJ].isEmpty()) {
-                _item.setShaking(false);
-                _item.setTarget(_grid[_targetI][_targetJ], this);
-                _retryDeliver = false;
-            }
-            else {
-                _item.setShaking(true);
-                _retryDeliver = true;
-            }
-        }
-        else {
-            //Ice cream reached a dead end. Should go to truck
-            //_item.setShaking(true);
-        }
-    }
-
-    public function releaseIceCream():Void {
         // If there is a device in this tile, it transforms the ice cream.
         if (_device != null) {
             _device.transformIceCream(_item);
         }
 
+        var neighbor = getNeighbor(_item.direction);
+
+        // If target is out of grid, or a hidden tile or is the currnent tile,
+        // then the item can't go anywhere.
+        if (neighbor == null || !neighbor.active || neighbor == this ||
+            (_targetI == i && _targetJ == j)) {
+                _item.setShaking(true);
+        }
+        else {
+            // If the target is ok but is not empty, then the item must wait.
+            if (!neighbor.isEmpty()) {
+                _item.setShaking(true);
+                _retryDeliver = true;
+            }
+            else {
+                // If everything is ok, then the item can go to next tile.
+                _retryDeliver = false;
+                _item.setShaking(false);
+                _item.setTarget(getNeighbor(_item.direction));
+                releaseIceCream();
+            }
+        }
+    }
+
+    public function releaseIceCream():Void {
         _item = null;
     }
 
@@ -262,6 +269,8 @@ class ConveyorTile extends FlxSprite {
                     _device = new Dispenser(this, x, y, _direction);
                 case SWITCH:
                     _device = new Switch(this, x, y, _direction);
+                case SCALE:
+                    _device = new Scale(this, x, y, _direction);
             }
             _addDevice(_device);
         }
@@ -275,8 +284,6 @@ class ConveyorTile extends FlxSprite {
             switch (type) {
                 case CUP:
                     iceCream = new Cup(i, j);
-                case BOX:
-                    iceCream = new Box(i, j);
                 default:
                     iceCream = null;
             }
@@ -286,7 +293,7 @@ class ConveyorTile extends FlxSprite {
         }
     }
 
-    public function setDirectionTarget(direction:Int):Void {
+    private function setDirectionTarget(direction:Int):Void {
         _targetI = i;
         _targetJ = j;
 
@@ -300,6 +307,27 @@ class ConveyorTile extends FlxSprite {
             case SE:
                 _targetJ++;
         }
+    }
+
+    private function getNeighbor(direction:Int):ConveyorTile {
+        var neighborI = i;
+        var neighborJ = j;
+
+        switch (direction) {
+            case NE:
+                neighborI--;
+            case NW:
+                neighborJ--;
+            case SW:
+                neighborI++;
+            case SE:
+                neighborJ++;
+        }
+
+        if (!isValidPosition(neighborI, neighborJ)) {
+            return null;
+        }
+        return _grid[neighborI][neighborJ];
     }
 
     override public function destroy():Void {

@@ -11,8 +11,8 @@ class IceCream extends FlxSpriteGroup {
     // Coordinates in tile matrix.
     public var i:Int;
     public var j:Int;
+    public  var direction:Int;
 
-    private var _direction:Int;
     private var _shaking:Bool;
     private var _tween:FlxTween;
 
@@ -20,10 +20,10 @@ class IceCream extends FlxSpriteGroup {
     // The type of each piece is stored in sprite's id.
     private var _stack:Array<FlxSprite>;
 
-    override public function new(I:Int = 0, J:Int = 0, direction:Int = SW) {
+    override public function new(I:Int = 0, J:Int = 0, Direction:Int = SW) {
         i = I;
         j = J;
-        _direction = direction;
+        direction = Direction;
         _shaking = false;
         _stack = new Array<FlxSprite>();
 
@@ -40,11 +40,8 @@ class IceCream extends FlxSpriteGroup {
         j = J;
     }
 
-    public function setTarget(target:ConveyorTile, from:ConveyorTile):Void {
+    public function setTarget(target:ConveyorTile):Void {
         target.receiveIceCream(this);
-        if (from != null) {
-            from.releaseIceCream();
-        }
 
         var callback:FlxTween->Void = function(tween:FlxTween) {
             target.deliverIceCream();
@@ -74,7 +71,15 @@ class IceCream extends FlxSpriteGroup {
         _stack.push(sprite);
     }
 
+    /**
+     * Create a new piece of type 'index' and put it on the stack.
+     * This function should be overriden.
+     */
     public function stackPiece(index:Int):FlxSprite {
         return null;
+    }
+
+    public function stackSize():Int {
+        return _stack.length;
     }
 }

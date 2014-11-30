@@ -49,8 +49,8 @@ class SlideMenu extends FlxSpriteGroup {
         add(t1);
 
         var t2 = new FlxSprite(SLIDE_MENU_MARGIN, 3 * TILE_FRAME_HEIGHT);
-        t2.loadGraphic("assets/images/box.png", true, TILE_FRAME_WIDTH,
-                       TILE_FRAME_HEIGHT);
+        t2.loadGraphic("assets/images/scale_top.png", true, TILE_FRAME_WIDTH,
+                       2 * TILE_FRAME_HEIGHT);
         t2.antialiasing = true;
         add(t2);
 
@@ -88,7 +88,7 @@ class SlideMenu extends FlxSpriteGroup {
         }
         MouseEventManager.add(t1, null, onUpFactory(DOSER), itemOnOver,
                               itemOnOut);
-        MouseEventManager.add(t2, null, onUpFactory(BOX), itemOnOver,
+        MouseEventManager.add(t2, null, onUpFactory(SCALE), itemOnOver,
                               itemOnOut);
         MouseEventManager.add(t3, null, onUpFactory(CUP), itemOnOver,
                               itemOnOut);

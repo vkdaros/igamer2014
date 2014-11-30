@@ -25,7 +25,6 @@ import StageSelectState;
 import DevicePopup;
 import ConveyorTile;
 import TiledHelper;
-import Box;
 
 /**
  * A FlxState which can be used for the actual gameplay.

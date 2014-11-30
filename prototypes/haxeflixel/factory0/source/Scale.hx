@@ -8,7 +8,7 @@ import Constants.*;
 import Device;
 import IceCream;
 
-class Switch extends Device {
+class Scale extends Device {
     // When _deviate is false, this device doesn't change parents tile behavior.
     // When it is true, the ice cream is sent to sideDirection output.
     private var _deviate:Bool;
@@ -18,7 +18,7 @@ class Switch extends Device {
                         direction:Int = SW) {
         super(parent, X, Y - 15, direction);
 
-        _deviate = false;
+        _deviate = true;
 
         var xOffset = TILE_WIDTH / 2;
         var yOffset = TILE_HEIGHT * 1.5;
@@ -35,7 +35,7 @@ class Switch extends Device {
         // loadGraphic(PATH, ANIMATED, FRAME_WIDTH, FRAME_HEIGHT)
         _bodyPiece.loadGraphic("assets/images/switch_body.png", true,
                                TILE_WIDTH, 2 * TILE_FRAME_HEIGHT);
-        _topPiece.loadGraphic("assets/images/switch_top.png", true, TILE_WIDTH,
+        _topPiece.loadGraphic("assets/images/scale_top.png", true, TILE_WIDTH,
                                2 * TILE_FRAME_HEIGHT);
 
         _bodyPiece.antialiasing = true;
@@ -72,13 +72,17 @@ class Switch extends Device {
 
     override public function transformIceCream(item:IceCream):Void {
         if (item == null) {
+            trace("NUL item");
             return;
+        }
+        _deviate = false;
+        if (item.stackSize() < 2) {
+            _deviate = true;
         }
 
         if (_deviate) {
             item.direction = _sideDirection;
         }
-        _deviate = !_deviate;
     }
 
     override public function destroy():Void {
