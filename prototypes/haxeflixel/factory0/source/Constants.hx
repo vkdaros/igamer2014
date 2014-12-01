@@ -3,7 +3,7 @@ package;
 class Constants {
     // Screen size
     public static inline var GAME_WIDTH:Int  = 960;
-    public static inline var GAME_HEIGHT:Int = 600;
+    public static inline var GAME_HEIGHT:Int = 552;
 
     // Dimensions of ground tile (without elevation).
     public static inline var TILE_WIDTH:Int  = 100;

@@ -7,7 +7,7 @@ index="
     </head>
     <body bgcolor="#dddddd">
         <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"
-                width="960" height="600" id="haxe" align="middle">
+                width="960" height="552" id="haxe" align="middle">
             <param name="movie" value="factory0.swf"/>
             <param name="allowScriptAccess" value="always" />
             <param name="quality" value="high" />
@@ -15,7 +15,7 @@ index="
             <param name="salign" value="lt" />
             <param name="bgcolor" value="#ffffff"/>
             <embed src="factory0.swf" bgcolor="#ffffff"
-                   width="960" height="600"
+                   width="960" height="552"
                    name="haxe" quality="high" align="middle"
                    allowScriptAccess="always"
                    type="application/x-shockwave-flash"

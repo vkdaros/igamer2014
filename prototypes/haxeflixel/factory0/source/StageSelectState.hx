@@ -117,22 +117,22 @@ class StageSelectState extends FlxUIState {
                 FlxG.switchState(new PlayState(id));
             };
         };
-        _buttons.push(new FlxUIButton(300, 120, null, callbackFactory(0)));
+        _buttons.push(new FlxUIButton(310, 100, null, callbackFactory(0)));
         _buttons[0].loadGraphic("assets/images/stage_icon.png", true,
                                 STAGE_BUTTON_SIZE, STAGE_BUTTON_SIZE);
         _buttons[0].antialiasing = true;
 
-        _buttons.push(new FlxUIButton(535, 395, null, callbackFactory(1)));
+        _buttons.push(new FlxUIButton(580, 260, null, callbackFactory(1)));
         _buttons[1].loadGraphic("assets/images/stage_icon.png", true,
                                 STAGE_BUTTON_SIZE, STAGE_BUTTON_SIZE);
         _buttons[1].antialiasing = true;
 
-        _buttons.push(new FlxUIButton(470, 505, null, callbackFactory(2)));
+        _buttons.push(new FlxUIButton(530, 320, null, callbackFactory(2)));
         _buttons[2].loadGraphic("assets/images/stage_icon.png", true,
                                 STAGE_BUTTON_SIZE, STAGE_BUTTON_SIZE);
         _buttons[2].antialiasing = true;
 
-        _buttons.push(new FlxUIButton(500, 505, null, callbackFactory(3)));
+        _buttons.push(new FlxUIButton(480, 420, null, callbackFactory(3)));
         _buttons[3].loadGraphic("assets/images/stage_icon.png", true,
                                 STAGE_BUTTON_SIZE, STAGE_BUTTON_SIZE);
         _buttons[3].antialiasing = true;

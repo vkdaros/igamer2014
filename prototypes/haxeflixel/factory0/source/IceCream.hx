@@ -11,7 +11,7 @@ class IceCream extends FlxSpriteGroup {
     // Coordinates in tile matrix.
     public var i:Int;
     public var j:Int;
-    public  var direction:Int;
+    public var direction:Int;
 
     private var _shaking:Bool;
     private var _tween:FlxTween;
