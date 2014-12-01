@@ -47,6 +47,9 @@ class Constants {
     public static inline var SLIDE_MENU_MARGIN:Int     = 20;
     public static inline var SLIDE_MENU_DURATION:Float = 0.5;
 
+    // 
+    public static inline var POPUP_BACKGROUND_COLOR:Int = 0x33CCCCCC;
+
     // Game elements.
     public static inline var DISPENSER:Int = 0;
     public static inline var DOSER:Int     = 1;
