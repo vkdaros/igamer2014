@@ -1,9 +1,9 @@
 package;
 
-import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
+import flixel.util.FlxTimer;
 import flixel.group.FlxSpriteGroup;
 import flixel.plugin.MouseEventManager;
 
@@ -20,14 +20,14 @@ class SlideMenu extends FlxSpriteGroup {
     private var _tween:FlxTween;
 
     public function new() {
-        super(FlxG.width - SLIDE_MENU_MARGIN, 0);
+        super(GAME_WIDTH - SLIDE_MENU_WIDTH, 0);
 
         // Position of all sprites inside this group will be relative to group's
         // coordinates.
         _background = new FlxSprite(0, 0);
-        _background.makeGraphic(SLIDE_MENU_WIDTH, FlxG.height,
+        _background.makeGraphic(SLIDE_MENU_WIDTH, GAME_HEIGHT,
                                 SLIDE_MENU_COLOR);
-        _isHidden = true;
+        _isHidden = false;
         _slidingIn = false;
         _slidingOut = false;
         _overMenuItem = false;
@@ -38,6 +38,9 @@ class SlideMenu extends FlxSpriteGroup {
 
         add(_background);
         addContent();
+
+        // Show the menu for a while and hide it at the beginning of stage.
+        var timer = new FlxTimer(1, function(t:FlxTimer):Void{slideIn();});
     }
 
     private function addContent():Void {
@@ -156,7 +159,7 @@ class SlideMenu extends FlxSpriteGroup {
             }
         }
         _tween = FlxTween.linearMotion(this, x, y,
-                                       FlxG.width - SLIDE_MENU_WIDTH, 0,
+                                       GAME_WIDTH - SLIDE_MENU_WIDTH, 0,
                                        SLIDE_MENU_DURATION, true, options);
     }
 
@@ -178,7 +181,7 @@ class SlideMenu extends FlxSpriteGroup {
             }
         }
         _tween = FlxTween.linearMotion(this, x, y,
-                                       FlxG.width - SLIDE_MENU_MARGIN, 0,
+                                       GAME_WIDTH - SLIDE_MENU_MARGIN, 0,
                                        SLIDE_MENU_DURATION, true, options);
     }
 }
