@@ -5,6 +5,8 @@ import flixel.group.FlxSpriteGroup;
 import flixel.plugin.MouseEventManager;
 import flixel.FlxG;
 
+import flash.geom.Rectangle;
+
 import Constants.*;
 import IceCream;
 
@@ -59,32 +61,40 @@ class Device extends FlxSpriteGroup {
     }
 
     /**
-     * Handler of the mouse down event for the device. It handles the event for both the body and the top sprites.
-     * @param sprite FlxSprite with the sprite for which the mouse event occurred.
+     * Handler of the mouse down event for the device. It handles the event for
+     * both the body and the top sprites.
+     * @param sprite FlxSprite with the sprite for which the mouse event
+     * occurred.
      */
     public function onDown(sprite:FlxSprite):Void {
         
     }
 
     /**
-     * Handler of the mouse up event for the device. It handles the event for both the body and the top sprites.
-     * @param sprite FlxSprite with the sprite for which the mouse event occurred.
+     * Handler of the mouse up event for the device. It handles the event for
+     * both the body and the top sprites.
+     * @param sprite FlxSprite with the sprite for which the mouse event
+     * occurred.
      */
     public function onUp(sprite:FlxSprite):Void {
         FlxG.state.openSubState(new DevicePopup(this));
     }
 
     /**
-     * Handler of the mouse over event for the device. It handles the event for both the body and the top sprites.
-     * @param sprite FlxSprite with the sprite for which the mouse event occurred.
+     * Handler of the mouse over event for the device. It handles the event for
+     * both the body and the top sprites.
+     * @param sprite FlxSprite with the sprite for which the mouse event
+     * occurred.
      */
     public function onOver(sprite:FlxSprite):Void {
         
     }
 
     /**
-     * Handler of the mouse out event for the device. It handles the event for both the body and the top sprites.
-     * @param sprite FlxSprite with the sprite for which the mouse event occurred.
+     * Handler of the mouse out event for the device. It handles the event for
+     * both the body and the top sprites.
+     * @param sprite FlxSprite with the sprite for which the mouse event
+     * occurred.
      */
     public function onOut(sprite:FlxSprite):Void {
         

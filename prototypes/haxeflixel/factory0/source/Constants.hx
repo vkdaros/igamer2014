@@ -57,8 +57,14 @@ class Constants {
     public static inline var SLIDE_MENU_MARGIN:Int     = 20;
     public static inline var SLIDE_MENU_DURATION:Float = 0.5;
 
-    // 
+    // Device popup constants.
     public static inline var POPUP_BACKGROUND_COLOR:Int = 0x33CCCCCC;
+    public static inline var POPUP_INFOAREA_BGCOLOR:Int = 0x55FFFFFF;
+    public static inline var POPUP_INFOAREA_FGCOLOR:Int = 0x55000000;
+    public static inline var POPUP_BUTTON_WIDTH:Int     = 50;
+    public static inline var POPUP_BUTTON_HEIGHT:Int    = 50;
+    public static inline var POPUP_BUTTON_HMARGIN:Int   = 5;
+    public static inline var POPUP_BUTTON_VMARGIN:Int   = 15;
 
     // Game elements.
     public static inline var DISPENSER:Int = 0;

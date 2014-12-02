@@ -3,6 +3,34 @@
 	{
 		"selected_items":
 		[
+			[
+				"Px",
+				"PxBitmapFont"
+			],
+			[
+				"FlxBitmap",
+				"FlxBitmapTextField	flixel.text"
+			],
+			[
+				"Flxbitma",
+				"FlxBitmapTextField	flixel.text"
+			],
+			[
+				"log",
+				"LogStyle	class"
+			],
+			[
+				"Device",
+				"DevicePopup	class"
+			],
+			[
+				"MouseEvent",
+				"MouseEventManager	flixel.plugin"
+			],
+			[
+				"Mouseevent",
+				"MouseEventManager	flixel.plugin"
+			]
 		]
 	},
 	"buffers":
@@ -11,15 +39,71 @@
 			"file": "source/Device.hx",
 			"settings":
 			{
-				"buffer_size": 1279,
+				"buffer_size": 2595,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "source/Main.hx",
+			"file": "source/PlayState.hx",
 			"settings":
 			{
-				"buffer_size": 2220,
+				"buffer_size": 15083,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "source/MenuState.hx",
+			"settings":
+			{
+				"buffer_size": 5552,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "source/DevicePopup.hx",
+			"settings":
+			{
+				"buffer_size": 5602,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "source/Constants.hx",
+			"settings":
+			{
+				"buffer_size": 3097,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "source/Dispenser.hx",
+			"settings":
+			{
+				"buffer_size": 3167,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "source/ConveyorTile.hx",
+			"settings":
+			{
+				"buffer_size": 11815,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "source/Doser.hx",
+			"settings":
+			{
+				"buffer_size": 2778,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "source/StageSelectState.hx",
+			"settings":
+			{
+				"buffer_size": 5664,
 				"line_ending": "Unix"
 			}
 		}
@@ -27,7 +111,7 @@
 	"build_system": "Packages/Haxe/Support/Hxml.sublime-build",
 	"command_palette":
 	{
-		"height": 369.0,
+		"height": 392.0,
 		"selected_items":
 		[
 			[
@@ -39,7 +123,11 @@
 	},
 	"console":
 	{
-		"height": 181.0
+		"height": 181.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
 	},
 	"distraction_free":
 	{
@@ -50,13 +138,32 @@
 		"side_bar_visible": false,
 		"status_bar_visible": false
 	},
+	"expanded_folders":
+	[
+		"/home/luiz/igamer2014/prototypes/haxeflixel/factory0",
+		"/home/luiz/igamer2014/prototypes/haxeflixel/factory0/assets",
+		"/home/luiz/igamer2014/prototypes/haxeflixel/factory0/assets/xml",
+		"/home/luiz/igamer2014/prototypes/haxeflixel/factory0/source"
+	],
 	"file_history":
 	[
+		"/home/luiz/igamer2014/prototypes/haxeflixel/factory0/assets/fonts/Courgette.fnt",
+		"/home/luiz/igamer2014/prototypes/haxeflixel/factory0/assets/images/font_courgette.png",
+		"/home/luiz/generate_bitmap_font.py",
+		"/home/luiz/sole_generate_bitmap_font.py",
+		"/home/luiz/igamer2014/prototypes/haxeflixel/factory0/source/MenuState.hx",
+		"/home/luiz/igamer2014/prototypes/haxeflixel/factory0/source/Main.hx",
+		"/home/luiz/.config/sublime-text-3/Packages/Default/Preferences.sublime-settings",
+		"/home/luiz/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
+		"/home/luiz/igamer2014/prototypes/haxeflixel/factory0/assets/xml/empty.xml",
+		"/home/luiz/igamer2014/prototypes/haxeflixel/factory0/source/Log.hx",
+		"/home/luiz/igamer2014/prototypes/haxeflixel/factory0/source/untitled",
+		"/home/luiz/igamer2014/prototypes/haxeflixel/factory0/source/Utils.hx",
 		"/home/luiz/igamer2014/prototypes/haxeflixel/factory0/source/Device.hx"
 	],
 	"find":
 	{
-		"height": 0.0
+		"height": 35.0
 	},
 	"find_in_files":
 	{
@@ -70,6 +177,19 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"tongue",
+			"$",
+			"fire",
+			"flip",
+			".\n",
+			"createU",
+			"clear",
+			"PlayState",
+			"MouseEventMa",
+			"clear",
+			"addDevice",
+			"sortByXY",
+			"_devices"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -87,23 +207,24 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 3,
 			"sheets":
 			[
 				{
 					"buffer": 0,
 					"file": "source/Device.hx",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1279,
+						"buffer_size": 2595,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								564,
-								564
+								488,
+								488
 							]
 						],
 						"settings":
@@ -114,25 +235,58 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 51.0,
 						"zoom_level": 1.0
 					},
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "source/Main.hx",
+					"file": "source/PlayState.hx",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2220,
+						"buffer_size": 15083,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								458,
-								458
+								3483,
+								3483
+							]
+						],
+						"settings":
+						{
+							"haxe-build-id": 0,
+							"syntax": "Packages/Haxe/Haxe.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1853.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "source/MenuState.hx",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5552,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1255,
+								1255
 							]
 						],
 						"settings":
@@ -146,6 +300,193 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "source/DevicePopup.hx",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5602,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3174,
+								3174
+							]
+						],
+						"settings":
+						{
+							"haxe-build-id": 0,
+							"syntax": "Packages/Haxe/Haxe.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1546.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "source/Constants.hx",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3097,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2536,
+								2536
+							]
+						],
+						"settings":
+						{
+							"haxe-build-id": 0,
+							"syntax": "Packages/Haxe/Haxe.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "source/Dispenser.hx",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3167,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								587,
+								587
+							]
+						],
+						"settings":
+						{
+							"haxe-build-id": 0,
+							"syntax": "Packages/Haxe/Haxe.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "source/ConveyorTile.hx",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 11815,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								109,
+								109
+							]
+						],
+						"settings":
+						{
+							"haxe-build-id": 0,
+							"syntax": "Packages/Haxe/Haxe.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1632.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "source/Doser.hx",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2778,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1384,
+								1384
+							]
+						],
+						"settings":
+						{
+							"haxe-build-id": 0,
+							"syntax": "Packages/Haxe/Haxe.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "source/StageSelectState.hx",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5664,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3569,
+								3569
+							]
+						],
+						"settings":
+						{
+							"haxe-build-id": 0,
+							"syntax": "Packages/Haxe/Haxe.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1581.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
 					"type": "text"
 				}
 			]
@@ -153,11 +494,11 @@
 	],
 	"incremental_find":
 	{
-		"height": 0.0
+		"height": 25.0
 	},
 	"input":
 	{
-		"height": 0.0
+		"height": 33.0
 	},
 	"layout":
 	{
@@ -186,9 +527,14 @@
 	{
 		"height": 148.0
 	},
-	"replace":
+	"output.find_results":
 	{
 		"height": 0.0
+	},
+	"project": "SweetSwitches.sublime-project",
+	"replace":
+	{
+		"height": 46.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -207,10 +553,25 @@
 		],
 		"width": 0.0
 	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
 	"show_minimap": true,
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 150.0,
-	"status_bar_visible": true
+	"side_bar_width": 259.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
 }
