@@ -9,6 +9,7 @@ typedef TiledLayer = {
     var width:Int;
     var height:Int;
     var data:Array<Float>;
+    var objects:Array<TiledObject>;
 }
 
 typedef TiledMap = {
@@ -42,4 +43,16 @@ typedef TiledAnimation = {
 typedef TiledAnimationFrame = {
     var duration:Int;
     var tileid:Int;
+}
+
+typedef TiledObject = {
+    var x:Int;
+    var y:Int;
+    var width:Int;
+    var height:Int;
+    var name:String;
+    var type:String;
+    var visible:Bool;
+    var properties:Array<Dynamic>; // Don't know the correct type.
+    var rotation:Int;
 }

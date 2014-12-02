@@ -19,6 +19,10 @@ class ConveyorTile extends FlxSprite {
     private var _rolling:Bool;
     private var _type:Int;
 
+    // When the tile is the end of conveyor belt, it has to handle ice creams in
+    // a different way.
+    private var _isEnd:Bool;
+
     // When fail to deliver ice cream to next tile, this flag is set to true.
     private var _retryDeliver:Bool;
 
@@ -64,6 +68,7 @@ class ConveyorTile extends FlxSprite {
         _grid = grid;
         _direction = direction;
         _type = type;
+        _isEnd = false;
         _retryDeliver = false;
         _addIceCream = addIceCreamCallback;
         _addDevice = addDeviceCallback;
@@ -189,6 +194,16 @@ class ConveyorTile extends FlxSprite {
         // If there is a device in this tile, it transforms the ice cream.
         if (_device != null) {
             _device.transformIceCream(_item);
+        }
+
+        // If this tile is the end of conveyor belt, item goes to the truck.
+        if (_isEnd) {
+            // 'Show' the ice cream to PlayState and let that class decided if
+            // it is the end of the game or if the game should continue.
+            // PlayState.validateResult(_item);
+            _item.destroy();
+            releaseIceCream();
+            return;
         }
 
         var neighbor = getNeighbor(_item.direction);
@@ -328,6 +343,10 @@ class ConveyorTile extends FlxSprite {
             return null;
         }
         return _grid[neighborI][neighborJ];
+    }
+
+    public function setIsEnd(isEnd:Bool):Void {
+        _isEnd = isEnd;
     }
 
     override public function destroy():Void {

@@ -164,6 +164,7 @@ class PlayState extends FlxUIState {
         var jsonFile = Assets.getText(_stageMap[_stageIndex]);
         var map:TiledMap = haxe.Json.parse(jsonFile);
         var dataArray:Array<Float> = null;
+        var objectArray:Array<TiledObject> = null;
 
         _tileGrid = new Array<Array<ConveyorTile>>();
         _conveyorLayer = new FlxTypedGroup<ConveyorTile>();
@@ -171,6 +172,9 @@ class PlayState extends FlxUIState {
         for (layer in map.layers) {
             if (layer.type == "tilelayer") {
                 dataArray = layer.data;
+            }
+            else if (layer.type == "objectgroup") {
+                objectArray = layer.objects;
             }
         }
 
@@ -201,6 +205,15 @@ class PlayState extends FlxUIState {
                                             addIceCream, addDevice);
                 _tileGrid[i].push(tile);
                 _conveyorLayer.add(tile);
+            }
+        }
+
+        for (object in objectArray) {
+            if (object.name == "end_tile") {
+                var endI = cast(object.y / object.height, Int);
+                var endJ = cast(object.x / object.width, Int);
+                _tileGrid[endI][endJ].setIsEnd(true);
+                break;
             }
         }
     }
