@@ -8,6 +8,7 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.ui.FlxButton;
 import flixel.addons.ui.FlxUIState;
+import flixel.addons.ui.FlxUIPopup;
 import flixel.group.FlxGroup;
 import flixel.group.FlxTypedGroup;
 import flixel.group.FlxSpriteGroup;
@@ -326,7 +327,6 @@ class PlayState extends FlxUIState {
      * Remove all devices player has put in the factory.
      */
     public function resetCallback():Void {
-        openSubState(new DevicePopup());
         _devices.callAll("destroy");
         _devices.clear();
 
@@ -337,6 +337,15 @@ class PlayState extends FlxUIState {
         // It is ok to clear this group because only top devices should be here.
         _overConveyorLayer.clear();
     }
+
+    /**
+     * Auxiliary static function to allow displaying popup windows from outside the
+     * PlayState class.
+     * @argument popup Instance of the FlxUIPopup class with the popup to be displayed.
+     */
+    /*public static function showPopup(popup:FlxUIPopup) {
+        openSubState(popup);
+    }*/
 
     /**
      * Return to menu.
@@ -361,6 +370,11 @@ class PlayState extends FlxUIState {
         _devices.add(device);
 
         _overConveyorLayer.sort(sortByXY);
+
+        // The devices are also sorted according to their position on the screen
+        // so the mouse interaction can be properly handled.
+        _devices.sort(sortByXY);
+        setupDevicesMouseInteraction();
     }
 
     private function sortByXY(order:Int, s1:FlxSprite, s2:FlxSprite):Int {
@@ -384,6 +398,27 @@ class PlayState extends FlxUIState {
         }
 
         return result;
+    }
+
+    /**
+     * Auxiliary function to reset all mouse handlers for devices,
+     * so the order of click (for instance), is kept the same as the
+     * order of visualization.
+     */
+    private function setupDevicesMouseInteraction():Void {
+        // First of all, remove all devices from the MouseEventManager
+        for(device in _devices.group)
+            MouseEventManager.remove(device);
+
+        // Now, add them all back. Since the group `_devices` is already sorted according to,
+        // their visual position on the screen, the mouse events shall be handled in the correct order.
+        for(device in _devices.group) {
+            var body:FlxSprite = cast(device, Device).getBodyPiece();
+            var top:FlxSprite = cast(device, Device).getTopPiece();
+            var dev:Device = cast(device, Device);
+            MouseEventManager.add(body, dev.onDown, dev.onUp, dev.onOver, dev.onOut);
+            MouseEventManager.add(top, dev.onDown, dev.onUp, dev.onOver, dev.onOut);
+        }
     }
 
     /**
