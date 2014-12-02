@@ -41,7 +41,7 @@ class ConveyorTile extends FlxSprite {
     // Callback function to add objects to Playstate.
     private var _addIceCream:IceCream->Void;
     private var _addDevice:Device->Void;
-    private var _addSprite:FlxSprite->Void;
+    private var _addTruck:FlxSprite->Void;
 
     private var _device:Device;
     private var _item:IceCream;
@@ -54,11 +54,11 @@ class ConveyorTile extends FlxSprite {
                         direction:Int = SW, animationFrames:Array<Int> = null,
                         addIceCreamCallback:IceCream->Void = null,
                         addDeviceCallback:Device->Void = null,
-                        addSpriteCallback:FlxSprite->Void = null) {
+                        addTruckCallback:FlxSprite->Void = null) {
 
         super(0, 0);
         init(I, J, type, grid, direction, animationFrames, addIceCreamCallback,
-             addDeviceCallback, addSpriteCallback);
+             addDeviceCallback, addTruckCallback);
     }
 
     public function init(I:Int, J:Int, type:Int,
@@ -66,7 +66,7 @@ class ConveyorTile extends FlxSprite {
                          animationFrames:Array<Int> = null,
                          addIceCreamCallback:IceCream->Void = null,
                          addDeviceCallback:Device->Void = null,
-                         addSpriteCallback:FlxSprite->Void = null) {
+                         addTruckCallback:FlxSprite->Void = null) {
         i = I;
         j = J;
         _grid = grid;
@@ -76,7 +76,7 @@ class ConveyorTile extends FlxSprite {
         _retryDeliver = false;
         _addIceCream = addIceCreamCallback;
         _addDevice = addDeviceCallback;
-        _addSprite = addSpriteCallback;
+        _addTruck = addTruckCallback;
 
         x = (TILE_WIDTH / 2.0) * (j - i) + X_OFFSET;
         y = (i + j) * (TILE_HEIGHT / 2.0) + Y_OFFSET;
@@ -378,7 +378,7 @@ class ConveyorTile extends FlxSprite {
         _truck.animation.add("idle", [0], 1, false);
         _truck.animation.add("jump", [0, 1, 2, 3, 4], 10, false);
         _truck.animation.play("jump");
-        _addSprite(_truck);
+        _addTruck(_truck);
     }
 
     override public function destroy():Void {

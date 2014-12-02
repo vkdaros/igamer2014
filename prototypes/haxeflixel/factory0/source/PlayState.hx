@@ -35,6 +35,7 @@ class PlayState extends FlxUIState {
     public static var selectedItem:Int;
 
     private var _tileGrid:Array<Array<ConveyorTile>>;
+    private var _endTile:ConveyorTile;
 
     // Map of <stage index, path to stage file>.
     private var _stageMap:Map<Int, String>;
@@ -102,6 +103,9 @@ class PlayState extends FlxUIState {
         add(_conveyorLayer);
         add(_onConveyorLayer);
         add(_overConveyorLayer);
+        if (_endTile != null) {
+            _endTile.setIsEnd(true);
+        }
 
         _uiLayer= createUI();
         add(_uiLayer);
@@ -224,7 +228,7 @@ class PlayState extends FlxUIState {
                 var tile = new ConveyorTile(i, j, Std.int(tileType), _tileGrid,
                                             tileDirection,
                                             animationMap[Std.int(tileType)],
-                                            addIceCream, addDevice, addSprite);
+                                            addIceCream, addDevice, addTruck);
                 _tileGrid[i].push(tile);
                 _conveyorLayer.add(tile);
             }
@@ -237,7 +241,7 @@ class PlayState extends FlxUIState {
                 var strDir = Reflect.field(object.properties, "direction");
 
                 _tileGrid[endI][endJ].setDirection(translateDirection(strDir));
-                _tileGrid[endI][endJ].setIsEnd(true);
+                _endTile = _tileGrid[endI][endJ];
                 break;
             }
         }
@@ -396,14 +400,12 @@ class PlayState extends FlxUIState {
     /**
      * Calback functions passed to other classes such as ConveyorTile.
      */
-    public function addSprite(sprite:FlxSprite):Void {
+    public function addTruck(sprite:FlxSprite):Void {
         if (sprite == null) {
             trace("ERROR: null pointer for sprite.");
             return;
         }
-        // Maybe it is not the best place to add the truck.
-        _overConveyorLayer.add(sprite);
-        _resort = true;
+        add(sprite);
     }
 
     public function addIceCream(iceCream:IceCream):Void {
