@@ -23,9 +23,9 @@ class Device extends FlxSpriteGroup {
      */
     private function new(parent:ConveyorTile, X:Float, Y:Float,
                          direction:Int = SW) {
-        super(X, Y);
         _parent = parent;
         _direction = direction;
+        super(X, Y);
     }
 
     // Function called whenever an ice cream reaches the device.
