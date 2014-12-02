@@ -194,10 +194,28 @@ class PlayState extends FlxUIState {
             for (j in 0...map.width) {
                 var tileType = dataArray[i * map.width + j];
                 var tileDirection = SW;
+                var west = true;
 
                 if (tileType > TILED_X_FLIP) {
                     tileType -= TILED_X_FLIP;
-                    tileDirection = SE;
+                    tileDirection = SW;
+                    west = false;
+                }
+                if (tileType == 9) {
+                    if (west) {
+                        tileDirection = SW;
+                    }
+                    else {
+                        tileDirection = SE;
+                    }
+                }
+                else if (tileType == 13) {
+                    if (west) {
+                        tileDirection = NW;
+                    }
+                    else {
+                        tileDirection = NE;
+                    }
                 }
                 if (tileType > TILED_Y_FLIP) {
                     tileType -= TILED_Y_FLIP;
