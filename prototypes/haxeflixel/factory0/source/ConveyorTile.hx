@@ -194,8 +194,8 @@ class ConveyorTile extends FlxSprite {
             return;
         }
 
-        // If there is a device in this tile, it transforms the ice cream.
-        if (_device != null) {
+        // If there is a device in this tile, it transforms ice cream (once).
+        if (_device != null && !_retryDeliver) {
             _device.transformIceCream(_item);
         }
 
