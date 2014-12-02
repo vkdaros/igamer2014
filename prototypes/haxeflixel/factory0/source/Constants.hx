@@ -5,6 +5,10 @@ class Constants {
     public static inline var GAME_WIDTH:Int  = 960;
     public static inline var GAME_HEIGHT:Int = 552;
 
+    // Offset of the factory grid with respect of the screen.
+    public static inline var X_OFFSET:Int = 505;
+    public static inline var Y_OFFSET:Int = 100;
+
     // Dimensions of ground tile (without elevation).
     public static inline var TILE_WIDTH:Int  = 100;
     public static inline var TILE_HEIGHT:Int =  50;
@@ -19,6 +23,12 @@ class Constants {
 
     // Dimension of stage button for StageSelectState.
     public static inline var STAGE_BUTTON_SIZE:Int = 56;
+
+    // Truck dimensions.
+    public static inline var TRUCK_FRAME_WIDTH:Int  = 260;
+    public static inline var TRUCK_FRAME_HEIGHT:Int = 230;
+    public static inline var TRUCK_X_OFFSET:Int     =  40;
+    public static inline var TRUCK_Y_OFFSET:Int     = 120;
 
     // Isometric directions.
     public static inline var NE:Int = 0;

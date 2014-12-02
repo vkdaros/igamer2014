@@ -22,6 +22,7 @@ class ConveyorTile extends FlxSprite {
     // When the tile is the end of conveyor belt, it has to handle ice creams in
     // a different way.
     private var _isEnd:Bool;
+    private var _truck:FlxSprite;
 
     // When fail to deliver ice cream to next tile, this flag is set to true.
     private var _retryDeliver:Bool;
@@ -40,6 +41,7 @@ class ConveyorTile extends FlxSprite {
     // Callback function to add objects to Playstate.
     private var _addIceCream:IceCream->Void;
     private var _addDevice:Device->Void;
+    private var _addSprite:FlxSprite->Void;
 
     private var _device:Device;
     private var _item:IceCream;
@@ -51,18 +53,20 @@ class ConveyorTile extends FlxSprite {
     public function new(I:Int, J:Int, type:Int, grid:Array<Array<ConveyorTile>>,
                         direction:Int = SW, animationFrames:Array<Int> = null,
                         addIceCreamCallback:IceCream->Void = null,
-                        addDeviceCallback:Device->Void = null) {
+                        addDeviceCallback:Device->Void = null,
+                        addSpriteCallback:FlxSprite->Void = null) {
 
         super(0, 0);
         init(I, J, type, grid, direction, animationFrames, addIceCreamCallback,
-             addDeviceCallback);
+             addDeviceCallback, addSpriteCallback);
     }
 
     public function init(I:Int, J:Int, type:Int,
                          grid:Array<Array<ConveyorTile>>, direction:Int = SW,
                          animationFrames:Array<Int> = null,
                          addIceCreamCallback:IceCream->Void = null,
-                         addDeviceCallback:Device->Void = null) {
+                         addDeviceCallback:Device->Void = null,
+                         addSpriteCallback:FlxSprite->Void = null) {
         i = I;
         j = J;
         _grid = grid;
@@ -72,11 +76,10 @@ class ConveyorTile extends FlxSprite {
         _retryDeliver = false;
         _addIceCream = addIceCreamCallback;
         _addDevice = addDeviceCallback;
+        _addSprite = addSpriteCallback;
 
-        var xOffset = (FlxG.width / 2.0) + (TILE_WIDTH / 4.0);
-        var yOffset = TILE_HEIGHT * 2;
-        x = (TILE_WIDTH / 2.0) * (j - i) + xOffset;
-        y = (i + j) * (TILE_HEIGHT / 2.0) + yOffset;
+        x = (TILE_WIDTH / 2.0) * (j - i) + X_OFFSET;
+        y = (i + j) * (TILE_HEIGHT / 2.0) + Y_OFFSET;
 
         // TODO: this moves the hitbox. It sholud be the new origin (position)
         //       of the sprite. But origin in Flixel is used only for rotation.
@@ -202,6 +205,9 @@ class ConveyorTile extends FlxSprite {
             // it is the end of the game or if the game should continue.
             // PlayState.validateResult(_item);
             _item.destroy();
+            if (_truck != null) {
+                _truck.animation.play("jump");
+            }
             releaseIceCream();
             return;
         }
@@ -308,6 +314,10 @@ class ConveyorTile extends FlxSprite {
         }
     }
 
+    public function setDirection(direction:Int):Void {
+        _direction = direction;
+    }
+
     private function setDirectionTarget(direction:Int):Void {
         _targetI = i;
         _targetJ = j;
@@ -347,6 +357,28 @@ class ConveyorTile extends FlxSprite {
 
     public function setIsEnd(isEnd:Bool):Void {
         _isEnd = isEnd;
+        _truck = new FlxSprite(x, y);
+        _truck.loadGraphic("assets/images/truck.png", true, TRUCK_FRAME_WIDTH,
+                           TRUCK_FRAME_HEIGHT);
+        _truck.antialiasing = true;
+
+        _truck.setFacingFlip(FlxObject.LEFT, false, false);
+        _truck.setFacingFlip(FlxObject.RIGHT, true, false);
+
+        if (_direction == SW || _direction == NW) {
+            _truck.facing = FlxObject.LEFT;
+            _truck.offset.set(TRUCK_FRAME_WIDTH - TRUCK_X_OFFSET,
+                              TRUCK_Y_OFFSET);
+        }
+        else {
+            _truck.facing = FlxObject.RIGHT;
+            _truck.offset.set(TRUCK_X_OFFSET, TRUCK_Y_OFFSET);
+        }
+        _truck.animation.destroyAnimations();
+        _truck.animation.add("idle", [0], 1, false);
+        _truck.animation.add("jump", [0, 1, 2, 3, 4], 10, false);
+        _truck.animation.play("jump");
+        _addSprite(_truck);
     }
 
     override public function destroy():Void {

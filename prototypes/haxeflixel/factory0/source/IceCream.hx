@@ -1,6 +1,5 @@
 package;
 
-import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxSpriteGroup;
 import flixel.tweens.FlxTween;
@@ -27,10 +26,8 @@ class IceCream extends FlxSpriteGroup {
         _shaking = false;
         _stack = new Array<FlxSprite>();
 
-        var xOffset = FlxG.width / 2;
-        var yOffset = TILE_HEIGHT / 2;
-        var x = (TILE_WIDTH / 2) * (j - i) + xOffset;
-        var y = (i + j) * (TILE_HEIGHT / 2) + yOffset;
+        var x = (TILE_WIDTH / 2) * (j - i) + X_OFFSET;
+        var y = (i + j) * (TILE_HEIGHT / 2) + Y_OFFSET;
 
         super(x, y);
     }

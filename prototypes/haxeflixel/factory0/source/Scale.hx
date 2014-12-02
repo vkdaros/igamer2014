@@ -53,7 +53,6 @@ class Scale extends Device {
         else {
             _bodyPiece.facing = FlxObject.RIGHT;
             _topPiece.facing = FlxObject.RIGHT;
-
         }
 
         switch (_direction) {

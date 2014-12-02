@@ -53,6 +53,6 @@ typedef TiledObject = {
     var name:String;
     var type:String;
     var visible:Bool;
-    var properties:Array<Dynamic>; // Don't know the correct type.
+    var properties:Dynamic; // It's complicated... such as TiledTileSet.tiles.
     var rotation:Int;
 }

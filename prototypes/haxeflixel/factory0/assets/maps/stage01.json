@@ -36,7 +36,7 @@
                  "name":"end_tile",
                  "properties":
                     {
-
+                     "direction":"SW"
                     },
                  "rotation":0,
                  "type":"",

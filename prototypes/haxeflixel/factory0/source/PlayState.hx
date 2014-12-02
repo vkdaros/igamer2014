@@ -89,16 +89,17 @@ class PlayState extends FlxUIState {
         // Plugin needed to detect when player clicks on a sprite.
         FlxG.plugins.add(new MouseEventManager());
 
-        // Create current level from a Tiled file.
-        initStageMap();
-        initTileGrid();
-        add(_conveyorLayer);
-
         // Objects created outside PlayState class.
         _iceCreams = new FlxSpriteGroup();
         _devices = new FlxSpriteGroup();
         _onConveyorLayer = new FlxSpriteGroup();
         _overConveyorLayer = new FlxSpriteGroup();
+
+        // Create current level from a Tiled file.
+        initStageMap();
+        initTileGrid();
+
+        add(_conveyorLayer);
         add(_onConveyorLayer);
         add(_overConveyorLayer);
 
@@ -205,7 +206,7 @@ class PlayState extends FlxUIState {
                 var tile = new ConveyorTile(i, j, Std.int(tileType), _tileGrid,
                                             tileDirection,
                                             animationMap[Std.int(tileType)],
-                                            addIceCream, addDevice);
+                                            addIceCream, addDevice, addSprite);
                 _tileGrid[i].push(tile);
                 _conveyorLayer.add(tile);
             }
@@ -215,9 +216,27 @@ class PlayState extends FlxUIState {
             if (object.name == "end_tile") {
                 var endI = cast(object.y / object.height, Int);
                 var endJ = cast(object.x / object.width, Int);
+                var strDir = Reflect.field(object.properties, "direction");
+
+                _tileGrid[endI][endJ].setDirection(translateDirection(strDir));
                 _tileGrid[endI][endJ].setIsEnd(true);
                 break;
             }
+        }
+    }
+
+    private function translateDirection(str:String):Int {
+        switch (str) {
+            case "NE":
+                return NE;
+            case "NW":
+                return NW;
+            case "SW":
+                return SW;
+            case "SE":
+                return SE;
+            default:
+                return -1;
         }
     }
 
@@ -359,6 +378,16 @@ class PlayState extends FlxUIState {
     /**
      * Calback functions passed to other classes such as ConveyorTile.
      */
+    public function addSprite(sprite:FlxSprite):Void {
+        if (sprite == null) {
+            trace("ERROR: null pointer for sprite.");
+            return;
+        }
+        // Maybe it is not the best place to add the truck.
+        _overConveyorLayer.add(sprite);
+        _resort = true;
+    }
+
     public function addIceCream(iceCream:IceCream):Void {
         _resort = true;
         _onConveyorLayer.add(iceCream);
