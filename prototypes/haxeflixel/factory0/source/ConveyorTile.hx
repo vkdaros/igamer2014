@@ -73,16 +73,16 @@ class ConveyorTile extends FlxSprite {
         _addIceCream = addIceCreamCallback;
         _addDevice = addDeviceCallback;
 
-        var xOffset = FlxG.width / 2;
-        var yOffset = TILE_HEIGHT / 2;
-        x = (TILE_WIDTH / 2) * (j - i) + xOffset;
-        y = (i + j) * (TILE_HEIGHT / 2) + yOffset;
+        var xOffset = (FlxG.width / 2.0) + (TILE_WIDTH / 4.0);
+        var yOffset = TILE_HEIGHT * 2;
+        x = (TILE_WIDTH / 2.0) * (j - i) + xOffset;
+        y = (i + j) * (TILE_HEIGHT / 2.0) + yOffset;
 
         // TODO: this moves the hitbox. It sholud be the new origin (position)
         //       of the sprite. But origin in Flixel is used only for rotation.
         //       Best approach would be create MySprite which extends FlXSprite
         //       and handle offset the way it is needed.
-        offset.set(TILE_WIDTH / 2, TILE_HEIGHT / 2);
+        offset.set(TILE_WIDTH / 2.0, TILE_HEIGHT / 2.0);
 
         // loadGraphic(PATH, ANIMATED, FRAME_WIDTH, FRAME_HEIGHT)
         loadGraphic("assets/images/conveyor.png", true, TILE_FRAME_WIDTH,

@@ -80,7 +80,9 @@ class PlayState extends FlxUIState {
         _isPlaying = false;
 
         // Add background image.
-        add(new FlxSprite(0, 0, "assets/images/bg_debug2.png"));
+        var bg = new FlxSprite(0, 0, "assets/images/factory_background2.png");
+        bg.antialiasing = true;
+        add(bg);
 
         super.create();
 
