@@ -8,19 +8,23 @@ import flash.events.KeyboardEvent;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.ui.FlxUIState;
-import flixel.addons.ui.FlxUIText;
 import flixel.addons.ui.FlxUIButton;
-import flixel.text.FlxText;
-import flixel.util.FlxMath;
 
 import flixel.system.scaleModes.FillScaleMode;
 import flixel.system.scaleModes.FixedScaleMode;
 import flixel.system.scaleModes.RatioScaleMode;
 import flixel.system.scaleModes.RelativeScaleMode;
 
+//import flixel.text.FlxBitmapTextField;
+import BitmapTextField;
+import flixel.text.pxText.PxTextAlign;
+import flixel.text.pxText.PxBitmapFont;
+import openfl.Assets;
+
 // Multi-language support.
 import firetongue.FireTongue;
 
+import Constants.*;
 import StageSelectState;
 
 /**
@@ -51,7 +55,7 @@ class MenuState extends FlxUIState {
 
         super.create();
 
-        add(new FlxSprite(0, 0, "assets/images/bg_debug2.png"));
+        add(new FlxSprite(0, 0, "assets/images/bg.png"));
         createUI();
         initEventListener();
     }
@@ -85,15 +89,27 @@ class MenuState extends FlxUIState {
     }
 
     private function createUITitle():Void {
-        // FlxUIText(x, y, width, text)
-        // _tongue.get(csv_field, translation_context)
-        var titleText = new FlxUIText(50, 100, 100, _tongue.get("$GAME_NAME",
-                                                                "ui"));
-        titleText.x = (FlxG.width - titleText.width) / 2;
-        titleText.alignment = "center";
+        var textBytes = Assets.getText("assets/fonts/Courgette.fnt");
+        var XMLData = Xml.parse(textBytes);
+        var bitmapFont = new PxBitmapFont();
+        var bitmapData = Assets.getBitmapData("assets/fonts/Courgette.png");
+        var font = bitmapFont.loadAngelCode(bitmapData, XMLData);
 
-        // Add titleText to the scene.
-        add(titleText);
+        // Stores a font for global use using an identifier.
+        // To retrieve, user fetch("name"):PxBitmapFont.
+        PxBitmapFont.store("Courgette", font);
+
+        var title = new BitmapTextField(font);
+        title.text = _tongue.get("$GAME_NAME", "ui");
+        title.alignment = PxTextAlign.CENTER;
+        title.x = GAME_WIDTH * 0.22;
+        title.y = 20;
+        title.useTextColor = false;
+        title.multiLine = true;
+        title.letterSpacing = -10;
+        title.lineSpacing = -50;
+        title.antialiasing = true;
+        add(title);
     }
 
     private function createUIButtons():Void {

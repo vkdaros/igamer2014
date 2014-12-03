@@ -57,7 +57,7 @@ class StageSelectState extends FlxUIState {
 
         _buttons = new Array<FlxUIButton>();
 
-        add(new FlxSprite(0, 0, "assets/images/bg_debug2.png"));
+        add(new FlxSprite(0, 0, "assets/images/bg.png"));
         var brazil = new FlxSprite(0, 0, "assets/images/brazil_map.png");
         brazil.x = (FlxG.width - brazil.width) / 2;
         brazil.antialiasing = true;
