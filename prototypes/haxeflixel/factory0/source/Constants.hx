@@ -52,9 +52,9 @@ class Constants {
     public static inline var BOX_MOVEMENT_DURATION:Int = 1; // seconds.
 
     // Slide menu properties.
-    public static inline var SLIDE_MENU_WIDTH:Int      = 180;
+    public static inline var SLIDE_MENU_WIDTH:Int      = 210;
     public static inline var SLIDE_MENU_COLOR:Int      = 0x99B0C4DE;
-    public static inline var SLIDE_MENU_MARGIN:Int     = 20;
+    public static inline var SLIDE_MENU_MARGIN:Int     = 40;
     public static inline var SLIDE_MENU_DURATION:Float = 0.5;
 
     // Device popup constants.
