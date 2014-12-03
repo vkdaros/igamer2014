@@ -157,6 +157,7 @@ class DevicePopup extends FlxUIPopup {
         //_infoArea.backgroundColor = POPUP_INFOAREA_BGCOLOR;
         _infoArea.alignment = PxTextAlign.CENTER;
         _infoArea.offset.y = font.getFontHeight() * _infoArea.fontScale / 2;
+        _infoArea.antialiasing = true;
         add(_infoArea);
         _currentValue = 1;
 
