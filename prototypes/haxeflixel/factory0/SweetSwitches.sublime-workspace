@@ -47,7 +47,7 @@
 			"file": "source/PlayState.hx",
 			"settings":
 			{
-				"buffer_size": 15083,
+				"buffer_size": 16043,
 				"line_ending": "Unix"
 			}
 		},
@@ -55,7 +55,7 @@
 			"file": "source/MenuState.hx",
 			"settings":
 			{
-				"buffer_size": 5552,
+				"buffer_size": 6100,
 				"line_ending": "Unix"
 			}
 		},
@@ -63,7 +63,23 @@
 			"file": "source/DevicePopup.hx",
 			"settings":
 			{
-				"buffer_size": 5602,
+				"buffer_size": 6469,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "source/RoundFrame.hx",
+			"settings":
+			{
+				"buffer_size": 1099,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "source/BitmapTextField.hx",
+			"settings":
+			{
+				"buffer_size": 23899,
 				"line_ending": "Unix"
 			}
 		},
@@ -87,7 +103,7 @@
 			"file": "source/ConveyorTile.hx",
 			"settings":
 			{
-				"buffer_size": 11815,
+				"buffer_size": 11808,
 				"line_ending": "Unix"
 			}
 		},
@@ -103,7 +119,7 @@
 			"file": "source/StageSelectState.hx",
 			"settings":
 			{
-				"buffer_size": 5664,
+				"buffer_size": 5657,
 				"line_ending": "Unix"
 			}
 		}
@@ -147,6 +163,8 @@
 	],
 	"file_history":
 	[
+		"/home/luiz/igamer2014/prototypes/haxeflixel/factory0/source/Log.hx",
+		"/home/luiz/igamer2014/prototypes/haxeflixel/factory0/source/Reg.hx",
 		"/home/luiz/igamer2014/prototypes/haxeflixel/factory0/assets/fonts/Courgette.fnt",
 		"/home/luiz/igamer2014/prototypes/haxeflixel/factory0/assets/images/font_courgette.png",
 		"/home/luiz/generate_bitmap_font.py",
@@ -156,7 +174,6 @@
 		"/home/luiz/.config/sublime-text-3/Packages/Default/Preferences.sublime-settings",
 		"/home/luiz/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
 		"/home/luiz/igamer2014/prototypes/haxeflixel/factory0/assets/xml/empty.xml",
-		"/home/luiz/igamer2014/prototypes/haxeflixel/factory0/source/Log.hx",
 		"/home/luiz/igamer2014/prototypes/haxeflixel/factory0/source/untitled",
 		"/home/luiz/igamer2014/prototypes/haxeflixel/factory0/source/Utils.hx",
 		"/home/luiz/igamer2014/prototypes/haxeflixel/factory0/source/Device.hx"
@@ -177,6 +194,10 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"_devices",
+			"updateBitmapData",
+			"_height",
+			"height",
 			"tongue",
 			"$",
 			"fire",
@@ -235,10 +256,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 51.0,
+						"translation.y": 1071.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
@@ -247,15 +268,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 15083,
+						"buffer_size": 16043,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3483,
-								3483
+								13629,
+								13629
 							]
 						],
 						"settings":
@@ -266,10 +287,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1853.0,
+						"translation.y": 6919.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
@@ -278,15 +299,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5552,
+						"buffer_size": 6100,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1255,
-								1255
+								599,
+								599
 							]
 						],
 						"settings":
@@ -300,7 +321,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
@@ -309,15 +330,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5602,
+						"buffer_size": 6469,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3174,
-								3174
+								2767,
+								2767
 							]
 						],
 						"settings":
@@ -328,7 +349,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1546.0,
+						"translation.y": 1275.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -336,6 +357,66 @@
 				},
 				{
 					"buffer": 4,
+					"file": "source/RoundFrame.hx",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1099,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								678,
+								678
+							]
+						],
+						"settings":
+						{
+							"haxe-build-id": 0,
+							"syntax": "Packages/Haxe/Haxe.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 182.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "source/BitmapTextField.hx",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 23899,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								8625,
+								8625
+							]
+						],
+						"settings":
+						{
+							"haxe-build-id": 0,
+							"syntax": "Packages/Haxe/Haxe.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 9103.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
 					"file": "source/Constants.hx",
 					"semi_transient": false,
 					"settings":
@@ -362,11 +443,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
+					"buffer": 7,
 					"file": "source/Dispenser.hx",
 					"semi_transient": false,
 					"settings":
@@ -393,24 +474,24 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 8,
 					"type": "text"
 				},
 				{
-					"buffer": 6,
+					"buffer": 8,
 					"file": "source/ConveyorTile.hx",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 11815,
+						"buffer_size": 11808,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								109,
-								109
+								0,
+								0
 							]
 						],
 						"settings":
@@ -424,11 +505,11 @@
 						"translation.y": 1632.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 7,
 					"type": "text"
 				},
 				{
-					"buffer": 7,
+					"buffer": 9,
 					"file": "source/Doser.hx",
 					"semi_transient": false,
 					"settings":
@@ -455,16 +536,16 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 7,
+					"stack_index": 9,
 					"type": "text"
 				},
 				{
-					"buffer": 8,
+					"buffer": 10,
 					"file": "source/StageSelectState.hx",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5664,
+						"buffer_size": 5657,
 						"regions":
 						{
 						},
@@ -486,7 +567,7 @@
 						"translation.y": 1581.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 8,
+					"stack_index": 10,
 					"type": "text"
 				}
 			]

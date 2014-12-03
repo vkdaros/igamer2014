@@ -6,7 +6,6 @@ import flixel.addons.ui.FlxUIPopup;
 import flixel.plugin.MouseEventManager;
 import flixel.FlxSprite;
 import flixel.FlxObject;
-import flixel.text.FlxBitmapTextField;
 import flixel.text.pxText.PxTextAlign;
 import flixel.text.pxText.PxBitmapFont;
 import openfl.Assets;
@@ -34,6 +33,33 @@ class DevicePopup extends FlxUIPopup {
      */
     private var _background:FlxSprite;
 
+    /** Text field for presenting counting data for the device. */
+    private var _infoArea:BitmapTextField;
+
+    /**
+     * Indication if an action has just been performed (to avoid forwarding
+     * click events to the fake background and close the menu when buttons are
+     * clicked).
+     */
+    private var _actionPerformed:Bool;
+
+    /** The current value of the main device configuration. */
+    public var _currentValue(default, set):Int;
+
+    /**
+     * Setter of the _currentValue property.
+     * @param value Integer with the new value for the property. The value must
+     * be in the range [1, 3].
+     * @return Integer with the value of the property.
+     */
+    private function set__currentValue(value:Int): Int {
+        if(value >= 1 && value <= 3) {
+            _currentValue = value;
+            _infoArea.text = "" + _currentValue;
+        }
+        return _currentValue;
+    }
+
     /**
      * Class constructor.
      * @param device Instance of a Device to be manipulated by the popup.
@@ -41,6 +67,7 @@ class DevicePopup extends FlxUIPopup {
     public function new(device:Device) {
         super();
         _device = device;
+        _actionPerformed = false;
     }
 
     /**
@@ -55,21 +82,25 @@ class DevicePopup extends FlxUIPopup {
          * Handler of the up button.
          */
         var upFunction = function():Void {
-            Log.info("Up Clicked!");
+            _actionPerformed = true;
+            _currentValue++;
         }
 
         /**
          * Handler of the down button.
          */
         var downFunction = function():Void {
-            Log.info("Down Clicked!");
+            _actionPerformed = true;
+            _currentValue--;
         }
 
         /**
          * Handler of the reset button.
          */
         var resetFunction = function():Void {
-            Log.info("Reset Clicked!");
+            _actionPerformed = true;
+            cast(FlxG.state, PlayState).removeDevice(_device);
+            close();
         }
 
         /**
@@ -77,7 +108,10 @@ class DevicePopup extends FlxUIPopup {
          * @param sprite Instance of the FlxSprite clicked.
          */
         var closeFunction = function(sprite:FlxSprite):Void {
-            close();
+            if(_actionPerformed)
+                _actionPerformed = false;
+            else
+                close();
         }
 
         _background = new flixel.FlxSprite(0, 0);
@@ -112,27 +146,19 @@ class DevicePopup extends FlxUIPopup {
 
         var textBytes = Assets.getText("assets/fonts/Courgette.fnt");
         var XMLData = Xml.parse(textBytes);
-        var font:PxBitmapFont = new PxBitmapFont().loadAngelCode(Assets.getBitmapData("assets/fonts/Courgette.png"), XMLData);
+        var font:PxBitmapFont = new PxBitmapFont().loadAngelCode(
+                Assets.getBitmapData("assets/fonts/Courgette.png"), XMLData);
 
-        var infoArea = new FlxBitmapTextField(font);
-        //infoArea.x = bbox.right + 2 * POPUP_BUTTON_HMARGIN;
-        //infoArea.y = bbox.y + bbox.height / 2;
-        infoArea.text = _tongue.get("$STAGE_SELECT", "ui");
-        infoArea.x = 10;
-        infoArea.y = 10;
-        infoArea.useTextColor = false;
-        //infoArea.fixedWidth = false;
-        //infoArea.lineSpacing = 5;
-        //infoArea.padding = 5;
-        infoArea.fontScale = 0.5;
-        //infoArea.width = 300;
-        //infoArea.height = 200;
-        //infoArea.background = true;
-        //infoArea.backgroundColor = POPUP_INFOAREA_BGCOLOR;
-        //infoArea.color = POPUP_INFOAREA_FGCOLOR;
-        infoArea.alignment = PxTextAlign.CENTER;
-        //infoArea.shadow = true;
-        add(infoArea);
+        _infoArea = new BitmapTextField(font);
+        _infoArea.x = bbox.right + POPUP_BUTTON_WIDTH + 2 * POPUP_BUTTON_HMARGIN;
+        _infoArea.y = bbox.y + bbox.height / 2;
+        _infoArea.useTextColor = false;
+        _infoArea.fontScale = 0.5;
+        //_infoArea.backgroundColor = POPUP_INFOAREA_BGCOLOR;
+        _infoArea.alignment = PxTextAlign.CENTER;
+        _infoArea.offset.y = font.getFontHeight() * _infoArea.fontScale / 2;
+        add(_infoArea);
+        _currentValue = 1;
 
         // Reset button
         var resetButton = new FlxButton(bbox.x + (bbox.width / 2) -

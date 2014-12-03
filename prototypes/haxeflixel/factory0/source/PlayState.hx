@@ -428,6 +428,17 @@ class PlayState extends FlxUIState {
         setupDevicesMouseInteraction();
     }
 
+    /**
+     * Removes the given device from the game.
+     * @param device The instance of the Device to remove from the game.
+     */
+    public function removeDevice(device:Device):Void {
+        _onConveyorLayer.remove(device.getBodyPiece());
+        _overConveyorLayer.remove(device.getTopPiece());
+        _devices.remove(device);
+        MouseEventManager.remove(device);
+    }
+
     private function sortByXY(order:Int, s1:FlxSprite, s2:FlxSprite):Int {
         var result:Int = 0;
         // Sprite with smaller y is drawn first.
