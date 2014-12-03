@@ -102,12 +102,12 @@ class MenuState extends FlxUIState {
         var title = new BitmapTextField(font);
         title.text = _tongue.get("$GAME_NAME", "ui");
         title.alignment = PxTextAlign.CENTER;
-        title.x = GAME_WIDTH * 0.22;
+        title.x = GAME_WIDTH * 0.24;
         title.y = 20;
         title.useTextColor = false;
         title.multiLine = true;
-        title.letterSpacing = -10;
-        title.lineSpacing = -50;
+        title.letterSpacing = -17;
+        title.lineSpacing = -60;
         title.antialiasing = true;
         add(title);
     }
@@ -115,27 +115,32 @@ class MenuState extends FlxUIState {
     private function createUIButtons():Void {
         /* Play button */
         // FlxUIButton(x, y, label)
-        var playButton = new FlxUIButton(20, 300, _tongue.get("$MENU_PLAY",
+        var playButton = new FlxUIButton(20, 320, _tongue.get("$MENU_PLAY",
                                                                "ui"));
         playButton.params = ["play"];
         //playButton.id = "?";
         playButton.x = (FlxG.width - playButton.width) / 2;
 
-        // Add button to the scene.
-        add(playButton);
-
         /* Switch language buttons */
-        var enButton = new FlxUIButton(20, 400, _tongue.get("$LANGUAGE:EN-US",
+        var enButton = new FlxUIButton(20, 370, _tongue.get("$LANGUAGE:EN-US",
                                                             "index"));
-        var ptButton = new FlxUIButton(20, 430, _tongue.get("$LANGUAGE:PT-BR",
+        var ptButton = new FlxUIButton(20, 420, _tongue.get("$LANGUAGE:PT-BR",
                                                             "index"));
-        //TODO:ExitButton.
         enButton.params = ["en-US"];
         ptButton.params = ["pt-BR"];
         enButton.x = (FlxG.width - enButton.width) / 2;
         ptButton.x = (FlxG.width - ptButton.width) / 2;
+
+        var exitButton = new FlxUIButton(20, 470, _tongue.get("$MENU_EXIT",
+                                                              "ui"));
+        exitButton.params = ["exit"];
+        exitButton.x = (FlxG.width - exitButton.width) / 2;
+
+        // Add buttons to the scene.
+        add(playButton);
         add(enButton);
         add(ptButton);
+        add(exitButton);
     }
 
     public override function getRequest(id:String, sender:Dynamic, data:Dynamic,
@@ -151,6 +156,9 @@ class MenuState extends FlxUIState {
                     switch (cast(params[0], String)) {
                         case "play":
                             FlxG.switchState(new StageSelectState());
+
+                        case "exit":
+                            System.exit(0);
 
                         case "en-US":
                             switchLanguage("en-US");
