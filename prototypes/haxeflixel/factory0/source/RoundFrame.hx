@@ -46,7 +46,7 @@ class RoundFrame extends FlxSprite {
 
 		var lineStyle:LineStyle = { thickness: 2, color: _lineColor };
 		var fillStyle:FillStyle = { hasFill: true, color: _fillColor };
-		
+
 		FlxSpriteUtil.drawRoundRect(this, _x, _y, _w, _h, 2, 2, _fillColor, lineStyle, fillStyle, null);
 	}
 }
