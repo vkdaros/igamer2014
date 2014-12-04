@@ -68,7 +68,6 @@ class DevicePopup extends FlxUIPopup {
         super();
         _device = device;
         _actionPerformed = false;
-        _currentValue = 1;
     }
 
     /**
@@ -86,9 +85,6 @@ class DevicePopup extends FlxUIPopup {
         MouseEventManager.add(_background, null, quitCallback);
 
         var font = getFont();
-		var teste = new FancyLabel(10, 10, 100, 100, "1", font, 0.5,
-                                   FlxColor.RED, FlxColor.WHITE, 5, 5, 5);
-		add(teste);
 
         // Rectangle with the bounding box of the device
         var bbox = new Rectangle(_device.x - _device.offset.x,
@@ -97,6 +93,7 @@ class DevicePopup extends FlxUIPopup {
 
         createButtons(bbox);
         createInfoArea(bbox);
+        _currentValue = 1;
     }
 
     private function createButtons(bbox:Rectangle):Void {
@@ -121,36 +118,11 @@ class DevicePopup extends FlxUIPopup {
         downButton.facing = FlxObject.DOWN;
         add(downButton);
 
-<<<<<<< HEAD
-        var textBytes = Assets.getText("assets/fonts/Courgette.fnt");
-        var XMLData = Xml.parse(textBytes);
-        var font:PxBitmapFont = new PxBitmapFont().loadAngelCode(
-                Assets.getBitmapData("assets/fonts/Courgette.png"), XMLData);
-
-        _infoArea = new BitmapTextField(font);
-        _infoArea.x = bbox.right + 2.5 * POPUP_BUTTON_HMARGIN;
-        _infoArea.y = bbox.y + bbox.height / 2 + 2;
-        _infoArea.useTextColor = false;
-        _infoArea.fontScale = 0.5;
-        _infoArea.alignment = PxTextAlign.CENTER;
-        _infoArea.offset.y = font.getFontHeight() * _infoArea.fontScale / 2;
-        _infoArea.antialiasing = true;
-        add(_infoArea);
-        _currentValue = 1;
-		
         // Remove button
         var removeButton = new FlxButton(bbox.left - POPUP_BUTTON_WIDTH,
                                          bbox.bottom - POPUP_BUTTON_HEIGHT / 3,
                                         null, removeCallback);
         removeButton.loadGraphic("assets/images/button_remove.png", true,
-=======
-        // Reset button
-        var clearButton = new FlxButton(bbox.x + (bbox.width / 2) -
-                                                 (POPUP_BUTTON_WIDTH / 2),
-                                        bbox.bottom + POPUP_BUTTON_VMARGIN,
-                                        null, clearCallback);
-        clearButton.loadGraphic("assets/images/button_reset.png", true,
->>>>>>> 28e98593f7b0156945305ce6df302b79acfe5602
                                 POPUP_BUTTON_WIDTH, POPUP_BUTTON_HEIGHT);
         removeButton.antialiasing = true;
         add(removeButton);
@@ -162,9 +134,8 @@ class DevicePopup extends FlxUIPopup {
     private function createInfoArea(bbox:Rectangle):Void {
         var font = getFont();
         _infoArea = new BitmapTextField(font);
-        _infoArea.x = bbox.right + POPUP_BUTTON_WIDTH +
-                      (2 * POPUP_BUTTON_HMARGIN);
-        _infoArea.y = bbox.y + bbox.height / 2;
+        _infoArea.x = bbox.right + 2.5 * POPUP_BUTTON_HMARGIN;
+        _infoArea.y = bbox.y + bbox.height / 2 + 2;
         _infoArea.useTextColor = false;
         _infoArea.fontScale = 0.5;
         _infoArea.alignment = PxTextAlign.CENTER;
@@ -221,7 +192,7 @@ class DevicePopup extends FlxUIPopup {
                    Assets.getBitmapData("assets/fonts/Courgette.png"), XMLData);
             PxBitmapFont.store("Courgette", font);
         }
-        // FIXME: null is been returned!
+
         return font;
     }
 
