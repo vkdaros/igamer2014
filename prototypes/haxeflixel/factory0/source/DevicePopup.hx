@@ -54,7 +54,9 @@ class DevicePopup extends FlxUIPopup {
      */
     private function set__currentValue(value:Int): Int {
         _currentValue = value;
-        _infoArea.text = "" + _currentValue;
+        if (_infoArea != null) {
+            _infoArea.text = "" + _currentValue;
+        }
         return _currentValue;
     }
 
@@ -66,6 +68,7 @@ class DevicePopup extends FlxUIPopup {
         super();
         _device = device;
         _actionPerformed = false;
+        _currentValue = 1;
     }
 
     /**
@@ -82,11 +85,21 @@ class DevicePopup extends FlxUIPopup {
         add(_background);
         MouseEventManager.add(_background, null, quitCallback);
 
+        var font = getFont();
+		var teste = new FancyLabel(10, 10, 100, 100, "1", font, 0.5,
+                                   FlxColor.RED, FlxColor.WHITE, 5, 5, 5);
+		add(teste);
+
         // Rectangle with the bounding box of the device
         var bbox = new Rectangle(_device.x - _device.offset.x,
                                  _device.y - _device.offset.y,
                                  TILE_WIDTH, 2 * TILE_HEIGHT);
 
+        createButtons(bbox);
+        createInfoArea(bbox);
+    }
+
+    private function createButtons(bbox:Rectangle):Void {
         // Up and down buttons (to change basic configuration like flavour,
         // number of scoops, etc)
         var upButton = new FlxButton(bbox.right + POPUP_BUTTON_HMARGIN,
@@ -97,6 +110,7 @@ class DevicePopup extends FlxUIPopup {
         upButton.antialiasing = true;
         add(upButton);
 
+        // Down arrow button.
         var downButton = new FlxButton(bbox.right + POPUP_BUTTON_HMARGIN,
                                        bbox.bottom - POPUP_BUTTON_HEIGHT / 3,
                                        null, downCallback);
@@ -107,6 +121,7 @@ class DevicePopup extends FlxUIPopup {
         downButton.facing = FlxObject.DOWN;
         add(downButton);
 
+<<<<<<< HEAD
         var textBytes = Assets.getText("assets/fonts/Courgette.fnt");
         var XMLData = Xml.parse(textBytes);
         var font:PxBitmapFont = new PxBitmapFont().loadAngelCode(
@@ -128,9 +143,34 @@ class DevicePopup extends FlxUIPopup {
                                          bbox.bottom - POPUP_BUTTON_HEIGHT / 3,
                                         null, removeCallback);
         removeButton.loadGraphic("assets/images/button_remove.png", true,
+=======
+        // Reset button
+        var clearButton = new FlxButton(bbox.x + (bbox.width / 2) -
+                                                 (POPUP_BUTTON_WIDTH / 2),
+                                        bbox.bottom + POPUP_BUTTON_VMARGIN,
+                                        null, clearCallback);
+        clearButton.loadGraphic("assets/images/button_reset.png", true,
+>>>>>>> 28e98593f7b0156945305ce6df302b79acfe5602
                                 POPUP_BUTTON_WIDTH, POPUP_BUTTON_HEIGHT);
         removeButton.antialiasing = true;
         add(removeButton);
+    }
+
+    /**
+     * Create display area where values or other information are drawn.
+     */
+    private function createInfoArea(bbox:Rectangle):Void {
+        var font = getFont();
+        _infoArea = new BitmapTextField(font);
+        _infoArea.x = bbox.right + POPUP_BUTTON_WIDTH +
+                      (2 * POPUP_BUTTON_HMARGIN);
+        _infoArea.y = bbox.y + bbox.height / 2;
+        _infoArea.useTextColor = false;
+        _infoArea.fontScale = 0.5;
+        _infoArea.alignment = PxTextAlign.CENTER;
+        _infoArea.offset.y = font.getFontHeight() * (_infoArea.fontScale / 2);
+        _infoArea.antialiasing = true;
+        add(_infoArea);
     }
 
     /**
@@ -169,6 +209,22 @@ class DevicePopup extends FlxUIPopup {
             close();
     }
 
+    private function getFont():PxBitmapFont {
+        var font:PxBitmapFont = null;
+        font = PxBitmapFont.fetch("Courgette");
+        if (font == null) {
+            // This is a fallback "just in case". Never is called because
+            // MenuState already has used that font.
+            var textBytes = Assets.getText("assets/fonts/Courgette.fnt");
+            var XMLData = Xml.parse(textBytes);
+            font = new PxBitmapFont().loadAngelCode(
+                   Assets.getBitmapData("assets/fonts/Courgette.png"), XMLData);
+            PxBitmapFont.store("Courgette", font);
+        }
+        // FIXME: null is been returned!
+        return font;
+    }
+
     /**
      * Class destructor.
      */
@@ -183,5 +239,5 @@ class DevicePopup extends FlxUIPopup {
      */
     public static function onSubstateClose():Void {
         FlxG.cameras.fade();
-    } 
+    }
 }

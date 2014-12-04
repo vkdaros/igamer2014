@@ -20,7 +20,9 @@ class ScalePopup extends DevicePopup {
     override private function set__currentValue(value:Int): Int {
         if(value >= MIN_SCALE_VALUE && value <= MAX_SCALE_VALUE) {
             _currentValue = value;
-            _infoArea.text = "" + _currentValue;
+            if (_infoArea != null) {
+                _infoArea.text = "" + _currentValue;
+            }
         }
         return _currentValue;
     }
