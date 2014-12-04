@@ -24,9 +24,12 @@ class SlideMenu extends FlxSpriteGroup {
 
         // Position of all sprites inside this group will be relative to group's
         // coordinates.
-        _background = new FlxSprite(0, 0);
+        _background = new FlxSprite(0, 0, "assets/images/slide_menu3.png");
+        _background.antialiasing = true;
+        /*
         _background.makeGraphic(SLIDE_MENU_WIDTH, GAME_HEIGHT,
                                 SLIDE_MENU_COLOR);
+        */
         _isHidden = false;
         _slidingIn = false;
         _slidingOut = false;
@@ -45,33 +48,34 @@ class SlideMenu extends FlxSpriteGroup {
 
     private function addContent():Void {
         // TODO: Refactor all this.
-        var t1 = new FlxSprite(SLIDE_MENU_MARGIN, SLIDE_MENU_MARGIN);
-        t1.loadGraphic("assets/images/doser.png", true, TILE_FRAME_WIDTH,
-                       2 * TILE_FRAME_HEIGHT);
+        var t1 = new FlxSprite(1.5 * SLIDE_MENU_MARGIN, 1.5 * TILE_FRAME_HEIGHT);
+        t1.loadGraphic("assets/images/doser_top.png", false);
         t1.antialiasing = true;
         add(t1);
 
-        var t2 = new FlxSprite(SLIDE_MENU_MARGIN, 3 * TILE_FRAME_HEIGHT);
+        var t2 = new FlxSprite(1.5 * SLIDE_MENU_MARGIN, t1.y + 1.4 * TILE_FRAME_HEIGHT);
         t2.loadGraphic("assets/images/scale_top.png", true, TILE_FRAME_WIDTH,
-                       2 * TILE_FRAME_HEIGHT);
+                       TILE_FRAME_HEIGHT);
         t2.antialiasing = true;
         add(t2);
 
+/*
         var t3 = new FlxSprite(SLIDE_MENU_MARGIN * 3, 5 * TILE_FRAME_HEIGHT);
         t3.loadGraphic("assets/images/icecream_cup.png", true,
                        ICE_CREAM_FRAME_WIDTH, ICE_CREAM_FRAME_HEIGHT);
         t3.antialiasing = true;
         add(t3);
+*/
 
-        var t4 = new FlxSprite(SLIDE_MENU_MARGIN * 3, 6 * TILE_FRAME_HEIGHT);
+        var t4 = new FlxSprite(1.5 * SLIDE_MENU_MARGIN, t2.y + 1.4 * TILE_FRAME_HEIGHT);
         t4.loadGraphic("assets/images/dispenser_top.png", true,
-                       TILE_FRAME_WIDTH, 2 * TILE_FRAME_HEIGHT);
+                       TILE_FRAME_WIDTH, TILE_FRAME_HEIGHT);
         t4.antialiasing = true;
         add(t4);
 
-        var t5 = new FlxSprite(SLIDE_MENU_MARGIN * 3, 7 * TILE_FRAME_HEIGHT);
+        var t5 = new FlxSprite(1.5 * SLIDE_MENU_MARGIN, t4.y + 1.4 * TILE_FRAME_HEIGHT);
         t5.loadGraphic("assets/images/switch_top.png", true,
-                       TILE_FRAME_WIDTH, 2 * TILE_FRAME_HEIGHT);
+                       TILE_FRAME_WIDTH, TILE_FRAME_HEIGHT);
         t5.antialiasing = true;
         add(t5);
 
@@ -93,8 +97,10 @@ class SlideMenu extends FlxSpriteGroup {
                               itemOnOut);
         MouseEventManager.add(t2, null, onUpFactory(SCALE), itemOnOver,
                               itemOnOut);
+        /*
         MouseEventManager.add(t3, null, onUpFactory(CUP), itemOnOver,
                               itemOnOut);
+        */
         MouseEventManager.add(t4, null, onUpFactory(DISPENSER), itemOnOver,
                               itemOnOut);
         MouseEventManager.add(t5, null, onUpFactory(SWITCH), itemOnOver,
