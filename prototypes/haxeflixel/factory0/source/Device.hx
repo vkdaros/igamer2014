@@ -8,6 +8,7 @@ import flixel.FlxG;
 import flash.geom.Rectangle;
 
 import Constants.*;
+import DevicePopup;
 import IceCream;
 
 class Device extends FlxSpriteGroup {
@@ -72,7 +73,8 @@ class Device extends FlxSpriteGroup {
 
     /**
      * Handler of the mouse up event for the device. It handles the event for
-     * both the body and the top sprites.
+     * both the body and the top sprites. Must be overriden by subclasses in
+     * order to get a specific DevicePopup.
      * @param sprite FlxSprite with the sprite for which the mouse event
      * occurred.
      */

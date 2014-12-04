@@ -48,16 +48,13 @@ class DevicePopup extends FlxUIPopup {
     public var _currentValue(default, set):Int;
 
     /**
-     * Setter of the _currentValue property.
-     * @param value Integer with the new value for the property. The value must
-     * be in the range [1, 3].
+     * Setter and getter of _currentValue.
+     * @param value Integer with the new value for the property.
      * @return Integer with the value of the property.
      */
     private function set__currentValue(value:Int): Int {
-        if(value >= 1 && value <= 3) {
-            _currentValue = value;
-            _infoArea.text = "" + _currentValue;
-        }
+        _currentValue = value;
+        _infoArea.text = "" + _currentValue;
         return _currentValue;
     }
 
@@ -79,47 +76,11 @@ class DevicePopup extends FlxUIPopup {
         _xml_id = "empty";
         super.create();
 
-        /**
-         * Handler of the up button.
-         */
-        var upFunction = function():Void {
-            _actionPerformed = true;
-            _currentValue++;
-        }
-
-        /**
-         * Handler of the down button.
-         */
-        var downFunction = function():Void {
-            _actionPerformed = true;
-            _currentValue--;
-        }
-
-        /**
-         * Handler of the reset button.
-         */
-        var resetFunction = function():Void {
-            _actionPerformed = true;
-            cast(FlxG.state, PlayState).removeDevice(_device);
-            close();
-        }
-
-        /**
-         * Handler of the outside click (to close the popup).
-         * @param sprite Instance of the FlxSprite clicked.
-         */
-        var closeFunction = function(sprite:FlxSprite):Void {
-            if(_actionPerformed)
-                _actionPerformed = false;
-            else
-                close();
-        }
-
         _background = new flixel.FlxSprite(0, 0);
         _background.makeGraphic(GAME_WIDTH, GAME_HEIGHT,
                                 POPUP_BACKGROUND_COLOR);
         add(_background);
-        MouseEventManager.add(_background, null, closeFunction);
+        MouseEventManager.add(_background, null, quitCallback);
 
         // Rectangle with the bounding box of the device
         var bbox = new Rectangle(_device.x - _device.offset.x,
@@ -129,7 +90,7 @@ class DevicePopup extends FlxUIPopup {
         // Up and down buttons (to change basic configuration like flavour,
         // number of scoops, etc)
         var upButton = new FlxButton(bbox.right + POPUP_BUTTON_HMARGIN, bbox.y,
-                                     null, upFunction);
+                                     null, upCallback);
         upButton.loadGraphic("assets/images/button_arrow.png", true,
                              POPUP_BUTTON_WIDTH, POPUP_BUTTON_HEIGHT);
         upButton.antialiasing = true;
@@ -137,7 +98,7 @@ class DevicePopup extends FlxUIPopup {
 
         var downButton = new FlxButton(bbox.right + POPUP_BUTTON_HMARGIN,
                                        bbox.bottom - POPUP_BUTTON_WIDTH, null,
-                                       downFunction);
+                                       downCallback);
         downButton.loadGraphic("assets/images/button_arrow.png", true,
                                POPUP_BUTTON_WIDTH, POPUP_BUTTON_HEIGHT);
         downButton.antialiasing = true;
@@ -165,14 +126,50 @@ class DevicePopup extends FlxUIPopup {
 		add(teste);
 		
         // Reset button
-        var resetButton = new FlxButton(bbox.x + (bbox.width / 2) -
+        var clearButton = new FlxButton(bbox.x + (bbox.width / 2) -
                                                  (POPUP_BUTTON_WIDTH / 2),
                                         bbox.bottom + POPUP_BUTTON_VMARGIN,
-                                        null, resetFunction);
-        resetButton.loadGraphic("assets/images/button_reset.png", true,
+                                        null, clearCallback);
+        clearButton.loadGraphic("assets/images/button_reset.png", true,
                                 POPUP_BUTTON_WIDTH, POPUP_BUTTON_HEIGHT);
-        resetButton.antialiasing = true;
-        add(resetButton);
+        clearButton.antialiasing = true;
+        add(clearButton);
+    }
+
+    /**
+     * Handler of the up button.
+     */
+    private function upCallback():Void {
+        _actionPerformed = true;
+        _currentValue++;
+    }
+
+    /**
+     * Handler of the down button.
+     */
+    private function downCallback():Void {
+        _actionPerformed = true;
+        _currentValue--;
+    }
+
+    /**
+     * Handler of the clear button.
+     */
+    private function clearCallback():Void {
+        _actionPerformed = true;
+        cast(FlxG.state, PlayState).removeDevice(_device);
+        close();
+    }
+
+    /**
+     * Handler of the outside click (to close the popup).
+     * @param sprite Instance of the FlxSprite clicked.
+     */
+    private function quitCallback(sprite:FlxSprite):Void {
+        if(_actionPerformed)
+            _actionPerformed = false;
+        else
+            close();
     }
 
     /**

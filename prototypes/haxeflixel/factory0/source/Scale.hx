@@ -84,6 +84,10 @@ class Scale extends Device {
         }
     }
 
+    override public function onUp(sprite:FlxSprite):Void {
+        FlxG.state.openSubState(new ScalePopup(this));
+    }
+
     override public function destroy():Void {
         _bodyPiece.destroy();
         _topPiece.destroy();

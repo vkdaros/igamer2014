@@ -43,7 +43,7 @@ class SlideMenu extends FlxSpriteGroup {
         addContent();
 
         // Show the menu for a while and hide it at the beginning of stage.
-        var timer = new FlxTimer(1, function(t:FlxTimer):Void{slideIn();});
+        var timer = new FlxTimer(0.8, function(t:FlxTimer):Void{slideIn();});
     }
 
     private function addContent():Void {

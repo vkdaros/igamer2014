@@ -73,4 +73,8 @@ class Constants {
     public static inline var BOX:Int       = 3;
     public static inline var SWITCH:Int    = 4;
     public static inline var SCALE:Int     = 5;
+
+    // Scale limits.
+    public static inline var MIN_SCALE_VALUE:Int = 1;
+    public static inline var MAX_SCALE_VALUE:Int = 3;
 }
