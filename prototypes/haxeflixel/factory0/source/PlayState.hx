@@ -437,6 +437,7 @@ class PlayState extends FlxUIState {
         _overConveyorLayer.remove(device.getTopPiece());
         _devices.remove(device);
         MouseEventManager.remove(device);
+        device.destroy();
     }
 
     private function sortByXY(order:Int, s1:FlxSprite, s2:FlxSprite):Int {
