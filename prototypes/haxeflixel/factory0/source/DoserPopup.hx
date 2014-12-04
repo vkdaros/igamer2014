@@ -7,9 +7,9 @@ import Scale;
 import DevicePopup;
 
 /**
- * Popup menu used by the Scale switcher.
+ * Popup menu used by the ice cream doser.
  */
-class ScalePopup extends DevicePopup {
+class DoserPopup extends DevicePopup {
 
     /** 
      * Class constructor.
@@ -27,8 +27,8 @@ class ScalePopup extends DevicePopup {
      * @return Integer with the value of the property.
      */
     override private function set__currentValue(value:Int): Int {
-        if(value >= MIN_SCALE_VALUE && value <= MAX_SCALE_VALUE) {
-            super.set__currentValue(value);
+        if(value >= MIN_DOSER_VALUE && value <= MAX_DOSER_VALUE) {
+            _currentValue = value;
         }
         return _currentValue;
     }
