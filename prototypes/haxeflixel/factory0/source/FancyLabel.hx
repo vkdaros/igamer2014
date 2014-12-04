@@ -40,7 +40,7 @@ class FancyLabel extends FlxSpriteGroup {
 	 * @param lineThickness Int with the thickness of the edge line.
 	 */
 	public function new(x:Float, y:Float, w:Float, h:Float,
-						text: String, font: PxBitmapFont, fontScale: Float = 1,
+						text:String, font:PxBitmapFont, fontScale:Float = 1,
 						lineColor:Int = FlxColor.TRANSPARENT,
 						fillColor:Int = FlxColor.WHITE,
 						ellipseWidth:Float = 0, ellipseHeight:Float = 0,
