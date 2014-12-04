@@ -33,8 +33,8 @@ class ScalePopup extends DevicePopup {
         super.downCallback();
     }
 
-    override function clearCallback():Void {
-        super.clearCallback();
+    override function removeCallback():Void {
+        super.removeCallback();
     }
 
     override function quitCallback(sprite:FlxSprite):Void {

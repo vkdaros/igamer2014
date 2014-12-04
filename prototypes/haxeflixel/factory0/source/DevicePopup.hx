@@ -89,16 +89,17 @@ class DevicePopup extends FlxUIPopup {
 
         // Up and down buttons (to change basic configuration like flavour,
         // number of scoops, etc)
-        var upButton = new FlxButton(bbox.right + POPUP_BUTTON_HMARGIN, bbox.y,
-                                     null, upCallback);
+        var upButton = new FlxButton(bbox.right + POPUP_BUTTON_HMARGIN,
+                        bbox.y - POPUP_BUTTON_WIDTH + POPUP_BUTTON_HEIGHT / 3,
+                        null, upCallback);
         upButton.loadGraphic("assets/images/button_arrow.png", true,
                              POPUP_BUTTON_WIDTH, POPUP_BUTTON_HEIGHT);
         upButton.antialiasing = true;
         add(upButton);
 
         var downButton = new FlxButton(bbox.right + POPUP_BUTTON_HMARGIN,
-                                       bbox.bottom - POPUP_BUTTON_WIDTH, null,
-                                       downCallback);
+                                       bbox.bottom - POPUP_BUTTON_HEIGHT / 3,
+                                       null, downCallback);
         downButton.loadGraphic("assets/images/button_arrow.png", true,
                                POPUP_BUTTON_WIDTH, POPUP_BUTTON_HEIGHT);
         downButton.antialiasing = true;
@@ -112,8 +113,8 @@ class DevicePopup extends FlxUIPopup {
                 Assets.getBitmapData("assets/fonts/Courgette.png"), XMLData);
 
         _infoArea = new BitmapTextField(font);
-        _infoArea.x = bbox.right + POPUP_BUTTON_WIDTH + 2 * POPUP_BUTTON_HMARGIN;
-        _infoArea.y = bbox.y + bbox.height / 2;
+        _infoArea.x = bbox.right + 2.5 * POPUP_BUTTON_HMARGIN;
+        _infoArea.y = bbox.y + bbox.height / 2 + 2;
         _infoArea.useTextColor = false;
         _infoArea.fontScale = 0.5;
         _infoArea.alignment = PxTextAlign.CENTER;
@@ -121,19 +122,15 @@ class DevicePopup extends FlxUIPopup {
         _infoArea.antialiasing = true;
         add(_infoArea);
         _currentValue = 1;
-
-		var teste = new FancyLabel(10, 10, 100, 100, "1", font, 0.5, FlxColor.RED, FlxColor.WHITE, 5, 5, 5);
-		add(teste);
 		
-        // Reset button
-        var clearButton = new FlxButton(bbox.x + (bbox.width / 2) -
-                                                 (POPUP_BUTTON_WIDTH / 2),
-                                        bbox.bottom + POPUP_BUTTON_VMARGIN,
-                                        null, clearCallback);
-        clearButton.loadGraphic("assets/images/button_reset.png", true,
+        // Remove button
+        var removeButton = new FlxButton(bbox.left - POPUP_BUTTON_WIDTH,
+                                         bbox.bottom - POPUP_BUTTON_HEIGHT / 3,
+                                        null, removeCallback);
+        removeButton.loadGraphic("assets/images/button_remove.png", true,
                                 POPUP_BUTTON_WIDTH, POPUP_BUTTON_HEIGHT);
-        clearButton.antialiasing = true;
-        add(clearButton);
+        removeButton.antialiasing = true;
+        add(removeButton);
     }
 
     /**
@@ -153,9 +150,9 @@ class DevicePopup extends FlxUIPopup {
     }
 
     /**
-     * Handler of the clear button.
+     * Handler of the remove button.
      */
-    private function clearCallback():Void {
+    private function removeCallback():Void {
         _actionPerformed = true;
         cast(FlxG.state, PlayState).removeDevice(_device);
         close();
