@@ -6,6 +6,7 @@ import flixel.addons.ui.FlxUIPopup;
 import flixel.plugin.MouseEventManager;
 import flixel.FlxSprite;
 import flixel.FlxObject;
+import flixel.util.FlxColor;
 import flixel.text.pxText.PxTextAlign;
 import flixel.text.pxText.PxBitmapFont;
 import openfl.Assets;
@@ -154,13 +155,15 @@ class DevicePopup extends FlxUIPopup {
         _infoArea.y = bbox.y + bbox.height / 2;
         _infoArea.useTextColor = false;
         _infoArea.fontScale = 0.5;
-        //_infoArea.backgroundColor = POPUP_INFOAREA_BGCOLOR;
         _infoArea.alignment = PxTextAlign.CENTER;
         _infoArea.offset.y = font.getFontHeight() * _infoArea.fontScale / 2;
         _infoArea.antialiasing = true;
         add(_infoArea);
         _currentValue = 1;
 
+		var teste = new FancyLabel(10, 10, 100, 100, "1", font, 0.5, FlxColor.RED, FlxColor.WHITE, 5, 5, 5);
+		add(teste);
+		
         // Reset button
         var resetButton = new FlxButton(bbox.x + (bbox.width / 2) -
                                                  (POPUP_BUTTON_WIDTH / 2),
