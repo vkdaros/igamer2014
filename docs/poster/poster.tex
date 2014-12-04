@@ -1,0 +1,145 @@
+\documentclass[landscape,a1paper,fontscale=0.292]{baposter}
+
+\usepackage[portuguese]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+
+% Necessário para que o BibTeX funcione com o Baposter
+% Esse arquivo precisa estar na mesma pasta do poster.tex
+% Baixe em: 
+% http://www.tex.ac.uk/tex-archive/biblio/bibtex/contrib/authordate/authordate1-4.sty
+\usepackage{authordate1-4}
+
+% The 'caption' package provides a nicer-looking replacement
+\usepackage[labelfont=bf,textfont=it]{caption}
+
+% Habilita subfigure.
+\usepackage{subcaption}
+
+% Habilita o uso de matrix.
+\usepackage{amsmath}
+
+% Habilita ambiente de algoritmos.
+\usepackage[linesnumbered,portuguese]{algorithm2e}
+
+% Divide igualmente o conteúdo da última página entre as duas colunas.
+%\usepackage{flushend}
+
+\usepackage{url}
+
+% Copiado do template original:
+\usepackage{relsize}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{ae}
+
+% Permite colocar direto o nome da imagem no includegraphics.
+\graphicspath{{images/}}
+
+% Distância entre colunas.
+\setlength{\columnsep}{0.7em}
+
+% Espessura da linha vertical que separa as colunas.
+\setlength{\columnseprule}{0mm}
+
+\begin{document}
+\begin{poster}{
+    grid=false,
+    eyecatcher=true, % Exibe imagem à esquerda do título.
+    colspacing=0.7em,
+    %%% Definindo as cores das caixas. %%%
+    headerColorOne=black!45!cyan!15,
+    borderColor=black!45!cyan!15,
+    %%% Estilo da borda. %%%
+    textborder=faded,
+    %%% Estilo da sub-caixa de título de cada caixa. %%%
+    headerborder=open,
+    headershape=roundedright,
+    headershade=plain,
+    background=none,
+    bgColorOne=cyan!10!white,
+    boxheaderheight=2.35em,
+    %%% Espaço reservado para o título, autores e imagens superiores. %%%
+    headerheight=11em,
+    %%% Número de colunas (de 1 a 6). %%%
+    columns=2
+}
+% Imagem superior esquerda.
+{
+    \includegraphics[height=10em]{sweetswitches}
+}
+% Título do pôster.
+{
+    \small
+    In Sweet Switches players will face a series of puzzles inside ice cream
+    factories. The objective is to attach devices to conveyors belt in order to
+    attend a production request. Those devices are analogous to programming
+    statements.
+}
+% Autores e nome da universidade.
+{
+    \small
+    Vinícius K. Daros, Flávio S. C. da Silva\\[0.5em]
+    Laboratório de Interatividade e Tecnologia de Entretenimento Digital
+    \\[0.15em]
+    Instituto de Matemática e Estatística - Universidade de São Paulo\\[0.5em]
+    \texttt{\{vkdaros, fcs\}@ime.usp.br}
+}
+% Imagem superior direita.
+{
+    \parbox[t][5em][b]{8.5em}{
+        \begin{tabular}{l}
+            \includegraphics[width=5em]{usp-logo}\\
+            \includegraphics[width=5em]{universidade}
+        \end{tabular}
+    }
+%    \parbox[t][7.2em][b]{4.5em}{
+%        \includegraphics[height=5.75em]{logo-ime}
+%    }
+}
+
+\headerbox{Resumo}{name = abstract, column = 0, row = 0, span = 1}{
+    Conhecer a forma da pista pode dar muitos benefícios à Inteligência
+    Artificial que controla os carros nos jogos de corrida, mas esse tipo de
+    informação nem sempre está disponível ao NPC. Tendo como plataforma de
+    testes o simulador de corridas TORCS, mostramos neste trabalho um método
+    capaz de construir um modelo de pista baseado apenas em leituras de um
+    número limitado de sensores no carro de corrida. Também apresentamos uma
+    técnica de segmentação do circuito indicando o início e fim de trechos
+    distintos, classificando-os por suas características - como reta, curva
+    suave, curva fechada, entre outros.
+}
+
+\headerbox{Construindo um modelo da pista}{name = model, column = 0,
+                                           below = abstract}{
+    \begin{multicols}{2}
+        Durante uma volta de reconhecimento, o piloto virtual coleta dados
+        através de sensores, como se fosse um robô. Ele tenta se manter no
+        centro da pista, anda relativamente devagar (por volta de $60 Km/h$ em
+        retas e $20 Km/h$ em curvas) e armazena a leitura dos sensores a cada 5
+        metros. Ao fim da volta, os dados são processados. Assim, considerando
+        pares consecutivos de medições, temos pequenos \textbf{segmentos} da
+    \end{multicols}
+}
+
+\headerbox{Segmentação da pista}{name = segmentation, column = 0,
+           below = model}{
+    Agrupar os segmentos em \textbf{trechos} da pista é vantajoso por
+    simplificar o modelo e a interpretação, além de facilitar o uso das
+    informações. Porém para isso, é preciso descobrir se cada segmento faz parte
+    de uma reta ou curva. Usando o sensor de quanto o volante estava virado no
+    início e fim do segmento, conseguimos encontrar quanto o carro mudou de
+    trajetória, ou seja, a \textbf{curvatura} do segmento.
+}
+
+\headerbox{Resultados}{name = results, column = 0, below = segmentation,
+                       span = 2}{
+    Obtivemos resultados satisfatórios de segmentação e classificação nas 18
+    pistas de asfalto que acompanham o \emph{TORCS}. Alguns exemplos estão na
+}
+
+\end{poster}
+\end{document}
