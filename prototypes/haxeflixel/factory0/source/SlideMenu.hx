@@ -48,12 +48,12 @@ class SlideMenu extends FlxSpriteGroup {
 
     private function addContent():Void {
         // TODO: Refactor all this.
-        var t1 = new FlxSprite(1.5 * SLIDE_MENU_MARGIN, 1.5 * TILE_FRAME_HEIGHT);
+        var t1 = new FlxSprite(15 + SLIDE_MENU_MARGIN, 1.5 * TILE_FRAME_HEIGHT);
         t1.loadGraphic("assets/images/doser_top.png", false);
         t1.antialiasing = true;
         add(t1);
 
-        var t2 = new FlxSprite(1.5 * SLIDE_MENU_MARGIN, t1.y + 1.4 * TILE_FRAME_HEIGHT);
+        var t2 = new FlxSprite(15 + SLIDE_MENU_MARGIN, t1.y + 1.4 * TILE_FRAME_HEIGHT);
         t2.loadGraphic("assets/images/scale_top.png", true, TILE_FRAME_WIDTH,
                        TILE_FRAME_HEIGHT);
         t2.antialiasing = true;
@@ -67,13 +67,13 @@ class SlideMenu extends FlxSpriteGroup {
         add(t3);
 */
 
-        var t4 = new FlxSprite(1.5 * SLIDE_MENU_MARGIN, t2.y + 1.4 * TILE_FRAME_HEIGHT);
+        var t4 = new FlxSprite(15 + SLIDE_MENU_MARGIN, t2.y + 1.4 * TILE_FRAME_HEIGHT);
         t4.loadGraphic("assets/images/dispenser_top.png", true,
                        TILE_FRAME_WIDTH, TILE_FRAME_HEIGHT);
         t4.antialiasing = true;
         add(t4);
 
-        var t5 = new FlxSprite(1.5 * SLIDE_MENU_MARGIN, t4.y + 1.4 * TILE_FRAME_HEIGHT);
+        var t5 = new FlxSprite(15 + SLIDE_MENU_MARGIN, t4.y + 1.4 * TILE_FRAME_HEIGHT);
         t5.loadGraphic("assets/images/switch_top.png", true,
                        TILE_FRAME_WIDTH, TILE_FRAME_HEIGHT);
         t5.antialiasing = true;

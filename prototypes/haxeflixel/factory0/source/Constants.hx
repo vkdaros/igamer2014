@@ -54,7 +54,7 @@ class Constants {
     // Slide menu properties.
     public static inline var SLIDE_MENU_WIDTH:Int      = 210;
     public static inline var SLIDE_MENU_COLOR:Int      = 0x99B0C4DE;
-    public static inline var SLIDE_MENU_MARGIN:Int     = 40;
+    public static inline var SLIDE_MENU_MARGIN:Int     = 60;
     public static inline var SLIDE_MENU_DURATION:Float = 0.5;
 
     // Device popup constants.

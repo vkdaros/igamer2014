@@ -55,6 +55,7 @@ class PlayState extends FlxUIState {
     private var _stopButton:FlxButton;
     private var _resetButton:FlxButton;
     private var _exitButton:FlxButton;
+    private var _menu:SlideMenu;
     private var _isPlaying:Bool;
 
     // Flag to resort draw order.
@@ -309,39 +310,43 @@ class PlayState extends FlxUIState {
 
     private function createUI():FlxGroup {
         var ui = new FlxGroup();
-        ui.add(new SlideMenu());
+        _menu = new SlideMenu();
 
-        _playButton = new FlxButton(20, 20, null, buttonCallback);
-        _playButton.loadGraphic("assets/images/button_play.png", true, 50, 50);
-        _playButton.antialiasing = true;
-
-        _stopButton = new FlxButton(20, 20, null, buttonCallback);
-        _stopButton.loadGraphic("assets/images/button_stop.png", true, 50, 50);
-        _stopButton.antialiasing = true;
-
-        _resetButton = new FlxButton(70, 20, null, resetCallback);
-        _resetButton.loadGraphic("assets/images/button_reset.png", true, 50, 50);
-        _resetButton.antialiasing = true;
-
-        _exitButton = new FlxButton(120, 20, null, exitCallback);
+        _exitButton = new FlxButton(210, 15, null, exitCallback);
         _exitButton.loadGraphic("assets/images/button_exit.png", true, 50, 50);
         _exitButton.antialiasing = true;
 
+        _resetButton = new FlxButton(265, 15, null, resetCallback);
+        _resetButton.loadGraphic("assets/images/button_reset.png", true, 50, 50);
+        _resetButton.antialiasing = true;
+
+        _playButton = new FlxButton(320, 15, null, startStopCallback);
+        _playButton.loadGraphic("assets/images/button_play.png", true, 50, 50);
+        _playButton.antialiasing = true;
+
+        _stopButton = new FlxButton(320, 15, null, startStopCallback);
+        _stopButton.loadGraphic("assets/images/button_stop.png", true, 50, 50);
+        _stopButton.antialiasing = true;
+        _stopButton.kill();
+
+        ui.add(_menu);
+        ui.add(_exitButton);
+        ui.add(_resetButton);
         ui.add(_playButton);
         ui.add(_stopButton);
-        ui.add(_resetButton);
-        ui.add(_exitButton);
-        _stopButton.kill();
         return ui;
     }
 
     // Callback function called when play/stop button is pressed.
-    public function buttonCallback():Void {
+    public function startStopCallback():Void {
         if (!_isPlaying) {
             // Start the factory.
             _playButton.kill();
             _resetButton.kill();
             _stopButton.revive();
+
+            // Hide slide menu.
+            _menu.visible = false;
 
             // Turn on all conveyors.
             for (conveyor in _conveyorLayer) {
@@ -352,6 +357,9 @@ class PlayState extends FlxUIState {
             _playButton.revive();
             _resetButton.revive();
             _stopButton.kill();
+
+            // Bring back slide menu.
+            _menu.visible = true;
 
             // Remove all ice creams and turn off all conveyors.
             for (conveyor in _conveyorLayer) {
