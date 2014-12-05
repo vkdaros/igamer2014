@@ -99,11 +99,17 @@ class DevicePopup extends FlxUIPopup {
                                  _device.y - _device.offset.y,
                                  TILE_WIDTH, 2 * TILE_HEIGHT);
 
+        add(_device.getBodyPiece());
+        add(_device.getTopPiece());
+
         createButtons();
         createInfoArea();
         _currentValue = 1;
     }
 
+    /**
+     * Auxiliary method to create the popup buttons.
+     */
     private function createButtons():Void {
         // Up and down buttons (to change basic configuration like flavour,
         // number of scoops, etc)

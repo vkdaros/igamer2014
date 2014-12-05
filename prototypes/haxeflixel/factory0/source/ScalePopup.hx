@@ -9,7 +9,7 @@ import DevicePopup;
 /**
  * Popup menu used by the Scale switcher.
  */
-class ScalePopup extends DevicePopup {
+class ScalePopup extends FlipableDevicePopup {
 
     /** 
      * Class constructor.
