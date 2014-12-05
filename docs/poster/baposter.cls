@@ -1059,10 +1059,10 @@
     \ifbaposter@eyecatcher% Has eye catcher%
       \draw (image.east) node(title)[anchor=west,text width=\baposter@titleimage@textwidth]{%
         \begin{minipage}{\baposter@titleimage@textwidth}%
-          \begin{center}%
-          \textbf{\Huge #3}\\%
-          {\Large #4}%
-          \end{center}%
+          %\begin{center}%
+          \textit{#3}\\%
+          {#4}%
+          %\end{center}%
         \end{minipage}
       };%
     \else% Has no eye catcher
