@@ -4,7 +4,7 @@ FILE=poster
 all: $(FILE)
 
 $(FILE): $(FILE).tex
-	$(TEX) --enable-write18 $<
+	#$(TEX) --enable-write18 $<
 	$(TEX) $<
 
 clean:
