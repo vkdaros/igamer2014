@@ -80,5 +80,9 @@ class Constants {
 
     // Doser limits.
     public static inline var MIN_DOSER_VALUE:Int = 1;
-    public static inline var MAX_DOSER_VALUE:Int = 2;
+    public static inline var MAX_DOSER_VALUE:Int = 4;
+
+    // Dispenser limits.
+    public static inline var MIN_DISPENSER_VALUE:Int = 1;
+    public static inline var MAX_DISPENSER_VALUE:Int = 2;
 }

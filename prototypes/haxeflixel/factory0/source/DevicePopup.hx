@@ -34,8 +34,13 @@ class DevicePopup extends FlxUIPopup {
      */
     private var _background:FlxSprite;
 
-    /** Text field for presenting counting data for the device. */
-    private var _infoArea:BitmapTextField;
+    /**
+     * Sprite used for presenting the device data (counting, flavours, etc).
+     * Even though the attribute is a FlxSprite, in this class it is
+     * instantiated as a BitmapTextField (a child of FlxSprite), since by
+     * default only text is presented.
+     */
+    private var _infoArea:FlxSprite;
 
     /**
      * Indication if an action has just been performed (to avoid forwarding
@@ -47,6 +52,9 @@ class DevicePopup extends FlxUIPopup {
     /** The current value of the main device configuration. */
     public var _currentValue(default, set):Int;
 
+    /** The coordinates of the device's bounding box. */
+    private var _bbox:Rectangle;
+
     /**
      * Setter and getter of _currentValue.
      * @param value Integer with the new value for the property.
@@ -55,7 +63,7 @@ class DevicePopup extends FlxUIPopup {
     private function set__currentValue(value:Int): Int {
         _currentValue = value;
         if (_infoArea != null) {
-            _infoArea.text = "" + _currentValue;
+            cast(_infoArea, BitmapTextField).text = "" + _currentValue;
         }
         return _currentValue;
     }
@@ -87,20 +95,26 @@ class DevicePopup extends FlxUIPopup {
         var font = getFont();
 
         // Rectangle with the bounding box of the device
-        var bbox = new Rectangle(_device.x - _device.offset.x,
+        _bbox = new Rectangle(_device.x - _device.offset.x,
                                  _device.y - _device.offset.y,
                                  TILE_WIDTH, 2 * TILE_HEIGHT);
 
-        createButtons(bbox);
-        createInfoArea(bbox);
+        add(_device.getBodyPiece());
+        add(_device.getTopPiece());
+
+        createButtons();
+        createInfoArea();
         _currentValue = 1;
     }
 
-    private function createButtons(bbox:Rectangle):Void {
+    /**
+     * Auxiliary method to create the popup buttons.
+     */
+    private function createButtons():Void {
         // Up and down buttons (to change basic configuration like flavour,
         // number of scoops, etc)
-        var upButton = new FlxButton(bbox.right + POPUP_BUTTON_HMARGIN,
-                        bbox.y - POPUP_BUTTON_WIDTH + POPUP_BUTTON_HEIGHT / 3,
+        var upButton = new FlxButton(_bbox.right + POPUP_BUTTON_HMARGIN,
+                        _bbox.y - POPUP_BUTTON_WIDTH + POPUP_BUTTON_HEIGHT / 3,
                         null, upCallback);
         upButton.loadGraphic("assets/images/button_arrow.png", true,
                              POPUP_BUTTON_WIDTH, POPUP_BUTTON_HEIGHT);
@@ -108,8 +122,8 @@ class DevicePopup extends FlxUIPopup {
         add(upButton);
 
         // Down arrow button.
-        var downButton = new FlxButton(bbox.right + POPUP_BUTTON_HMARGIN,
-                                       bbox.bottom - POPUP_BUTTON_HEIGHT / 3,
+        var downButton = new FlxButton(_bbox.right + POPUP_BUTTON_HMARGIN,
+                                       _bbox.bottom - POPUP_BUTTON_HEIGHT / 3,
                                        null, downCallback);
         downButton.loadGraphic("assets/images/button_arrow.png", true,
                                POPUP_BUTTON_WIDTH, POPUP_BUTTON_HEIGHT);
@@ -119,8 +133,8 @@ class DevicePopup extends FlxUIPopup {
         add(downButton);
 
         // Remove button
-        var removeButton = new FlxButton(bbox.left - POPUP_BUTTON_WIDTH,
-                                         bbox.bottom - POPUP_BUTTON_HEIGHT / 3,
+        var removeButton = new FlxButton(_bbox.left - POPUP_BUTTON_WIDTH,
+                                         _bbox.bottom - POPUP_BUTTON_HEIGHT / 3,
                                         null, removeCallback);
         removeButton.loadGraphic("assets/images/button_remove.png", true,
                                 POPUP_BUTTON_WIDTH, POPUP_BUTTON_HEIGHT);
@@ -129,18 +143,22 @@ class DevicePopup extends FlxUIPopup {
     }
 
     /**
-     * Create display area where values or other information are drawn.
+     * Create the basic display area (that, in this class, displays texts).
      */
-    private function createInfoArea(bbox:Rectangle):Void {
+    private function createInfoArea():Void {
         var font = getFont();
         _infoArea = new BitmapTextField(font);
-        _infoArea.x = bbox.right + 2.5 * POPUP_BUTTON_HMARGIN;
-        _infoArea.y = bbox.y + bbox.height / 2 + 2;
-        _infoArea.useTextColor = false;
-        _infoArea.fontScale = 0.5;
-        _infoArea.alignment = PxTextAlign.CENTER;
-        _infoArea.offset.y = font.getFontHeight() * (_infoArea.fontScale / 2);
+
+        cast(_infoArea, BitmapTextField).useTextColor = false;
+        cast(_infoArea, BitmapTextField).fontScale = 0.5;
+        cast(_infoArea, BitmapTextField).alignment = PxTextAlign.CENTER;
+
+        _infoArea.x = _bbox.right + 2.5 * POPUP_BUTTON_HMARGIN;
+        _infoArea.y = _bbox.top + _bbox.height / 2 + 2;
         _infoArea.antialiasing = true;
+        _infoArea.offset.y = font.getFontHeight() *
+                              cast(_infoArea, BitmapTextField).fontScale / 2;
+
         add(_infoArea);
     }
 
