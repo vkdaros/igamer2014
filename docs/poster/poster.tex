@@ -80,7 +80,8 @@
 % Prototype
 % ------
 %
-% - Experimentation of the basic mechanics and aesthetics, and interaction methods
+% - Experimentation of the basic mechanics and aesthetics, and interaction
+%   methods
 % - Presentation of the visual identity and main characters
 %     > penguin (that comes from Argentina to the south region of Brazil) and
 %       jaguar (that lives in the northest region of Brazil)
@@ -206,16 +207,12 @@
 }
 
 \headerbox{Educational aspects}{name=education, column=0, row=0, span=1}{
-    Existing approaches using entertainment to motivate learning computer
-    programming are usually too focused on direct input of code.
+    Existing approaches usually motivate learning with direct input of code.
 
     \vskip 1em%
-    The main goal of \gamename{ }is not to teach how to write code, but instead
-    to promote the development of skills required for solving
-    computational problems and useful for any human task in which logical
-    thinking is involved.
+    \gamename's goal is to promote the development of skills required for
+    solving computational problems. Useful for tasks with:
 
-    \vskip 1em%
     \begin{itemize}[noitemsep,topsep=0pt,parsep=0pt]
         \item Operation order
         \item Conditional execution
@@ -223,30 +220,55 @@
     \end{itemize}
 
     \vskip 1em%
-    Further more the trial and error aspect of the game requires the players to:
-    (i) follow the execution steps, (ii) understand where are the pieces causing
-    undesired behavior, and (iii) fix the problems. \textbf{This is essentially
-    debugging}.
+    The trial and error aspect of the game requires the players to:
+
+    \begin{enumerate}[noitemsep,topsep=0pt,parsep=0pt]
+        \item Follow the execution steps
+        \item Understand where are the pieces causing undesired behavior
+        \item Fix the problems. \textbf{This is essentially debugging}.
+    \end{enumerate}
 }
 
-\headerbox{Targets}{name=target, column=0, below=education, span=1}{
+\headerbox{Tangential learning}{name=target, column=0, below=education, span=1}{
+    Besides logical thinking, players may be able to learn about:
+
+    \begin{description}[noitemsep,topsep=0pt,parsep=0pt]
+        \item[Geography:] Find Brazilian cities on the map
+        \item[Biology:] Discover animal species of various Brazilian regions
+    \end{description}
+}
+
+\headerbox{Prototype}{name=prototype, column=4, row=0, span=1}{
+    Intended for:
+
+    \begin{itemize}[noitemsep,topsep=0pt,parsep=0pt]
+        \item Playability evaluation
+        \item Feedback on characters and visual identity 
+        \item Participation in iGam4ER
+    \end{itemize}
+
+    \vskip 1em%
+    Development tools used:
+
+    \begin{description}[noitemsep,topsep=0pt,parsep=0pt]
+        \item[Programing language:] Haxe
+        \item[Framework:] Flixel
+        \item[Levels:] Tiled
+        \item[Art:] Gimp, Photoshop
+    \end{description}
+}
+
+\headerbox{Targets}{name=target, column=4, below=prototype, span=1}{
     \begin{description}[noitemsep,topsep=0pt,parsep=0pt]
         \item[Audience:] $12+$ years old
         \item[Platform:] Web, Linux, Windows, Android, iOS
     \end{description}
 }
 
-\headerbox{End}{name=end, column=4, row=0, span=1}{
-    Conhecer a forma da pista pode dar muitos benefícios à Inteligência
-    Artificial que controla os carros nos jogos de corrida, mas esse tipo de
-    informação nem sempre está disponível ao NPC. Tendo como plataforma de
-    testes o simulador de corridas TORCS, mostramos neste trabalho um método
-}
-
-\headerbox{Links}{name=links, column=4, below=end, span=1}{
+\headerbox{Links}{name=links, column=4, below=target, span=1}{
     \begin{minipage}{\textwidth}
         \centering
-        \includegraphics[width=0.9\textwidth]{onca}
+        \includegraphics[width=0.7\textwidth]{onca}
     \end{minipage}
 
     \scriptsize
