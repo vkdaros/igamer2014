@@ -1,4 +1,4 @@
-\documentclass[landscape,a1paper]{baposter}
+\documentclass[landscape,a1paper,fontscale=0.33]{baposter}
 
 \usepackage[portuguese]{babel}
 \usepackage[utf8]{inputenc}
@@ -36,6 +36,9 @@
 \usepackage{multicol}
 \usepackage{ae}
 
+% Permite ajusta o espaçamento entre os itens de itemize
+\usepackage{enumitem}
+
 % Permite colocar direto o nome da imagem no includegraphics.
 \graphicspath{{images/}}
 
@@ -44,6 +47,10 @@
 
 % Espessura da linha vertical que separa as colunas.
 \setlength{\columnseprule}{0mm}
+
+% Define the name of the game
+\newcommand{\rawgamename}{Sweet Switches}
+\newcommand{\gamename}{\textbf{\emph{\rawgamename}}}
 
 %
 % Challenges and Goals
@@ -149,7 +156,7 @@
     %%% Espaço reservado para o título, autores e imagens superiores. %%%
     headerheight=11em,
     %%% Número de colunas (de 1 a 6). %%%
-    columns=5
+    columns=5,
 }
 % Imagem superior esquerda.
 {
@@ -198,16 +205,28 @@
 %    }
 }
 
-\headerbox{Resumo}{name=abstract, column=0, row=0, span=1}{
-    Conhecer a forma da pista pode dar muitos benefícios à Inteligência
-    Artificial que controla os carros nos jogos de corrida, mas esse tipo de
-    informação nem sempre está disponível ao NPC. Tendo como plataforma de
-    testes o simulador de corridas TORCS, mostramos neste trabalho um método
-    capaz de construir um modelo de pista baseado apenas em leituras de um
-    número limitado de sensores no carro de corrida. Também apresentamos uma
-    técnica de segmentação do circuito indicando o início e fim de trechos
-    distintos, classificando-os por suas características - como reta, curva
-    suave, curva fechada, entre outros.
+\headerbox{Educational aspects}{name=education, column=0, row=0, span=1}{
+    Existing approaches using entertainment to motivate learning computer
+    programming are usually too focused on direct input of code.
+
+    \vskip 1em%
+    The main goal of \gamename{ }is not to teach how to write code, but instead
+    to promote the development of skills required for solving
+    computational problems and useful for any human task in which logical
+    thinking is involved.
+
+    \vskip 1em%
+    \begin{itemize}[noitemsep,topsep=0pt,parsep=0pt]
+        \item Operation order
+        \item Conditional execution
+        \item Repetitions
+    \end{itemize}
+
+    \vskip 1em%
+    Further more the trial and error aspect of the game requires the players to:
+    (i) follow the execution steps, (ii) understand where are the pieces causing
+    undesired behavior, and (iii) fix the problems. \textbf{This is essentially
+    debugging}.
 }
 
 \headerbox{End}{name=end, column=4, row=0, span=1}{
@@ -215,20 +234,22 @@
     Artificial que controla os carros nos jogos de corrida, mas esse tipo de
     informação nem sempre está disponível ao NPC. Tendo como plataforma de
     testes o simulador de corridas TORCS, mostramos neste trabalho um método
+}
 
+\headerbox{Links}{name=links, column=4, below=end, span=1}{
     \begin{minipage}{\textwidth}
         \centering
-        \vskip 0.25em
         \includegraphics[width=0.9\textwidth]{onca}
     \end{minipage}
+
+    \scriptsize
+    \vskip 0.5em%
+    \url{www.ime.usp.br/~lidet/sweet-switches}\\[0.5em]
+    \url{www.github.com/vkdaros/igamer2014}
+
 }
 
-\headerbox{Links}{name=links, column=3, below=end, span=2}{
-    \url{http://www.ime.usp.br/~lidet/sweet-switches/}
-    \url{http://github.com/vkdaros/igamer2014}
-}
-
-\headerbox{Construindo}{name=model, column=1, aligned=abstract, span=3}{
+\headerbox{Construindo}{name=model, column=1, aligned=education, span=3}{
     \begin{multicols}{3}
         Durante uma volta de reconhecimento, o piloto virtual coleta dados
         através de sensores, como se fosse um robô. Ele tenta se manter no
