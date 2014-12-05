@@ -441,11 +441,12 @@ class PlayState extends FlxUIState {
      * @param device The instance of the Device to remove from the game.
      */
     public function removeDevice(device:Device):Void {
-        _onConveyorLayer.remove(device.getBodyPiece());
-        _overConveyorLayer.remove(device.getTopPiece());
-        _devices.remove(device);
-        MouseEventManager.remove(device);
-        device.destroy();
+        _onConveyorLayer.remove(device.getBodyPiece(), true);
+        _overConveyorLayer.remove(device.getTopPiece(), true);
+        _devices.remove(device, true);
+        MouseEventManager.remove(device.getTopPiece());
+        MouseEventManager.remove(device.getBodyPiece());
+        device.destroy();        
     }
 
     private function sortByXY(order:Int, s1:FlxSprite, s2:FlxSprite):Int {

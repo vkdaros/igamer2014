@@ -89,4 +89,14 @@ class Doser extends Device {
         _topPiece.destroy();
         super.destroy();
     }
+
+    /**
+     * Handler of the mouse up event for the device. It handles the event for
+     * both the body and the top sprites.
+     * @param sprite FlxSprite with the sprite for which the mouse event
+     * occurred.
+     */
+    override public function onUp(sprite:FlxSprite):Void {
+        FlxG.state.openSubState(new DoserPopup(this));
+    }    
 }
