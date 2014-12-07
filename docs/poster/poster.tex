@@ -251,7 +251,7 @@
 \headerbox{Find more}{name=links, column=4, above=bottom, span=1}{
     \begin{minipage}{\textwidth}
         \centering
-        \includegraphics[height=13em]{onca}
+        \includegraphics[height=13.5em]{onca}
     \end{minipage}
 
     \scriptsize
@@ -259,20 +259,36 @@
     \url{www.ime.usp.br/~lidet/sweet-switches}
 }
 
-\headerbox{Game elements}{name=elements, column=1, aligned=education, span=3}{
-    \begin{multicols}{2}
-        \begin{minipage}{0.48\textwidth}
+\headerbox{Game elements}{name=elements, column=2, aligned=education, span=2}{
+    \begin{multicols}{3}
+        \begin{minipage}{0.66\textwidth}
             %\centering
             \includegraphics[width=\textwidth]{GameElements}
         \end{minipage}
-        \begin{minipage}{0.5\textwidth}
-            \centering
-            \includegraphics[width=\textwidth]{screen}
-        \end{minipage}
+        %\begin{minipage}{0.47\textwidth}
+        %    %\centering
+        %    \includegraphics[width=\textwidth]{screen}
+        %\end{minipage}
     \end{multicols}
 }
 
-\headerbox{Prototype}{name=prototype, column=4, aligned=elements, span=1}{
+\headerbox{Actions}{name=actions, column=2, below=elements, span=2}{
+    \begin{minipage}{\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{GameActions}
+    \end{minipage}
+}
+
+\headerbox{Motivation}{name=motivation, column=1, aligned=education}{
+    A report prepared for the UK Computing Research Committee\footnote{Computing
+    at School: the state of the nation, 2009} advocates that if on one hand
+    learning how to use computers can be seen as similar to learning how to
+    read, on the other hand learning how to program is similar to
+    learning how to write. Both are skills that everyone should have, even
+    though a minority will become professionals (writers or programmers).
+}
+
+\headerbox{Prototype}{name=prototype, column=4, aligned=education, span=1}{
     Open source project intended for:
 
     \begin{itemize}[noitemsep,topsep=0pt,parsep=0pt]
@@ -281,7 +297,7 @@
         \item Participation in \textit{iGam4ER}
     \end{itemize}
 
-    \vskip 1em%
+    \vskip 0.75em%
     Development tools used:
 
     \begin{description}[noitemsep,topsep=0pt,parsep=0pt]
@@ -292,13 +308,6 @@
     \end{description}
 }
 
-\headerbox{Actions}{name=actions, column=1, below=elements, span=2}{
-    \begin{minipage}{\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{GameActions}
-    \end{minipage}
-}
-
 \headerbox{Targets}{name=target, column=4, below=prototype, span=1}{
     \begin{description}[noitemsep,topsep=0pt,parsep=0pt]
         \item[Audience:] $12+$ years old
@@ -306,13 +315,17 @@
     \end{description}
 }
 
-%
-%\headerbox{Bola}{name=bola, column=1, below=elements, span=2}{
-%    \begin{minipage}{0.5\textwidth}
-%        \centering
-%        \includegraphics[width=\textwidth]{screen}
-%    \end{minipage}
-%}
+
+\headerbox{Screenshots}{name=screenshot, column=1, below=motivation, span=1}{
+    \begin{minipage}{\textwidth}
+        \centering
+        \vskip 0.2em%
+        \includegraphics[width=\textwidth]{screen1}
+
+        \vskip 1.2em%
+        \includegraphics[width=\textwidth]{screen2}
+    \end{minipage}
+}
 
 \end{poster}
 \end{document}
