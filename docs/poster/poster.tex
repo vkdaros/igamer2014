@@ -138,6 +138,15 @@
 %
 
 \begin{document}
+
+% Set the background to an image (poster_bg.pdf)
+\background{
+    \begin{tikzpicture}[remember picture,overlay]
+    \draw (current page.north west)+(-2em,2em) node[anchor=north west]
+    {\includegraphics[height=1.1\textheight]{images/poster_bg}};
+    \end{tikzpicture}
+}
+
 \begin{poster}{
     grid=false,
     eyecatcher=true, % Exibe imagem à esquerda do título.
@@ -146,12 +155,13 @@
     headerColorOne=black!45!cyan!15,
     borderColor=black!45!cyan!15,
     %%% Estilo da borda. %%%
-    textborder=faded,
+    textborder=none,
+    boxshade=none,
     %%% Estilo da sub-caixa de título de cada caixa. %%%
     headerborder=open,
     headershape=roundedright,
     headershade=plain,
-    background=none,
+    background=user,
     bgColorOne=cyan!10!white,
     boxheaderheight=2.35em,
     %%% Espaço reservado para o título, autores e imagens superiores. %%%
@@ -215,7 +225,7 @@
     Existing approaches to motivate learning of computer programming through
     entertainment are usually too focused on coding.
 
-    \vskip 1em%
+    \vskip 0.5em%
     \gamename's goal is to promote the development of skills required for
     solving computational problems. Useful for tasks with:
 
@@ -225,7 +235,7 @@
         \item Repetitions
     \end{itemize}
 
-    \vskip 1em%
+    \vskip 0.5em%
     The trial and error aspect of the game requires the players to:
 
     \begin{enumerate}[noitemsep,topsep=0pt,parsep=0pt]
@@ -244,7 +254,7 @@
         \item[Geography:] \hfill\\
             Brazilian cities on the map
         \item[Biology:] \hfill\\
-            Animals of the Brazilian fauna
+            Animals of the Brazilian fauna (penguins, jaguars, macaws, etc)
     \end{description}
 }
 
@@ -314,7 +324,7 @@
     \url{www.ime.usp.br/~lidet/sweet-switches}
 }
 
-\headerbox{Screenshots}{name=screenshot, column=1, below=motivation, span=1}{
+\headerbox{Screenshots}{name=screenshot, column=1, above=bottom, span=1}{
     \begin{minipage}{\textwidth}
         \centering
         \vskip 0.2em%
