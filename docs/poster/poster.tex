@@ -52,91 +52,6 @@
 \newcommand{\rawgamename}{Sweet Switches}
 \newcommand{\gamename}{\textbf{\emph{\rawgamename}}}
 
-%
-% Challenges and Goals
-% =====================
-%
-% Education
-% ------
-%
-% - Computer literacy is more than just using computers, but also programming them
-%     > similar metaphor to non-professional writers learning how to write
-% - The skills involved in computer programming are useful for many other activitites
-%     > thinking about thinking
-%     > trial and error
-% - Existing solutions are too focused on computer languages or too far from the
-%   Brazilian culture
-%     > brazilian state division and fauna
-%
-% Game
-% ------
-%
-% - A puzzle in which players need to experimentaly design an ice cream factory to
-%   produce the requested flavors
-% - Simple mechanics based on path decisions
-%     > with switchers and scales to conduct the products on the conveyors
-% - Fantasy and aesthetics with a cartoonished style and funny animations
-%
-% Prototype
-% ------
-%
-% - Experimentation of the basic mechanics and aesthetics, and interaction
-%   methods
-% - Presentation of the visual identity and main characters
-%     > penguin (that comes from Argentina to the south region of Brazil) and
-%       jaguar (that lives in the northest region of Brazil)
-%
-% Research
-% ------
-%
-% - To be used for complementing the computer programming classes in the
-%   Administration course from the University of São Paulo
-% - To be used as a sample game in a PhD research interested in evaluating the
-%   educational potential of games **** (to falando sobre a pesquisa do Bosco.
-%   Talvez fosse legal perguntar pra ele - e pro professor! - sobre como escrever
-%   isso aqui)
-%
-% Fun
-% ------
-%
-% The game aims to produce a fun experience through different aspects:
-% - Fantasy: an ice cream factory managed by the player with the help of penguin
-%   assistants and other animals as truck drivers
-% - Challenge: different configurations of conveyors in many levels, producing
-%   initially simple problems but increasing complexity as the player progress in
-%   the game
-% - "Juiceness": pleasing designs and animations, with cartoonish and comical
-%   styles strongly based on visual and auditory puns and incongruent elements
-%   ("crazy machines")
-% - Curiosity: elicitation of curiosity regarding the appearance and behavior of
-%   new animals and devices (truck drivers and control devices unlocked as the
-%   player progress in the game)
-%
-% Target
-% ------
-%
-% - Children with at least 12 years old and adults
-% - Playable in Windows, Linux, Android and iOS platforms
-%     > and also via Web through Flash or HTML5
-%
-% Game Mechanics and Aesthetics
-% =====================
-%
-% **** A ideia de construir um diagrama aqui com o "processo de jogo" é bastante
-% bacana. Acho que aqui dá de colocar também algumas imagens do Danilo.
-%
-% Production
-% =====================
-%
-% Engine
-% ------
-%
-% - Currently using the HaxeFlixel engine
-%     > open source engine based on the ActionScript 3 programming language
-%       (Haxe + Flixel products)
-%     > able to compile to all targeted platforms
-%
-
 \begin{document}
 
 % Set the background to an image (poster_bg.pdf)
@@ -181,7 +96,8 @@
     In Sweet Switches players will face a series of puzzles inside ice cream
     factories. The objective is to attach devices to conveyor belts in order to
     respond to a production request. As those devices are analogous to
-    programming statements, the game foster computational thinking. %TODO: logical bla
+    programming statements, the game fosters computational thinking.
+    %TODO: logical bla
     \end{minipage}
 }
 % Autores e nome da universidade.
@@ -192,14 +108,19 @@
     \begin{minipage}{0.94\textwidth}
         \vskip 1.1em%
         %\centering
-        \begin{minipage}{0.5\textwidth}
+        \begin{minipage}{0.515\textwidth}
             Vinícius K. Daros, Luiz C. Vieira, Adalberto B. C. Pereira, Flávio S. C. da Silva\\[0.5em]
             Laboratory of Interactivity and Digital Entertainment Technology (LIDET)
             \\[0.15em]
             University of São Paulo - Brazil\\[0.5em]
             \texttt{\{vkdaros, lvieira, bosco, fcs\}@ime.usp.br}
         \end{minipage}
-        \begin{minipage}{0.49\textwidth}
+        \begin{minipage}{0.1\textwidth}
+            \textbf{Art:}\\
+            Danilo Gabriel Rios and\\
+            Salvador Oliva Junior
+        \end{minipage}
+        \begin{minipage}{0.27\textwidth}
             \parbox[t][6em][t]{0.44\textwidth}{
                 \centering
                 \begin{tabular}{c}
@@ -243,7 +164,7 @@
         \item Understand where are the pieces causing undesired behavior
         \item Fix the problems.
     \end{enumerate}
-    \textbf{This procedure is to debug}.
+    \textbf{Similar to code debugging}
 }
 
 \headerbox{Tangential learning}{name=learning, column=0, below=education}{
@@ -262,10 +183,14 @@
     \begin{minipage}{0.66\textwidth}
         \includegraphics[width=\textwidth]{GameElements}
     \end{minipage}
-    \begin{minipage}[t]{0.3\textwidth}
-        During a play session paad ad fa  asgdaswdg gasdg asd asdgasdg
+    \begin{minipage}{0.3\textwidth}
+        Game elements are analogies for programming elements: conveyor segments
+        work as commands, switches work as decisions, and scales work as are
+        more complex decisions that allow repetitions (iterations).
 
-        absdas asdfasdf asdfasdf
+        Starting and stopping the factory line are analogies for testing a
+        program to verify if the sequence of commands and decisions produce the
+        desired result.
     \end{minipage}
 }
 
@@ -292,7 +217,7 @@
     \begin{itemize}[noitemsep,topsep=0pt,parsep=0pt]
         \item Playability evaluation
         \item Feedback on characters and visual identity 
-        \item Participation in \textit{iGam4ER}
+        \item Expose at \textit{iGam4ER 2014}
     \end{itemize}
 
     \vskip 0.75em%
