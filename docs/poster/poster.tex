@@ -171,7 +171,7 @@
     In Sweet Switches players will face a series of puzzles inside ice cream
     factories. The objective is to attach devices to conveyor belts in order to
     respond to a production request. As those devices are analogous to
-    programming statements, the game foster computational thinking.
+    programming statements, the game foster computational thinking. %TODO: logical bla
     \end{minipage}
 }
 % Autores e nome da universidade.
@@ -193,12 +193,12 @@
             \parbox[t][6em][t]{0.44\textwidth}{
                 \centering
                 \begin{tabular}{c}
-                    \includegraphics[width=5em]{usp-logo}\\
-                    \includegraphics[width=5em]{universidade}
+                    \includegraphics[width=6em]{usp-logo}\\
+                    \includegraphics[width=6em]{universidade}
                 \end{tabular}
             }
-            \parbox[t][2.2em][b]{0.44\textwidth}{
-                \includegraphics[height=5.5em]{LIDET-logo}
+            \parbox[t][2.7em][b]{0.44\textwidth}{
+                \includegraphics[height=6.5em]{LIDET-logo}
             }
         \end{minipage}
     \end{minipage}
@@ -212,7 +212,8 @@
 }
 
 \headerbox{Educational aspects}{name=education, column=0, row=0, span=1}{
-    Existing approaches usually motivate learning with direct input of code.
+    Existing approaches to motivate learning of computer programming through
+    entertainment are usually too focused on coding.
 
     \vskip 1em%
     \gamename's goal is to promote the development of skills required for
@@ -232,10 +233,10 @@
         \item Understand where are the pieces causing undesired behavior
         \item Fix the problems.
     \end{enumerate}
-    \textbf{This is procedure is to debug}.
+    \textbf{This procedure is to debug}.
 }
 
-\headerbox{Tangential learning}{name=target, column=0, above=bottom, span=1}{
+\headerbox{Tangential learning}{name=learning, column=0, above=bottom, span=1}{
     Besides logical thinking, players may be able to learn about:
 
     \vskip 1em%
@@ -244,33 +245,6 @@
             Brazilian cities on the map
         \item[Biology:] \hfill\\
             Animals of the Brazilian fauna
-    \end{description}
-}
-
-\headerbox{Prototype}{name=prototype, column=4, row=0, span=1}{
-    Open source project Intended for:
-
-    \begin{itemize}[noitemsep,topsep=0pt,parsep=0pt]
-        \item Playability evaluation
-        \item Feedback on characters and visual identity 
-        \item Participation in iGam4ER
-    \end{itemize}
-
-    \vskip 1em%
-    Development tools used:
-
-    \begin{description}[noitemsep,topsep=0pt,parsep=0pt]
-        \item[Programing language:] Haxe
-        \item[Framework:] Flixel
-        \item[Levels:] Tiled
-        \item[Art:] Gimp, Photoshop
-    \end{description}
-}
-
-\headerbox{Targets}{name=target, column=4, below=prototype, span=1}{
-    \begin{description}[noitemsep,topsep=0pt,parsep=0pt]
-        \item[Audience:] $12+$ years old
-        \item[Platforms:] Web, Android, iOS, Linux, Windows
     \end{description}
 }
 
@@ -285,32 +259,60 @@
     \url{www.ime.usp.br/~lidet/sweet-switches}
 }
 
-\headerbox{Construindo}{name=model, column=1, aligned=education, span=3}{
-    \begin{multicols}{3}
-        Durante uma volta de reconhecimento, o piloto virtual coleta dados
-        através de sensores, como se fosse um robô. Ele tenta se manter no
-        centro da pista, anda relativamente devagar (por volta de $60 Km/h$ em
-        retas e $20 Km/h$ em curvas) e armazena a leitura dos sensores a cada 5
-        metros. Ao fim da volta, os dados são processados. Assim, considerando
-        pares consecutivos de medições, temos pequenos \textbf{segmentos} da
+\headerbox{Game elements}{name=elements, column=1, aligned=education, span=3}{
+    \begin{multicols}{2}
+        \begin{minipage}{0.48\textwidth}
+            %\centering
+            \includegraphics[width=\textwidth]{GameElements}
+        \end{minipage}
+        \begin{minipage}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{screen}
+        \end{minipage}
     \end{multicols}
+}
 
+\headerbox{Prototype}{name=prototype, column=4, aligned=elements, span=1}{
+    Open source project intended for:
+
+    \begin{itemize}[noitemsep,topsep=0pt,parsep=0pt]
+        \item Playability evaluation
+        \item Feedback on characters and visual identity 
+        \item Participation in \textit{iGam4ER}
+    \end{itemize}
+
+    \vskip 1em%
+    Development tools used:
+
+    \begin{description}[noitemsep,topsep=0pt,parsep=0pt]
+        \item[Programing language:] Haxe
+        \item[Framework:] Flixel
+        \item[Levels:] Tiled
+        \item[Art:] Gimp, Photoshop
+    \end{description}
+}
+
+\headerbox{Actions}{name=actions, column=1, below=elements, span=2}{
     \begin{minipage}{\textwidth}
         \centering
-        \includegraphics[width=0.7\textwidth]{screen}
+        \includegraphics[width=\textwidth]{GameActions}
     \end{minipage}
 }
 
-\headerbox{Construindo2}{name=bot, column=1, above=bottom, span=2}{
-    \begin{multicols}{3}
-        Durante uma volta de reconhecimento, o piloto virtual coleta dados
-        através de sensores, como se fosse um robô. Ele tenta se manter no
-        centro da pista, anda relativamente devagar (por volta de $60 Km/h$ em
-        retas e $20 Km/h$ em curvas) e armazena a leitura dos sensores a cada 5
-        metros. Ao fim da volta, os dados são processados. Assim, considerando
-        pares consecutivos de medições, temos pequenos \textbf{segmentos} da
-    \end{multicols}
+\headerbox{Targets}{name=target, column=4, below=prototype, span=1}{
+    \begin{description}[noitemsep,topsep=0pt,parsep=0pt]
+        \item[Audience:] $12+$ years old
+        \item[Platforms:] Web, Android, iOS, Linux, Windows
+    \end{description}
 }
+
+%
+%\headerbox{Bola}{name=bola, column=1, below=elements, span=2}{
+%    \begin{minipage}{0.5\textwidth}
+%        \centering
+%        \includegraphics[width=\textwidth]{screen}
+%    \end{minipage}
+%}
 
 \end{poster}
 \end{document}
