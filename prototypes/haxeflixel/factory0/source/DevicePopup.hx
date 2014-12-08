@@ -99,6 +99,7 @@ class DevicePopup extends FlxUIPopup {
                                  _device.y - _device.offset.y,
                                  TILE_WIDTH, 2 * TILE_HEIGHT);
 
+        // Adding external sprites just to make them appear 'bright'.
         add(_device.getBodyPiece());
         add(_device.getTopPiece());
 
@@ -218,6 +219,11 @@ class DevicePopup extends FlxUIPopup {
      * Class destructor.
      */
     override public function destroy():Void {
+        // Removing external sprites from this state in order to avoid them to
+        // be destroyed.
+        remove(_device.getBodyPiece());
+        remove(_device.getTopPiece());
+
         MouseEventManager.remove(_background);
         _background.destroy();
         super.destroy();
