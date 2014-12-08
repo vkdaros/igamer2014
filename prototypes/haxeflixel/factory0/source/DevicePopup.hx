@@ -122,7 +122,7 @@ class DevicePopup extends FlxUIPopup {
 		
         createButtons();
         createInfoArea();
-        _currentValue = 1;
+        _currentValue = 0;
     }
 
     /**

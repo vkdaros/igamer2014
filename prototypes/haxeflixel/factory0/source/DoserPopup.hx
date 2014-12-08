@@ -34,19 +34,18 @@ class DoserPopup extends DevicePopup {
 
         add(_infoArea);
     }
-
+	
     /**
      * Override the setter of the _currentValue property to guarantee a range
      * for the counting value.
-     * @param value Integer with the new value for the property. The value must
-     * be in the range [MIN_DOSER_VALUE, MAX_DOSER_VALUE].
+     * @param value Integer with the new value for the property. No matter the
+	 * value, it will be rotated in range [0, MAX_DOSER_VALUE-1] both in up and
+	 * down directions.
      * @return Integer with the value of the property.
      */
     override private function set__currentValue(value:Int): Int {
-        if(value >= MIN_DOSER_VALUE && value <= MAX_DOSER_VALUE) {
-            _currentValue = value;
-            _infoArea.animation.frameIndex = 3 + _currentValue;
-        }
+		_currentValue = ((value < 0) ? MAX_DOSER_VALUE : 0) + (value % MAX_DOSER_VALUE);
+        _infoArea.animation.frameIndex = 4 + _currentValue;
         return _currentValue;
     }
 }

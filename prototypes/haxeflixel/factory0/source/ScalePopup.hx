@@ -19,6 +19,15 @@ class ScalePopup extends FlipableDevicePopup {
         super(device);
     }
 
+	/**
+     * Initialization method for the class.
+     */
+    override public function create():Void {
+		super.create();
+		// Initialize the property with the correct value
+		_currentValue = MIN_SCALE_VALUE;
+	}
+	
     /**
      * Override the setter of the _currentValue property to guarantee a range
      * for the counting value.
