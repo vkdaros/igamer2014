@@ -1,5 +1,6 @@
 package;
 
+import flixel.effects.FlxSpriteFilter;
 import flixel.FlxG;
 import flixel.ui.FlxButton;
 import flixel.addons.ui.FlxUIPopup;
@@ -10,6 +11,8 @@ import flixel.util.FlxColor;
 import flixel.text.pxText.PxTextAlign;
 import flixel.text.pxText.PxBitmapFont;
 import openfl.Assets;
+import flash.filters.GlowFilter;
+import flash.filters.BitmapFilterQuality;
 
 import flash.geom.Rectangle;
 
@@ -55,6 +58,12 @@ class DevicePopup extends FlxUIPopup {
     /** The coordinates of the device's bounding box. */
     private var _bbox:Rectangle;
 
+	/** Glowed filter for the top of the device. */
+	private var _bodyGlowed:FlxSpriteFilter;
+	
+	/** Glowed filter for the body of the device. */
+	private var _topGlowed:FlxSpriteFilter;
+	
     /**
      * Setter and getter of _currentValue.
      * @param value Integer with the new value for the property.
@@ -103,6 +112,14 @@ class DevicePopup extends FlxUIPopup {
         add(_device.getBodyPiece());
         add(_device.getTopPiece());
 
+		// Add a greenish glow to the device by using a glow filter
+		var glowFilter = new GlowFilter(0xA6FD9C, 0.8, 20, 20, 10,
+		                               BitmapFilterQuality.LOW, false, false);
+		_bodyGlowed = new FlxSpriteFilter(_device.getBodyPiece(), 20, 20);
+		_topGlowed = new FlxSpriteFilter(_device.getTopPiece(), 20, 20);
+		_bodyGlowed.addFilter(glowFilter);
+		_topGlowed.addFilter(glowFilter);
+		
         createButtons();
         createInfoArea();
         _currentValue = 1;
@@ -195,8 +212,16 @@ class DevicePopup extends FlxUIPopup {
     private function quitCallback(sprite:FlxSprite):Void {
         if(_actionPerformed)
             _actionPerformed = false;
-        else
-            close();
+        else {
+			// This is not done in the destroy method to avoid double deletion
+			// (internal to the filter class) in case of the remove action.
+			_topGlowed.removeAllFilters();
+			_bodyGlowed.removeAllFilters();
+			_topGlowed.destroy();
+			_bodyGlowed.destroy();
+			
+            close();			
+		}
     }
 
     private function getFont():PxBitmapFont {
