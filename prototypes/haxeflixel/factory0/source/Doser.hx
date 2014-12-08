@@ -98,5 +98,5 @@ class Doser extends Device {
      */
     override public function onUp(sprite:FlxSprite):Void {
         FlxG.state.openSubState(new DoserPopup(this));
-    }    
+    }
 }

@@ -108,5 +108,5 @@ class Dispenser extends Device {
      */
     override public function onUp(sprite:FlxSprite):Void {
         FlxG.state.openSubState(new DispenserPopup(this));
-    }        
+    }
 }

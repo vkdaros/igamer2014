@@ -11,7 +11,7 @@ import DevicePopup;
  * Popup menu used by flipable devices.
  */
 class FlipableDevicePopup extends DevicePopup {
-    /** 
+    /**
      * Class constructor.
      * @param device Instance of a Device to be manipulated by the popup.
      */
@@ -33,7 +33,7 @@ class FlipableDevicePopup extends DevicePopup {
                                 POPUP_BUTTON_WIDTH, POPUP_BUTTON_HEIGHT);
         flipButton.antialiasing = true;
         add(flipButton);
-    }    
+    }
 
     /**
      * Handler of the flip button.

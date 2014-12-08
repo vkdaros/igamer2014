@@ -11,7 +11,7 @@ import DevicePopup;
  */
 class ScalePopup extends FlipableDevicePopup {
 
-    /** 
+    /**
      * Class constructor.
      * @param device Instance of a Device to be manipulated by the popup.
      */

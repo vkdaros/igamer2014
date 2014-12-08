@@ -10,7 +10,7 @@ import DevicePopup;
  * Popup menu used by the ice cream cup dispenser.
  */
 class DispenserPopup extends DevicePopup {
-    /** 
+    /**
      * Class constructor.
      * @param device Instance of a Device to be manipulated by the popup.
      */
@@ -33,7 +33,7 @@ class DispenserPopup extends DevicePopup {
         _infoArea.offset.y = _infoArea.height / 2;
 
         add(_infoArea);
-    }    
+    }
 
     /**
      * Override the setter of the _currentValue property to guarantee a range
