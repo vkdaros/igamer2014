@@ -6,6 +6,10 @@ import flixel.tweens.FlxEase;
 import flixel.util.FlxTimer;
 import flixel.group.FlxSpriteGroup;
 import flixel.plugin.MouseEventManager;
+import flixel.util.FlxColor;
+import flash.filters.GlowFilter;
+import flixel.effects.FlxSpriteFilter;
+import flash.filters.BitmapFilterQuality;
 
 import Constants.*;
 import PlayState;
@@ -18,6 +22,12 @@ class SlideMenu extends FlxSpriteGroup {
 
     private var _background:FlxSprite;
     private var _tween:FlxTween;
+	
+	/** Glow filter used to glow the selected icons in the slide menu. */
+	private var _glowFilter:GlowFilter;
+	
+	/** Sprite filter to apply the glow filter to the selected sprite. */
+	private var _glowSelected:FlxSpriteFilter;
 
     public function new() {
         super(GAME_WIDTH - SLIDE_MENU_WIDTH, 0);
@@ -47,11 +57,20 @@ class SlideMenu extends FlxSpriteGroup {
     }
 
     private function addContent():Void {
+		
+		// Create the glow filter
+		_glowFilter = new GlowFilter(0xA6FD9C, 0.8, 20, 20, 10,
+		                               BitmapFilterQuality.LOW, false, false);
+		
         // TODO: Refactor all this.
         var t1 = new FlxSprite(15 + SLIDE_MENU_MARGIN, 1.5 * TILE_FRAME_HEIGHT);
         t1.loadGraphic("assets/images/doser_top.png", false);
         t1.antialiasing = true;
         add(t1);
+		// The doser is selected by default, so create the sprite filter to it.
+		// It will be recreated whenever a new icon is selected.
+		_glowSelected = new FlxSpriteFilter(t1, 20, 20);
+		_glowSelected.addFilter(_glowFilter);
 
         var t2 = new FlxSprite(15 + SLIDE_MENU_MARGIN, t1.y + 1.4 * TILE_FRAME_HEIGHT);
         t2.loadGraphic("assets/images/scale_top.png", true, TILE_FRAME_WIDTH,
@@ -82,6 +101,13 @@ class SlideMenu extends FlxSpriteGroup {
         var onUpFactory = function(index:Int):FlxSprite->Void {
             return function(s:FlxSprite):Void {
                 slideIn();
+				
+				// Reset the glow and recreated it with the selected icon
+				_glowSelected.removeAllFilters();
+				_glowSelected.destroy();
+				_glowSelected = new FlxSpriteFilter(s, 20, 20);
+				_glowSelected.addFilter(_glowFilter);
+
                 PlayState.selectedItem = index;
             };
         }
