@@ -79,7 +79,7 @@ class Device extends FlxSpriteGroup {
      * occurred.
      */
     public function onUp(sprite:FlxSprite):Void {
-        FlxG.state.openSubState(new DevicePopup(this));
+		showPopup(new DevicePopup(this));
     }
 
     /**
@@ -102,4 +102,12 @@ class Device extends FlxSpriteGroup {
         
     }
 
+	/**
+	 * Display the given device popup when the factory is not running.
+	 */
+	private function showPopup(popup:DevicePopup):Void {
+		// Only display the popup if the factory is not running
+		if (!cast(FlxG.state, PlayState).isPlaying())
+			FlxG.state.openSubState(popup);		
+	}
 }

@@ -516,4 +516,13 @@ class PlayState extends FlxUIState {
             exitCallback();
         }
     }
+	
+	/**
+	 * Indicate if the factory is running or not.
+	 * @return Boolean value indicating if the factory is running (true) or
+	 * not (false).
+	 */
+	public function isPlaying():Bool {
+		return _isPlaying;
+	}
 }
