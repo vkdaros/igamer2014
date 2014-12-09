@@ -11,6 +11,10 @@ import DevicePopup;
  * Popup menu used by flipable devices.
  */
 class FlipableDevicePopup extends DevicePopup {
+	
+	/** Button used to flip the device. */
+	private var _flipButton:FlxButton;
+	
     /**
      * Class constructor.
      * @param device Instance of a Device to be manipulated by the popup.
@@ -26,13 +30,13 @@ class FlipableDevicePopup extends DevicePopup {
         super.createButtons();
 
         // Flip button
-        var flipButton = new FlxButton(_bbox.left - POPUP_BUTTON_WIDTH,
+        _flipButton = new FlxButton(_bbox.left - POPUP_BUTTON_WIDTH,
                         _bbox.y - POPUP_BUTTON_WIDTH + POPUP_BUTTON_HEIGHT / 3,
                         null, flipCallback);
-        flipButton.loadGraphic("assets/images/button_flip.png", true,
+        _flipButton.loadGraphic("assets/images/button_flip.png", true,
                                 POPUP_BUTTON_WIDTH, POPUP_BUTTON_HEIGHT);
-        flipButton.antialiasing = true;
-        add(flipButton);
+        _flipButton.antialiasing = true;
+        add(_flipButton);
     }
 
     /**
@@ -40,6 +44,6 @@ class FlipableDevicePopup extends DevicePopup {
      */
     private function flipCallback():Void {
         _actionPerformed = true;
-    // TODO: call method flip() in a subclass of Device called FlipableDevice
+		cast(_device, FlipableDevice).flipSideDirection();
     }
 }

@@ -13,8 +13,10 @@ import IceCream;
 
 class Device extends FlxSpriteGroup {
     private var _parent:ConveyorTile;
-    private var _direction:Int;
-
+	
+	/** Property with the movement direction through the device. */
+    public var direction(default, set):Int;
+	
     private var _bodyPiece:FlxSprite;
     private var _topPiece:FlxSprite;
 
@@ -23,9 +25,9 @@ class Device extends FlxSpriteGroup {
      * It is almost abstract.
      */
     private function new(parent:ConveyorTile, X:Float, Y:Float,
-                         direction:Int = SW) {
+                         dir:Int = SW) {
         _parent = parent;
-        _direction = direction;
+        direction = dir;
         super(X, Y);
     }
 
@@ -35,6 +37,16 @@ class Device extends FlxSpriteGroup {
             return;
         }
     }
+	
+	/**
+	 * Setter of the property "diretion".
+	 * @param value Integer value with the new direction for the device.
+	 * @return Integer value with the current direction of the device.
+	 */
+	public function set_direction(value:Int):Int {
+		direction = value;
+		return direction;
+	}
 
     /**
      * Function called when the factory starts.

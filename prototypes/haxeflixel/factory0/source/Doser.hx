@@ -12,8 +12,8 @@ class Doser extends Device {
     private var _flavor:Int;
 
     public function new(parent:ConveyorTile, X:Float, Y:Float,
-                        direction:Int = SW, flavor:Int = 4) {
-        super(parent, X, Y - 15, direction);
+                        dir:Int = SW, flavor:Int = 4) {
+        super(parent, X, Y - 15, dir);
         _flavor = flavor;
 
         var xOffset = TILE_WIDTH / 2;
@@ -42,7 +42,7 @@ class Doser extends Device {
         _topPiece.setFacingFlip(FlxObject.LEFT, false, false);
         _topPiece.setFacingFlip(FlxObject.RIGHT, true, false);
 
-        if (_direction == SW || _direction == NE) {
+        if (direction == SW || direction == NE) {
             _bodyPiece.facing = FlxObject.LEFT;
             _topPiece.facing = FlxObject.LEFT;
         }
@@ -60,7 +60,7 @@ class Doser extends Device {
         animation.destroyAnimations();
 
         var firstFrame = 0;
-        if (_direction == SE || _direction == NE) {
+        if (direction == SE || direction == NE) {
             //facing = FlxObject.RIGHT;
             firstFrame = 4;
         }

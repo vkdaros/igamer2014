@@ -29,6 +29,7 @@ class Log {
 	 * @param data Any type with the data to be printed out to the console log.
 	 */
 	public static function warning(data:Dynamic):Void {
+		trace(data);
 		FlxG.log.advanced(data, LogStyle.WARNING);
 	}
 
@@ -37,6 +38,7 @@ class Log {
 	 * @param data Any type with the data to be printed out to the console log.
 	 */
 	public static function critical(data:Dynamic):Void {
+		trace(data);
 		FlxG.log.advanced(data, LogStyle.ERROR);
 	}
 }

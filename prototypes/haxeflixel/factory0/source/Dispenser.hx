@@ -15,8 +15,8 @@ class Dispenser extends Device {
     private var _retryDrop:Bool;
 
     public function new(parent:ConveyorTile, X:Float, Y:Float,
-                        direction:Int = SW, type:Int = CUP) {
-        super(parent, X, Y - 15, direction);
+                        dir:Int = SW, type:Int = CUP) {
+        super(parent, X, Y - 15, dir);
         _type = type;
         _coolDown = new FlxTimer();
         _retryDrop = false;
@@ -47,7 +47,7 @@ class Dispenser extends Device {
         _topPiece.setFacingFlip(FlxObject.LEFT, false, false);
         _topPiece.setFacingFlip(FlxObject.RIGHT, true, false);
 
-        if (_direction == SW || _direction == NE) {
+        if (direction == SW || direction == NE) {
             _bodyPiece.facing = FlxObject.LEFT;
             _topPiece.facing = FlxObject.LEFT;
         }

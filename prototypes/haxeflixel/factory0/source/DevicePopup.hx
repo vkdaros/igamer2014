@@ -37,6 +37,15 @@ class DevicePopup extends FlxUIPopup {
      */
     private var _background:FlxSprite;
 
+	/** Button used for changing up the current value of the device. */
+	private var _upButton:FlxButton;
+	
+	/** Button used for changing down the current value of the device. */
+	private var _downButton:FlxButton;
+	
+	/** Button used for removing the device. */
+	private var _removeButton:FlxButton;
+	
     /**
      * Sprite used for presenting the device data (counting, flavours, etc).
      * Even though the attribute is a FlxSprite, in this class it is
@@ -131,33 +140,33 @@ class DevicePopup extends FlxUIPopup {
     private function createButtons():Void {
         // Up and down buttons (to change basic configuration like flavour,
         // number of scoops, etc)
-        var upButton = new FlxButton(_bbox.right + POPUP_BUTTON_HMARGIN,
+        _upButton = new FlxButton(_bbox.right + POPUP_BUTTON_HMARGIN,
                         _bbox.y - POPUP_BUTTON_WIDTH + POPUP_BUTTON_HEIGHT / 3,
                         null, upCallback);
-        upButton.loadGraphic("assets/images/button_arrow.png", true,
+        _upButton.loadGraphic("assets/images/button_arrow.png", true,
                              POPUP_BUTTON_WIDTH, POPUP_BUTTON_HEIGHT);
-        upButton.antialiasing = true;
-        add(upButton);
+        _upButton.antialiasing = true;
+        add(_upButton);
 
         // Down arrow button.
-        var downButton = new FlxButton(_bbox.right + POPUP_BUTTON_HMARGIN,
+        _downButton = new FlxButton(_bbox.right + POPUP_BUTTON_HMARGIN,
                                        _bbox.bottom - POPUP_BUTTON_HEIGHT / 3,
                                        null, downCallback);
-        downButton.loadGraphic("assets/images/button_arrow.png", true,
+        _downButton.loadGraphic("assets/images/button_arrow.png", true,
                                POPUP_BUTTON_WIDTH, POPUP_BUTTON_HEIGHT);
-        downButton.antialiasing = true;
-        downButton.setFacingFlip(FlxObject.DOWN, false, true);
-        downButton.facing = FlxObject.DOWN;
-        add(downButton);
+        _downButton.antialiasing = true;
+        _downButton.setFacingFlip(FlxObject.DOWN, false, true);
+        _downButton.facing = FlxObject.DOWN;
+        add(_downButton);
 
         // Remove button
-        var removeButton = new FlxButton(_bbox.left - POPUP_BUTTON_WIDTH,
+        _removeButton = new FlxButton(_bbox.left - POPUP_BUTTON_WIDTH,
                                          _bbox.bottom - POPUP_BUTTON_HEIGHT / 3,
                                         null, removeCallback);
-        removeButton.loadGraphic("assets/images/button_remove.png", true,
+        _removeButton.loadGraphic("assets/images/button_remove.png", true,
                                 POPUP_BUTTON_WIDTH, POPUP_BUTTON_HEIGHT);
-        removeButton.antialiasing = true;
-        add(removeButton);
+        _removeButton.antialiasing = true;
+        add(_removeButton);
     }
 
     /**
