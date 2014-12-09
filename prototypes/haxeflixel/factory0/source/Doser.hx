@@ -80,6 +80,14 @@ class Doser extends Device {
         item.stackPiece(_flavor);
     }
 
+	/**
+	 * Get the device ice cream flavor.
+	 * @return Integer with the flavor code.
+	 */
+	public function getFlavor():Int {
+		return _flavor;
+	}
+	
     public function setFlavor(flavor:Int):Void {
         _flavor = flavor;
     }

@@ -18,6 +18,18 @@ class DoserPopup extends DevicePopup {
         super(device);
     }
 
+	/**
+     * Initialization method for the class.
+     */
+    override public function create():Void {
+		// super.create() initializes _currentValue with 0, so the device type
+		// must be saved before calling it.
+		var deviceFlavor = cast(_device, Doser).getFlavor() - 4;
+		super.create();
+		_currentValue = deviceFlavor;
+	}
+
+	
     /**
      * Override the basic function to create a plain image sprite instead of a
      * field text area.
@@ -46,6 +58,7 @@ class DoserPopup extends DevicePopup {
     override private function set__currentValue(value:Int): Int {
 		_currentValue = ((value < 0) ? MAX_DOSER_VALUE : 0) + (value % MAX_DOSER_VALUE);
         _infoArea.animation.frameIndex = 4 + _currentValue;
+		cast(_device, Doser).setFlavor(_currentValue + 4);
         return _currentValue;
     }
 }

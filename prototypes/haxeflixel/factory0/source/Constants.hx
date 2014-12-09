@@ -69,11 +69,13 @@ class Constants {
     // Game elements.
     public static inline var DISPENSER:Int = 0;
     public static inline var DOSER:Int     = 1;
-    public static inline var CUP:Int       = 2;
-    public static inline var BOX:Int       = 3;
-    public static inline var SWITCH:Int    = 4;
-    public static inline var SCALE:Int     = 5;
+    public static inline var SWITCH:Int    = 2;
+    public static inline var SCALE:Int     = 3;
 
+	// Types of ice-creams and cups.
+	public static inline var CUP:Int = 0;
+	public static inline var WAFER:Int = 1;
+	
     // Scale limits.
     public static inline var MIN_SCALE_VALUE:Int = 1;
     public static inline var MAX_SCALE_VALUE:Int = 3;

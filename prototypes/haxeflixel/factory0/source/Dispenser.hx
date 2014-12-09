@@ -58,6 +58,14 @@ class Dispenser extends Device {
         }
     }
 
+	/**
+	 * Get the type of the ice cream cup dispensed by this device.
+	 * @return Integer with the type code.
+	 */
+	public function getType():Int {
+		return _type;
+	}
+	
     public function setType(type:Int):Void {
         _type = type;
     }

@@ -17,6 +17,17 @@ class DispenserPopup extends DevicePopup {
     override public function new(device:Device) {
         super(device);
     }
+	
+	/**
+     * Initialization method for the class.
+     */
+    override public function create():Void {
+		// super.create() initializes _currentValue with 0, so the device type
+		// must be saved before calling it.
+		var deviceType = cast(_device, Dispenser).getType();
+		super.create();
+		_currentValue = deviceType;
+	}
 
     /**
      * Override the basic function to create a plain image sprite instead of a
@@ -46,6 +57,7 @@ class DispenserPopup extends DevicePopup {
     override private function set__currentValue(value:Int): Int {
 		_currentValue = ((value < 0) ? MAX_DISPENSER_VALUE : 0) + (value % MAX_DISPENSER_VALUE);
         _infoArea.animation.frameIndex = _currentValue;
+		cast(_device, Dispenser).setType(_currentValue);
         return _currentValue;
     }
 }

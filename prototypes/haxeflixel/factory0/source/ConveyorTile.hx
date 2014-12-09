@@ -255,16 +255,7 @@ class ConveyorTile extends FlxSprite {
     }
 
     private function onUp(sprite:FlxSprite):Void {
-        var item = PlayState.selectedItem;
-
-        // TODO:
-        // This conditional is temporary and just for testing.
-        // When there is only devices in menu, this if() should be removed.
-        if (item == CUP || item == BOX) {
-            addIceCream(item);
-            return;
-        }
-        addDevice(item);
+        addDevice(PlayState.selectedItem);
     }
 
     private function onOver(sprite:FlxSprite):Void {
@@ -305,6 +296,8 @@ class ConveyorTile extends FlxSprite {
             switch (type) {
                 case CUP:
                     iceCream = new Cup(i, j);
+				case WAFER:
+					iceCream = new Wafer(i, j);
                 default:
                     iceCream = null;
             }
