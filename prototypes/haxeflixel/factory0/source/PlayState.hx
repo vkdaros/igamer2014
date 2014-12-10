@@ -37,9 +37,17 @@ class PlayState extends FlxUIState {
     private var _tileGrid:Array<Array<ConveyorTile>>;
     private var _endTile:ConveyorTile;
 
-    // Map of <stage index, path to stage file>.
-    private var _stageMap:Map<Int, String>;
-    private var _stageIndex:Int;
+    /**
+	 * String with the json of the current level (selected at the class named
+	 * StageSelectState).
+	 */
+    private var _jsonLevel:String;
+	
+	/**
+	 * String with the city of the current level (selected at the class named
+	 * StageSelectState).
+	 */
+	private var _city:String;
 
     // Layers to be added in current state.
     private var _conveyorLayer:FlxTypedGroup<ConveyorTile>;
@@ -67,9 +75,17 @@ class PlayState extends FlxUIState {
     private var relative:RelativeScaleMode;
     private var fixed:FixedScaleMode;
 
-    public function new(index:Int) {
+	/**
+	 * Class constructor.
+	 * @param city String with the name of the brazilian city that contains the
+	 * current level.
+	 * @param jsonLevel String with the json content of the level as created by
+	 * the Tiled tool (provided by the caller class StageSelectState).
+	 */
+    public function new(city:String, jsonLevel:String) {
         super();
-        _stageIndex = index;
+        _jsonLevel = jsonLevel;
+		_city = city; // TODO: Show the name of the city somewhere in the level
     }
 
     /**
@@ -98,7 +114,6 @@ class PlayState extends FlxUIState {
         _overConveyorLayer = new FlxSpriteGroup();
 
         // Create current level from a Tiled file.
-        initStageMap();
         initTileGrid();
 
         add(_conveyorLayer);
@@ -158,20 +173,13 @@ class PlayState extends FlxUIState {
         super.update();
     }
 
-    private function initStageMap():Void {
-        _stageMap = new Map<Int, String>();
-        _stageMap[0] = "assets/maps/stage00.json";
-        _stageMap[1] = "assets/maps/stage01.json";
-        _stageMap[2] = "assets/maps/stage02.json";
-        _stageMap[3] = "assets/maps/stage03.json";
-    }
+    
 
     /**
      * Open Tiled file and fill tileGrid and conveyorLayer.
      */
     public function initTileGrid():Void {
-        var jsonFile = Assets.getText(_stageMap[_stageIndex]);
-        var map:TiledMap = haxe.Json.parse(jsonFile);
+        var map:TiledMap = haxe.Json.parse(_jsonLevel);
         var dataArray:Array<Float> = null;
         var objectArray:Array<TiledObject> = null;
 
