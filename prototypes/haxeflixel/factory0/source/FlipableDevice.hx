@@ -95,7 +95,7 @@ class FlipableDevice extends Device
 	 * Flip the device by changing its sideways direction.
 	 */
 	public function flipSideDirection():Void {
-		_sideDirection += 2 * ((_sideDirection > 1) ? -1 : 1);
+		_sideDirection += ((_sideDirection % 2) == 0) ? 1 : -1;
 		
 		if (_bodyPiece.facing == FlxObject.LEFT) {
 			_bodyPiece.facing = FlxObject.RIGHT;

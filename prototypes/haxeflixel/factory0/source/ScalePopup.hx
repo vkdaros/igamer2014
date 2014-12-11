@@ -38,6 +38,7 @@ class ScalePopup extends FlipableDevicePopup {
     override private function set__currentValue(value:Int): Int {
         if(value >= MIN_SCALE_VALUE && value <= MAX_SCALE_VALUE) {
             super.set__currentValue(value);
+			cast(_device, Scale).target = value;
         }
         return _currentValue;
     }

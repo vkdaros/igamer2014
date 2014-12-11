@@ -78,7 +78,7 @@ class Constants {
 	
     // Scale limits.
     public static inline var MIN_SCALE_VALUE:Int = 1;
-    public static inline var MAX_SCALE_VALUE:Int = 3;
+    public static inline var MAX_SCALE_VALUE:Int = 5;
 
     // Doser limits.
     public static inline var MAX_DOSER_VALUE:Int = 4;

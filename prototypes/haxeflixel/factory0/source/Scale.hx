@@ -13,6 +13,22 @@ class Scale extends FlipableDevice {
     // When it is true, the ice cream is sent to sideDirection output.
     private var _deviate:Bool;
 
+	/** Target weight for the scale to let a product pass through it. */
+	public var target(default, set):Int;
+	
+	/**
+	 * Setter of the target property.
+	 * @param value Integer value with the new target for the scale, in the
+	 * range [MIN_SCALE_VALUE, MAX_SCALE_VALUE].
+	 * @return Integer with the new value for the scale target.
+	 */
+	public function set_target(value:Int):Int {
+		if (value >= MIN_SCALE_VALUE && value <= MAX_SCALE_VALUE) {
+			target = value;
+		}
+		return target;
+	}
+	
     public function new(parent:ConveyorTile, X:Float, Y:Float, dir:Int = SW) {
         super(parent, X, Y, dir);
 
@@ -23,6 +39,8 @@ class Scale extends FlipableDevice {
                                TILE_WIDTH, 2 * TILE_FRAME_HEIGHT);
         _topPiece.loadGraphic("assets/images/scale_top.png", true, TILE_WIDTH,
                                2 * TILE_FRAME_HEIGHT);
+							   
+		target = MIN_SCALE_VALUE;
     }
 
     override public function transformIceCream(item:IceCream):Void {
@@ -31,7 +49,7 @@ class Scale extends FlipableDevice {
             return;
         }
         _deviate = false;
-        if (item.stackSize() < 2) {
+        if (item.stackSize() < target) {
             _deviate = true;
         }
 
