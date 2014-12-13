@@ -111,7 +111,7 @@ class Device extends FlxSpriteGroup {
      * occurred.
      */
     public function onOut(sprite:FlxSprite):Void {
-        
+
     }
 
 	/**

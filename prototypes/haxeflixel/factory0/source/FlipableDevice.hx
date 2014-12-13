@@ -16,6 +16,12 @@ class FlipableDevice extends Device
 	 * Sideways direction of the device (the one that is flipable).
 	 */
 	private var _sideDirection:Int;
+
+
+    /**
+     * Indicates when device has been flipped.
+     */
+    private var _flipped:Bool;
 	
 	/**
 	 * Class constructor
@@ -30,6 +36,7 @@ class FlipableDevice extends Device
 	public function new(parent:ConveyorTile, X:Float, Y:Float, dir:Int=SW) 
 	{
 		super(parent, X, Y - 15, dir);
+        _flipped = false;
 		
 		var xOffset = TILE_WIDTH / 2;
         var yOffset = TILE_HEIGHT * 1.5;
@@ -95,16 +102,16 @@ class FlipableDevice extends Device
 	 * Flip the device by changing its sideways direction.
 	 */
 	public function flipSideDirection():Void {
-		_sideDirection += ((_sideDirection % 2) == 0) ? 1 : -1;
-		
-		if (_bodyPiece.facing == FlxObject.LEFT) {
-			_bodyPiece.facing = FlxObject.RIGHT;
-            _topPiece.facing = FlxObject.RIGHT;
-		}
-		else {
-			_bodyPiece.facing = FlxObject.LEFT;
-            _topPiece.facing = FlxObject.LEFT;
-		}
+		//_sideDirection += ((_sideDirection % 2) == 0) ? 1 : -1;
+		_sideDirection = (_sideDirection + 2) % 4;
+
+        if (!_flipped) {
+            _topPiece.animation.frameIndex++;
+        }
+        else {
+            _topPiece.animation.frameIndex--;
+        }
+        _flipped = !_flipped;
 	}
 	
 }
